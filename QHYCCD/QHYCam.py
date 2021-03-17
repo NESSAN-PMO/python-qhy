@@ -3,12 +3,13 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2021-03-12 00:55:57
+LastEditTime: 2021-03-18 01:58:51
 '''
 
 from .pyqhyccd import *
-import time
 from astropy.io import fits
+from astropy.time import Time
+import numpy as np
 
 
 class Camera():
@@ -23,7 +24,11 @@ class Camera():
         if num >= total_cam:
             pass
         self.camid = GetQHYCCDId(num)
+        self.type, self.sn = self.camid.decode('UTF-8').split('-')
         self.lib = GetQHYCCDSDKVersion()
+        self.unsaved_settings = 0
+        self.starttime = 0
+        self.exptime = 0
 
     def __del__(self):
         try:
@@ -46,153 +51,123 @@ class Camera():
             self.cam = OpenQHYCCD(self.camid)
             SetQHYCCDStreamMode(self.cam, 0)
             InitQHYCCD(self.cam)
-            self.model = GetQHYCCDModel(self.camid)
-            chipw, chiph, self.imagew, self.imageh, self.pixelw, self.pixelh, bpp = GetQHYCCDChipInfo(
+            self.model = GetQHYCCDModel(self.camid).decode('UTF-8')
+            chipw, chiph, self.imagew, self.imageh, self.pixelw, self.pixelh, self.bpp = GetQHYCCDChipInfo(
                 self.cam)
             SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_GAIN, 60)
             SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_OFFSET, 76)
             self.n_modes = GetQHYCCDNumberOfReadModes(self.cam)
             self.mode_names = []
             for i in range(self.n_modes):
-                self.mode_names.append(GetQHYCCDReadModeName(self.cam, i))
-            SetQHYCCDResolution(self.cam, 0, 0, self.imagew, self.imageh)
-            print(GetQHYCCDEffectiveArea(self.cam))
-            print(GetQHYCCDOverScanArea(self.cam))
-
-#             ul_x, ul_y, lr_x, lr_y = getVisibleArea(
-#                 self.cam)
-#             self.sizex = lr_x - ul_x
-#             self.sizey = lr_y - ul_y
-#             self.offsetx = ul_x
-#             self.offsety = ul_y
-#             aul_x, aul_y, alr_x, alr_y = getArrayArea(
-#                 self.cam)
-#             self.sizeax = alr_x - aul_x
-#             self.sizeay = alr_y - aul_y
-
-#             self.startx = 0
-#             self.starty = 0
-#             self.numx = self.sizex
-#             self.numy = self.sizey
-#             self.binx = 1
-#             self.biny = 1
-#             self.SetImageArea()
-
-#             self.psx, self.psy = getPixelSize(self.cam)
-#             n = 0
-#             modes = []
-#             while 1:
-#                 try:
-#                     modes.append(getCameraModeString(self.cam, n))
-#                     n += 1
-#                 except:
-#                     break
-#             self.modes = tuple(modes)
-#             self.model = getModel(self.cam)
-#             self.sn = getSerialString(self.cam)
-#             self.lib = getLibVersion()
-#             self.fw = getFWRevision(self.cam)
-#             self.hw = getHWRevision(self.cam)
+                self.mode_names.append(
+                    GetQHYCCDReadModeName(self.cam, i).decode('UTF-8'))
+            self.read_mode = 0
+            SetQHYCCDReadMode(self.cam, self.read_mode)
+            self.bin_modes = GetBinModes(self.cam)
+            self.area_eff = GetQHYCCDEffectiveArea(self.cam)
+            self.area_ovr = GetQHYCCDOverScanArea(self.cam)
+            self.area = [0, 0, self.imagew, self.imageh]
+            self.binw = 1
+            self.binh = 1
+            self.SetImageArea()
+            if IsQHYCCDControlAvailable(self.cam, CONTROL_ID.CAM_GPS):
+                SetQHYCCDParam(self.cam, CONTROL_ID.CAM_GPS, 1)
+                self.has_gps = 1
+            else:
+                self.has_gps = 0
 
         elif value is False and self.Connected is True:
             CloseQHYCCD(self.cam)
         else:
             pass
 
-#     def SetImageArea(self):
-#         if (self.numx + self.startx) * self.binx >= self.sizex:
-#             self.numx = int(self.sizex / self.binx - self.startx)
-#         if (self.numy + self.starty) * self.biny >= self.sizey:
-#             self.numy = int(self.sizey / self.biny - self.starty)
-#         setImageArea(self.cam, self.startx + self.offsetx / self.binx,
-#                      self.starty + self.offsety / self.biny,
-#                      self.startx + self.numx + self.offsetx / self.binx,
-#                      self.starty + self.numy + self.offsety / self.biny)
+    def SetImageArea(self):
+        if (self.area[0] * self.binw) >= self.imagew:
+            self.area[0] = (self.imagew / self.binw - 1)
+        if self.area[1] * self.binh >= self.imageh:
+            self.area[1] = self.imageh / self.binh - 1
+        if (self.area[0] + self.area[2]) * self.binw > self.imagew:
+            self.area[2] = self.imagew / self.binw
+        if (self.area[1] + self.area[3]) * self.binh > self.imageh:
+            self.area[3] = self.imageh / self.binh
+        SetQHYCCDBinMode(self.cam, self.binw, self.binh)
+        SetQHYCCDResolution(self.cam, *self.area)
+        self.unsaved_settings = 0
 
-#     @property
-#     def BinX(self):
-#         return getReadoutDimensions(self.cam)[2]
+    @property
+    def BinX(self):
+        return self.binw
 
-#     @BinX.setter
-#     def BinX(self, value):
-#         if value <= 16 and value >= 1:
-#             setHBin(self.cam, value)
-#             self.binx = int(value)
-#             self.SetImageArea()
+    @BinX.setter
+    def BinX(self, value):
+        if value in self.bin_modes:
+            self.binw = value
+            self.binh = value
+            self.area = [0, 0, self.imagew/self.binw, self.imageh/self.binh]
+            self.unsaved_settings = 1
 
-#     @property
-#     def BinY(self):
-#         return getReadoutDimensions(self.cam)[5]
+    @property
+    def BinY(self):
+        return self.binh
 
-#     @BinX.setter
-#     def BinY(self, value):
-#         if value <= 16 and value >= 1:
-#             setVBin(self.cam, value)
-#             self.biny = int(value)
-#             self.SetImageArea()
+    @BinX.setter
+    def BinY(self, value):
+        if value in self.bin_modes:
+            self.binw = value
+            self.binh = value
+            self.area = [0, 0, self.imagew/self.binw, self.imageh/self.binh]
+            self.unsaved_settings = 1
 
-#     @property
-#     def NumX(self):
-#         return getReadoutDimensions(self.cam)[0]
+    @property
+    def NumX(self):
+        return self.area[2]
 
-#     @NumX.setter
-#     def NumX(self, value):
-#         if value > 0:
-#             self.numx = int(value)
-#             self.SetImageArea()
-#         else:
-#             raise ValueError("Invalid value")
+    @NumX.setter
+    def NumX(self, value):
+        if value > 0:
+            self.area[2] = int(value)
+            self.unsaved_settings = 1
 
-#     @property
-#     def NumY(self):
-#         return getReadoutDimensions(self.cam)[3]
+    @property
+    def NumY(self):
+        return self.area[3]
 
-#     @NumY.setter
-#     def NumY(self, value):
-#         if value > 0:
-#             self.numy = int(value)
-#             self.SetImageArea()
-#         else:
-#             raise ValueError("Invalid value")
+    @NumY.setter
+    def NumY(self, value):
+        if value > 0:
+            self.area[3] = int(value)
+            self.unsaved_settings = 1
 
-#     @property
-#     def StartX(self):
-#         return getReadoutDimensions(self.cam)[1] - self.offsetx
+    @property
+    def StartX(self):
+        return self.area[0]
 
-#     @StartX.setter
-#     def StartX(self, value):
-#         if value >= 0 and value < self.sizex:
-#             self.startx = int(value)
-#             self.SetImageArea()
+    @StartX.setter
+    def StartX(self, value):
+        if value >= 0 and value < self.imagew:
+            self.area[0] = int(value)
+            self.unsaved_settings = 1
 
-#     @property
-#     def StartY(self):
-#         return getReadoutDimensions(self.cam)[4] - self.offsety
+    @property
+    def StartY(self):
+        return self.area[1]
 
-#     @StartY.setter
-#     def StartY(self, value):
-#         if value >= 0 and value < self.sizey:
-#             self.starty = int(value)
-#             self.SetImageArea()
+    @StartY.setter
+    def StartY(self, value):
+        if value >= 0 and value < self.imageh:
+            self.area[1] = int(value)
+            self.unsaved_settings = 1
 
     def StartExposure(self, exp, light=1):
+        if self.unsaved_settings == 1:
+            self.SetImageArea()
         SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_EXPOSURE, exp * 1000000.0)
         self.exptime = exp * 1000000.0
         ExpQHYCCDSingleFrame(self.cam)
 
-#     @property
-#     def CameraState(self):
-#         s = getDeviceStatus(self.cam)
-#         if s == CAMERA_STATUS_UNKNOWN:
-#             return 5
-#         elif s & 0x03 == 0x00:
-#             return 0
-#         elif s & 0x03 == 0x01:
-#             return 1
-#         elif s & 0x03 == 0x02:
-#             return 2
-#         elif s & 0x03 == 0x03:
-#             return 3
+    @property
+    def CameraState(self):
+        return -1
 
     @property
     def CameraXSize(self):
@@ -202,33 +177,33 @@ class Camera():
     def CameraYSize(self):
         return self.imageh
 
-#     @property
-#     def CanAbortExposure(self):
-#         return True
+    @property
+    def CanAbortExposure(self):
+        return True
 
-#     @property
-#     def CanAsymmetricBin(self):
-#         return True
+    @property
+    def CanAsymmetricBin(self):
+        return True
 
-#     @property
-#     def CanFastReadout(self):
-#         return False
+    @property
+    def CanFastReadout(self):
+        return False
 
-#     @property
-#     def CanGetCoolerPower(self):
-#         return True
+    @property
+    def CanGetCoolerPower(self):
+        return True
 
-#     @property
-#     def CanPulseGuide(self):
-#         return False
+    @property
+    def CanPulseGuide(self):
+        return False
 
-#     @property
-#     def CanSetCCDTemperature(self):
-#         return True
+    @property
+    def CanSetCCDTemperature(self):
+        return True
 
-#     @property
-#     def CanStopExposure(self):
-#         return False
+    @property
+    def CanStopExposure(self):
+        return False
 
     @property
     def CCDTemperature(self):
@@ -262,31 +237,41 @@ class Camera():
 
     @property
     def ImageArray(self):
-        return GetQHYCCDSingleFrame(self.cam)
+        self.image = GetQHYCCDSingleFrame(self.cam)
+        if self.has_gps:
+            buf = self.image[0, 0:22].tobytes(order='C')
+            self.image[0, 0:22] = np.nan
+            jd = (int.from_bytes(buf[18:22], 'big', signed=False) + int.from_bytes(
+                buf[22:25], 'big', signed=False) / 10000000.) / 86400. + 2450000.5
+            tm = Time(jd, format='jd').strftime("%Y-%m-%dT%H:%M:%S.%f")
+            self.starttime = tm
+        return self.image
 
     @property
     def ImageArrayVariant(self):
-        return GetQHYCCDSingleFrame(self.cam)
+        self.image = GetQHYCCDSingleFrame(self.cam)
+        return self.image
 
-#     @property
-#     def LastExposureDuration(self):
-#         return 0
+    @property
+    def LastExposureDuration(self):
+        return self.exptime
 
-#     @property
-#     def LastExposureStartTime(self):
-#         return 0
+    @property
+    def LastExposureStartTime(self):
+        print("Exposure info: ", GetQHYCCDPreciseExposureInfo(self.cam))
+        return self.starttime
 
-#     @property
-#     def MaxBinX(self):
-#         return 16
+    @property
+    def MaxBinX(self):
+        return self.bin_modes[-1]
 
-#     @property
-#     def MaxBinY(self):
-#         return 16
+    @property
+    def MaxBinY(self):
+        return self.bin_modes[-1]
 
-#     @property
-#     def MaxADU(self):
-#         return 65535
+    @property
+    def MaxADU(self):
+        return np.power(2, self.bpp) - 1
 
     @property
     def PercentCompleted(self):
@@ -302,7 +287,7 @@ class Camera():
 
     @property
     def ReadoutMode(self):
-        return GetQHYCCDReadMode(self.cam)
+        return self.read_mode
 
     @property
     def ReadoutModes(self):
@@ -311,11 +296,12 @@ class Camera():
     @ReadoutMode.setter
     def ReadoutMode(self, value):
         if value >= 0 and value < self.n_modes:
-            GetQHYCCDReadMode(self.cam, value)
+            SetQHYCCDReadMode(self.cam, value)
+            self.read_mode = value
 
     @property
     def SensorType(self):
-        return
+        return "CMOS"
 
     @property
     def SetCCDTemperature(self):

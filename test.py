@@ -4,37 +4,52 @@ Description:
 Author: F.O.X
 Date: 2021-01-07 16:31:54
 LastEditor: F.O.X
-LastEditTime: 2021-03-11 21:51:38
+LastEditTime: 2021-03-18 01:50:52
 '''
 
 from QHYCCD import Camera
 import time
 from astropy.io import fits
+from astropy.time import Time
 
 cam = Camera("QHY.usb.0")
 cam.Connected = True
-cam.StartExposure(1)
-time.sleep(3)
-t = time.time()
-d = cam.ImageArray
-print(time.time() - t)
-fits.PrimaryHDU(data=d).writeto("test.fits", overwrite=True)
+cam.ReadoutMode = 3
+print(cam.ReadoutModes[cam.ReadoutMode])
+for i in range(1):
+    cam.StartExposure(1)
+    time.sleep(3)
+    t = time.time()
+    d = cam.ImageArray
+    print(time.time() - t)
+    fits.PrimaryHDU(data=d).writeto("test.fits", overwrite=True)
+    print(cam.LastExposureStartTime)
 cam.Connected = False
+
+
+# buf = b'\x12\x05\xea\x04\xf7\x04\xec\x04\xea\x04\xf8\x04\xe6\x04\xc3\x04\x1b\x05\xf0\x04\xf0\x04\xe9\x04\xe1\x04\x05\x05\x03\x05;\x05\xee\x04\xdf\x04!\x05\xe5\x04\xed\x04\x02\x05'
+# print(int.from_bytes(buf[0:4], 'little', signed=False)*256)
+# jd = 695925030 / 86400. + 2450000.5
+# print(jd)
+# tm = Time(jd, format='jd').strftime("%Y-%m-%dT%H:%M:%S.%f")
+# print(tm)
+
 
 # from QHYCCD.pyqhyccd import *
 # import sys
 # from astropy.io import fits
+# from datetime import datetime
+# import time
 
 # InitQHYCCDResource()
 # total_cam = ScanQHYCCD()
 # print(f"Found {total_cam} cameras.")
 # if total_cam > 0:
 #     camid = GetQHYCCDId(0)
-#     print(camid)
 #     cam = OpenQHYCCD(camid)
-#     print(cam)
-#     SetQHYCCDStreamMode(cam, 0)
+#     SetQHYCCDStreamMode(cam, 1)
 #     InitQHYCCD(cam)
+#     SetQHYCCDBitsMode(cam, 16)
 
 #     chipw, chiph, imagew, imageh, pixelw, pixelh, bpp = GetQHYCCDChipInfo(cam)
 #     print(chipw, chiph, imagew, imageh, pixelw, pixelh, bpp)
@@ -42,9 +57,24 @@ cam.Connected = False
 
 #     SetQHYCCDParam(cam, CONTROL_ID.CONTROL_GAIN, 60)
 #     SetQHYCCDParam(cam, CONTROL_ID.CONTROL_OFFSET, 76)
-#     SetQHYCCDParam(cam, CONTROL_ID.CONTROL_EXPOSURE, 1 * 1000000.0)
-#     ExpQHYCCDSingleFrame(cam)
-#     d = GetQHYCCDSingleFrame(cam)
-#     fits.PrimaryHDU(data=d).writeto("test.fits", overwrite=True)
+#     SetQHYCCDParam(cam, CONTROL_ID.CONTROL_EXPOSURE, 0.1 * 1000000.0)
+#     SetQHYCCDParam(cam, CONTROL_ID.CAM_GPS, 1)
+#     print("Exposure info: ", GetQHYCCDPreciseExposureInfo(cam))
+#     SetQHYCCDParam(cam, CONTROL_ID.CONTROL_USBTRAFFIC, 0)
+#     print("USBTraffic: ", GetQHYCCDParam(cam, CONTROL_ID.CONTROL_USBTRAFFIC))
+#     BeginQHYCCDLive(cam)
+#     time.sleep(1)
+#     print("Sys Time: ", datetime.utcnow())
+#     for i in range(10):
+#         t = time.time()
+#         d = GetQHYCCDLiveFrame(cam)
+#         print(d.shape, time.time() - t)
+#         buf = d[0, 0:22].tobytes(order='C')
+#         jd = (int.from_bytes(buf[18:22], 'big', signed=False) + int.from_bytes(
+#             buf[22:25], 'big', signed=False) / 10000000.) / 86400. + 2450000.5
+#         tm = Time(jd, format='jd').strftime("%Y-%m-%dT%H:%M:%S.%f")
+#         print("Frame: ", int.from_bytes(buf[0:4], 'big', signed=False), tm)
+#     print("Sys Time: ", datetime.utcnow())
+#     StopQHYCCDLive(cam)
 #     CloseQHYCCD(cam)
 # ReleaseQHYCCDResource()

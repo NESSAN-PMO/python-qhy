@@ -123,6 +123,12 @@ cdef extern from 'qhyccd.h':
     uint32_t GetQHYCCDReadMode(qhyccd_handle *h,uint32_t* modeNumber) nogil
     uint32_t GetQHYCCDEffectiveArea(qhyccd_handle *h,uint32_t *startX, uint32_t *startY, uint32_t *sizeX, uint32_t *sizeY)
     uint32_t GetQHYCCDOverScanArea(qhyccd_handle *h,uint32_t *startX, uint32_t *startY, uint32_t *sizeX, uint32_t *sizeY)
+    uint32_t SetQHYCCDBinMode(qhyccd_handle *handle,uint32_t wbin,uint32_t hbin) nogil
+    uint32_t BeginQHYCCDLive(qhyccd_handle *handle)
+    uint32_t GetQHYCCDLiveFrame(qhyccd_handle *handle,uint32_t *w,uint32_t *h,uint32_t *bpp,uint32_t *channels,uint8_t *imgdata)
+    uint32_t StopQHYCCDLive(qhyccd_handle *handle)
+    uint32_t GetQHYCCDPreciseExposureInfo(qhyccd_handle *h, uint32_t *PixelPeriod_ps, uint32_t *LinePeriod_ns, uint32_t *FramePeriod_us, uint32_t *ClocksPerLine, uint32_t *LinesPerFrame, uint32_t *ActualExposureTime, uint8_t *isLongExposureMode)
+    uint32_t SetQHYCCDBitsMode(qhyccd_handle *handle,uint32_t bits)
 
     # void SetQHYCCDAutoDetectCamera(bool enable)
 
@@ -136,15 +142,8 @@ cdef extern from 'qhyccd.h':
 
     # uint32_t GetQHYCCDCameraStatus(qhyccd_handle *h,uint8_t *buf) nogil
 
-    # uint32_t BeginQHYCCDLive(qhyccd_handle *handle)
 
-    # uint32_t GetQHYCCDLiveFrame(qhyccd_handle *handle,uint32_t *w,uint32_t *h,uint32_t *bpp,uint32_t *channels,uint8_t *imgdata)
 
-    # uint32_t StopQHYCCDLive(qhyccd_handle *handle)
-
-    # uint32_t SetQHYCCDBinMode(qhyccd_handle *handle,uint32_t wbin,uint32_t hbin)
-
-    # uint32_t SetQHYCCDBitsMode(qhyccd_handle *handle,uint32_t bits)
 
     # uint32_t ControlQHYCCDTemp(qhyccd_handle *handle,double targettemp)
 
@@ -258,7 +257,6 @@ cdef extern from 'qhyccd.h':
 
     # uint32_t EnableQHYCCDImageOSD(qhyccd_handle *h,uint32_t i)
 
-    # uint32_t GetQHYCCDPreciseExposureInfo(qhyccd_handle *h, uint32_t *PixelPeriod_ps, uint32_t *LinePeriod_ns, uint32_t *FramePeriod_us, uint32_t *ClocksPerLine, uint32_t *LinesPerFrame, uint32_t *ActualExposureTime, uint8_t  *isLongExposureMode)
 
     # void QHYCCDQuit()
 

@@ -1458,69 +1458,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg
 #define __Pyx_PyObject_Call(func, arg, kw) PyObject_Call(func, arg, kw)
 #endif
 
-/* WriteUnraisableException.proto */
-static void __Pyx_WriteUnraisable(const char *name, int clineno,
-                                  int lineno, const char *filename,
-                                  int full_traceback, int nogil);
-
-/* TupleAndListFromArray.proto */
-#if CYTHON_COMPILING_IN_CPYTHON
-static CYTHON_INLINE PyObject* __Pyx_PyList_FromArray(PyObject *const *src, Py_ssize_t n);
-static CYTHON_INLINE PyObject* __Pyx_PyTuple_FromArray(PyObject *const *src, Py_ssize_t n);
-#endif
-
-/* IncludeStringH.proto */
-#include <string.h>
-
-/* BytesEquals.proto */
-static CYTHON_INLINE int __Pyx_PyBytes_Equals(PyObject* s1, PyObject* s2, int equals);
-
-/* UnicodeEquals.proto */
-static CYTHON_INLINE int __Pyx_PyUnicode_Equals(PyObject* s1, PyObject* s2, int equals);
-
-/* fastcall.proto */
-#define __Pyx_Arg_VARARGS(args, i) PyTuple_GET_ITEM(args, i)
-#define __Pyx_NumKwargs_VARARGS(kwds) PyDict_Size(kwds)
-#define __Pyx_KwValues_VARARGS(args, nargs) NULL
-#define __Pyx_GetKwValue_VARARGS(kw, kwvalues, s) __Pyx_PyDict_GetItemStrWithError(kw, s)
-#define __Pyx_KwargsAsDict_VARARGS(kw, kwvalues) PyDict_Copy(kw)
-#if CYTHON_METH_FASTCALL
-    #define __Pyx_Arg_FASTCALL(args, i) args[i]
-    #define __Pyx_NumKwargs_FASTCALL(kwds) PyTuple_GET_SIZE(kwds)
-    #define __Pyx_KwValues_FASTCALL(args, nargs) (&args[nargs])
-    static CYTHON_INLINE PyObject * __Pyx_GetKwValue_FASTCALL(PyObject *kwnames, PyObject *const *kwvalues, PyObject *s);
-    #define __Pyx_KwargsAsDict_FASTCALL(kw, kwvalues) _PyStack_AsDict(kwvalues, kw)
-#else
-    #define __Pyx_Arg_FASTCALL __Pyx_Arg_VARARGS
-    #define __Pyx_NumKwargs_FASTCALL __Pyx_NumKwargs_VARARGS
-    #define __Pyx_KwValues_FASTCALL __Pyx_KwValues_VARARGS
-    #define __Pyx_GetKwValue_FASTCALL __Pyx_GetKwValue_VARARGS
-    #define __Pyx_KwargsAsDict_FASTCALL __Pyx_KwargsAsDict_VARARGS
-#endif
-#if CYTHON_COMPILING_IN_CPYTHON
-#define __Pyx_ArgsSlice_VARARGS(args, start, stop) __Pyx_PyTuple_FromArray(&__Pyx_Arg_VARARGS(args, start), stop - start)
-#define __Pyx_ArgsSlice_FASTCALL(args, start, stop) __Pyx_PyTuple_FromArray(&__Pyx_Arg_FASTCALL(args, start), stop - start)
-#else
-#define __Pyx_ArgsSlice_VARARGS(args, start, stop) PyTuple_GetSlice(args, start, stop)
-#define __Pyx_ArgsSlice_FASTCALL(args, start, stop) PyTuple_GetSlice(args, start, stop)
-#endif
-
-/* RaiseDoubleKeywords.proto */
-static void __Pyx_RaiseDoubleKeywordsError(const char* func_name, PyObject* kw_name);
-
-/* ParseKeywords.proto */
-static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject *const *kwvalues,
-    PyObject **argnames[],
-    PyObject *kwds2, PyObject *values[], Py_ssize_t num_pos_args,
-    const char* function_name);
-
-/* RaiseArgTupleInvalid.proto */
-static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
-    Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
-
-/* ExtTypeTest.proto */
-static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type);
-
 /* PyDictVersioning.proto */
 #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_TYPE_SLOTS
 #define __PYX_DICT_VERSION_INIT  ((PY_UINT64_T) -1)
@@ -1601,6 +1538,69 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_FastCallDict(PyObject *func, PyObj
 /* RaiseException.proto */
 static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject *cause);
 
+/* WriteUnraisableException.proto */
+static void __Pyx_WriteUnraisable(const char *name, int clineno,
+                                  int lineno, const char *filename,
+                                  int full_traceback, int nogil);
+
+/* TupleAndListFromArray.proto */
+#if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE PyObject* __Pyx_PyList_FromArray(PyObject *const *src, Py_ssize_t n);
+static CYTHON_INLINE PyObject* __Pyx_PyTuple_FromArray(PyObject *const *src, Py_ssize_t n);
+#endif
+
+/* IncludeStringH.proto */
+#include <string.h>
+
+/* BytesEquals.proto */
+static CYTHON_INLINE int __Pyx_PyBytes_Equals(PyObject* s1, PyObject* s2, int equals);
+
+/* UnicodeEquals.proto */
+static CYTHON_INLINE int __Pyx_PyUnicode_Equals(PyObject* s1, PyObject* s2, int equals);
+
+/* fastcall.proto */
+#define __Pyx_Arg_VARARGS(args, i) PyTuple_GET_ITEM(args, i)
+#define __Pyx_NumKwargs_VARARGS(kwds) PyDict_Size(kwds)
+#define __Pyx_KwValues_VARARGS(args, nargs) NULL
+#define __Pyx_GetKwValue_VARARGS(kw, kwvalues, s) __Pyx_PyDict_GetItemStrWithError(kw, s)
+#define __Pyx_KwargsAsDict_VARARGS(kw, kwvalues) PyDict_Copy(kw)
+#if CYTHON_METH_FASTCALL
+    #define __Pyx_Arg_FASTCALL(args, i) args[i]
+    #define __Pyx_NumKwargs_FASTCALL(kwds) PyTuple_GET_SIZE(kwds)
+    #define __Pyx_KwValues_FASTCALL(args, nargs) (&args[nargs])
+    static CYTHON_INLINE PyObject * __Pyx_GetKwValue_FASTCALL(PyObject *kwnames, PyObject *const *kwvalues, PyObject *s);
+    #define __Pyx_KwargsAsDict_FASTCALL(kw, kwvalues) _PyStack_AsDict(kwvalues, kw)
+#else
+    #define __Pyx_Arg_FASTCALL __Pyx_Arg_VARARGS
+    #define __Pyx_NumKwargs_FASTCALL __Pyx_NumKwargs_VARARGS
+    #define __Pyx_KwValues_FASTCALL __Pyx_KwValues_VARARGS
+    #define __Pyx_GetKwValue_FASTCALL __Pyx_GetKwValue_VARARGS
+    #define __Pyx_KwargsAsDict_FASTCALL __Pyx_KwargsAsDict_VARARGS
+#endif
+#if CYTHON_COMPILING_IN_CPYTHON
+#define __Pyx_ArgsSlice_VARARGS(args, start, stop) __Pyx_PyTuple_FromArray(&__Pyx_Arg_VARARGS(args, start), stop - start)
+#define __Pyx_ArgsSlice_FASTCALL(args, start, stop) __Pyx_PyTuple_FromArray(&__Pyx_Arg_FASTCALL(args, start), stop - start)
+#else
+#define __Pyx_ArgsSlice_VARARGS(args, start, stop) PyTuple_GetSlice(args, start, stop)
+#define __Pyx_ArgsSlice_FASTCALL(args, start, stop) PyTuple_GetSlice(args, start, stop)
+#endif
+
+/* RaiseDoubleKeywords.proto */
+static void __Pyx_RaiseDoubleKeywordsError(const char* func_name, PyObject* kw_name);
+
+/* ParseKeywords.proto */
+static int __Pyx_ParseOptionalKeywords(PyObject *kwds, PyObject *const *kwvalues,
+    PyObject **argnames[],
+    PyObject *kwds2, PyObject *values[], Py_ssize_t num_pos_args,
+    const char* function_name);
+
+/* RaiseArgTupleInvalid.proto */
+static void __Pyx_RaiseArgtupleInvalid(const char* func_name, int exact,
+    Py_ssize_t num_min, Py_ssize_t num_max, Py_ssize_t num_found);
+
+/* ExtTypeTest.proto */
+static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type);
+
 /* PyObjectFormatSimple.proto */
 #if CYTHON_COMPILING_IN_PYPY
     #define __Pyx_PyObject_FormatSimple(s, f) (\
@@ -1626,6 +1626,23 @@ static void __Pyx_Raise(PyObject *type, PyObject *value, PyObject *tb, PyObject 
 /* JoinPyUnicode.proto */
 static PyObject* __Pyx_PyUnicode_Join(PyObject* value_tuple, Py_ssize_t value_count, Py_ssize_t result_ulength,
                                       Py_UCS4 max_char);
+
+/* ListAppend.proto */
+#if CYTHON_USE_PYLIST_INTERNALS && CYTHON_ASSUME_SAFE_MACROS
+static CYTHON_INLINE int __Pyx_PyList_Append(PyObject* list, PyObject* x) {
+    PyListObject* L = (PyListObject*) list;
+    Py_ssize_t len = Py_SIZE(list);
+    if (likely(L->allocated > len) & likely(len > (L->allocated >> 1))) {
+        Py_INCREF(x);
+        PyList_SET_ITEM(list, len, x);
+        __Pyx_SET_SIZE(list, len + 1);
+        return 0;
+    }
+    return PyList_Append(list, x);
+}
+#else
+#define __Pyx_PyList_Append(L,x) PyList_Append(L,x)
+#endif
 
 /* GetItemInt.proto */
 #define __Pyx_GetItemInt(o, i, type, is_signed, to_py_func, is_list, wraparound, boundscheck)\
@@ -1883,6 +1900,9 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_From_uint32_t(uint32_t value);
 
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
+
+/* CIntToPy.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_uint8_t(uint8_t value);
 
 /* RealImag.proto */
 #if CYTHON_CCOMPLEX
@@ -2145,7 +2165,7 @@ static const char __pyx_k__2[] = ",";
 static const char __pyx_k__8[] = "*";
 static const char __pyx_k_np[] = "np";
 static const char __pyx_k_os[] = "os";
-static const char __pyx_k__66[] = "?";
+static const char __pyx_k__82[] = "?";
 static const char __pyx_k_all[] = "__all__";
 static const char __pyx_k_bpp[] = "bpp";
 static const char __pyx_k_cam[] = "cam";
@@ -2153,8 +2173,11 @@ static const char __pyx_k_day[] = "day";
 static const char __pyx_k_doc[] = "__doc__";
 static const char __pyx_k_ret[] = "ret";
 static const char __pyx_k_sys[] = "sys";
+static const char __pyx_k_binh[] = "binh";
+static const char __pyx_k_binw[] = "binw";
 static const char __pyx_k_data[] = "data";
 static const char __pyx_k_dict[] = "__dict__";
+static const char __pyx_k_hbin[] = "hbin";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_mode[] = "mode";
 static const char __pyx_k_name[] = "__name__";
@@ -2162,11 +2185,13 @@ static const char __pyx_k_pmax[] = "pmax";
 static const char __pyx_k_pmin[] = "pmin";
 static const char __pyx_k_spec[] = "__spec__";
 static const char __pyx_k_test[] = "__test__";
+static const char __pyx_k_wbin[] = "wbin";
 static const char __pyx_k_year[] = "year";
 static const char __pyx_k_camid[] = "camid";
 static const char __pyx_k_chiph[] = "chiph";
 static const char __pyx_k_chipw[] = "chipw";
 static const char __pyx_k_error[] = "error: ";
+static const char __pyx_k_modes[] = "modes";
 static const char __pyx_k_month[] = "month";
 static const char __pyx_k_numpy[] = "numpy";
 static const char __pyx_k_print[] = "print";
@@ -2200,6 +2225,7 @@ static const char __pyx_k_numModes[] = "numModes";
 static const char __pyx_k_qualname[] = "__qualname__";
 static const char __pyx_k_set_name[] = "__set_name__";
 static const char __pyx_k_stderror[] = "stderror";
+static const char __pyx_k_strerror[] = "strerror";
 static const char __pyx_k_warnings[] = "warnings";
 static const char __pyx_k_CAM_8BITS[] = "CAM_8BITS";
 static const char __pyx_k_CAM_COLOR[] = "CAM_COLOR";
@@ -2220,6 +2246,7 @@ static const char __pyx_k_CONTROL_WBG[] = "CONTROL_WBG";
 static const char __pyx_k_CONTROL_WBR[] = "CONTROL_WBR";
 static const char __pyx_k_CloseQHYCCD[] = "CloseQHYCCD";
 static const char __pyx_k_DefaultGain[] = "DefaultGain";
+static const char __pyx_k_GetBinModes[] = "GetBinModes";
 static const char __pyx_k_GetQHYCCDId[] = "GetQHYCCDId";
 static const char __pyx_k_ImportError[] = "ImportError";
 static const char __pyx_k_CAM_HUMIDITY[] = "CAM_HUMIDITY";
@@ -2233,8 +2260,11 @@ static const char __pyx_k_initializing[] = "_initializing";
 static const char __pyx_k_CAM_VIEW_MODE[] = "CAM_VIEW_MODE";
 static const char __pyx_k_CONTROL_GAMMA[] = "CONTROL_GAMMA";
 static const char __pyx_k_CONTROL_SPEED[] = "CONTROL_SPEED";
+static const char __pyx_k_ClocksPerLine[] = "ClocksPerLine";
 static const char __pyx_k_DefaultOffset[] = "DefaultOffset";
 static const char __pyx_k_GetQHYCCDType[] = "GetQHYCCDType";
+static const char __pyx_k_LinePeriod_ns[] = "LinePeriod_ns";
+static const char __pyx_k_LinesPerFrame[] = "LinesPerFrame";
 static const char __pyx_k_class_getitem[] = "__class_getitem__";
 static const char __pyx_k_init_subclass[] = "__init_subclass__";
 static const char __pyx_k_CAM_BIN1X1MODE[] = "CAM_BIN1X1MODE";
@@ -2245,11 +2275,15 @@ static const char __pyx_k_CONTROL_COOLER[] = "CONTROL_COOLER";
 static const char __pyx_k_CONTROL_CURPWM[] = "CONTROL_CURPWM";
 static const char __pyx_k_CONTROL_MAX_ID[] = "CONTROL_MAX_ID";
 static const char __pyx_k_CONTROL_OFFSET[] = "CONTROL_OFFSET";
+static const char __pyx_k_FramePeriod_us[] = "FramePeriod_us";
 static const char __pyx_k_GetQHYCCDModel[] = "GetQHYCCDModel";
 static const char __pyx_k_GetQHYCCDParam[] = "GetQHYCCDParam";
+static const char __pyx_k_PixelPeriod_ps[] = "PixelPeriod_ps";
 static const char __pyx_k_ScreenStretchB[] = "ScreenStretchB";
 static const char __pyx_k_ScreenStretchW[] = "ScreenStretchW";
 static const char __pyx_k_SetQHYCCDParam[] = "SetQHYCCDParam";
+static const char __pyx_k_StopQHYCCDLive[] = "StopQHYCCDLive";
+static const char __pyx_k_BeginQHYCCDLive[] = "BeginQHYCCDLive";
 static const char __pyx_k_CONTROL_CFWPORT[] = "CONTROL_CFWPORT";
 static const char __pyx_k_CONTROL_CURTEMP[] = "CONTROL_CURTEMP";
 static const char __pyx_k_CONTROL_ST4PORT[] = "CONTROL_ST4PORT";
@@ -2259,16 +2293,21 @@ static const char __pyx_k_CONTROL_CONTRAST[] = "CONTROL_CONTRAST";
 static const char __pyx_k_CONTROL_EXPOSURE[] = "CONTROL_EXPOSURE";
 static const char __pyx_k_CONTROL_MANULPWM[] = "CONTROL_MANULPWM";
 static const char __pyx_k_IS_EXPOSING_DONE[] = "IS_EXPOSING_DONE";
+static const char __pyx_k_SetQHYCCDBinMode[] = "SetQHYCCDBinMode";
 static const char __pyx_k_CAM_LIVEVIDEOMODE[] = "CAM_LIVEVIDEOMODE";
 static const char __pyx_k_GetQHYCCDChipInfo[] = "GetQHYCCDChipInfo";
 static const char __pyx_k_GetQHYCCDReadMode[] = "GetQHYCCDReadMode";
+static const char __pyx_k_SetQHYCCDBitsMode[] = "SetQHYCCDBitsMode";
 static const char __pyx_k_SetQHYCCDReadMode[] = "SetQHYCCDReadMode";
+static const char __pyx_k_ActualExposureTime[] = "ActualExposureTime";
 static const char __pyx_k_CONTROL_BRIGHTNESS[] = "CONTROL_BRIGHTNESS";
 static const char __pyx_k_CONTROL_ROWNOISERE[] = "CONTROL_ROWNOISERE";
 static const char __pyx_k_CONTROL_USBTRAFFIC[] = "CONTROL_USBTRAFFIC";
+static const char __pyx_k_GetQHYCCDLiveFrame[] = "GetQHYCCDLiveFrame";
 static const char __pyx_k_GetQHYCCDMemLength[] = "GetQHYCCDMemLength";
 static const char __pyx_k_InitQHYCCDResource[] = "InitQHYCCDResource";
 static const char __pyx_k_cline_in_traceback[] = "cline_in_traceback";
+static const char __pyx_k_isLongExposureMode[] = "isLongExposureMode";
 static const char __pyx_k_CAM_SINGLEFRAMEMODE[] = "CAM_SINGLEFRAMEMODE";
 static const char __pyx_k_CONTROL_CFWSLOTSNUM[] = "CONTROL_CFWSLOTSNUM";
 static const char __pyx_k_CONTROL_TRANSFERBIT[] = "CONTROL_TRANSFERBIT";
@@ -2307,6 +2346,7 @@ static const char __pyx_k_GetQHYCCDNumberOfReadModes[] = "GetQHYCCDNumberOfReadM
 static const char __pyx_k_GetQHYCCDReadModeResolution[] = "GetQHYCCDReadModeResolution";
 static const char __pyx_k_CAM_IGNOREOVERSCAN_INTERFACE[] = "CAM_IGNOREOVERSCAN_INTERFACE";
 static const char __pyx_k_CAM_TECOVERPROTECT_INTERFACE[] = "CAM_TECOVERPROTECT_INTERFACE";
+static const char __pyx_k_GetQHYCCDPreciseExposureInfo[] = "GetQHYCCDPreciseExposureInfo";
 static const char __pyx_k_CancelQHYCCDExposingAndReadout[] = "CancelQHYCCDExposingAndReadout";
 static const char __pyx_k_CAM_USBREADOUTSLOWEST_INTERFACE[] = "CAM_USBREADOUTSLOWEST_INTERFACE";
 static const char __pyx_k_CONTROL_SensorChamberCycle_PUMP[] = "CONTROL_SensorChamberCycle_PUMP";
@@ -2320,6 +2360,8 @@ static const char __pyx_k_numpy_core_umath_failed_to_impor[] = "numpy.core.umath
 static const char __pyx_k_Format_string_allocated_too_shor_2[] = "Format string allocated too short.";
 #if !CYTHON_COMPILING_IN_LIMITED_API
 static PyObject *__pyx_kp_u_;
+static PyObject *__pyx_n_s_ActualExposureTime;
+static PyObject *__pyx_n_s_BeginQHYCCDLive;
 static PyObject *__pyx_n_s_CAM_16BITS;
 static PyObject *__pyx_n_s_CAM_8BITS;
 static PyObject *__pyx_n_s_CAM_BIN1X1MODE;
@@ -2377,6 +2419,7 @@ static PyObject *__pyx_n_s_CONTROL_WBG;
 static PyObject *__pyx_n_s_CONTROL_WBR;
 static PyObject *__pyx_n_s_CancelQHYCCDExposing;
 static PyObject *__pyx_n_s_CancelQHYCCDExposingAndReadout;
+static PyObject *__pyx_n_s_ClocksPerLine;
 static PyObject *__pyx_n_s_CloseQHYCCD;
 static PyObject *__pyx_n_s_DDR_BUFFER_CAPACITY;
 static PyObject *__pyx_n_s_DDR_BUFFER_READ_THRESHOLD;
@@ -2385,16 +2428,20 @@ static PyObject *__pyx_n_s_DefaultOffset;
 static PyObject *__pyx_n_s_ExpQHYCCDSingleFrame;
 static PyObject *__pyx_kp_u_Format_string_allocated_too_shor;
 static PyObject *__pyx_kp_u_Format_string_allocated_too_shor_2;
+static PyObject *__pyx_n_s_FramePeriod_us;
+static PyObject *__pyx_n_s_GetBinModes;
 static PyObject *__pyx_n_s_GetQHYCCDChipInfo;
 static PyObject *__pyx_n_s_GetQHYCCDEffectiveArea;
 static PyObject *__pyx_n_s_GetQHYCCDExposureRemaining;
 static PyObject *__pyx_n_s_GetQHYCCDId;
+static PyObject *__pyx_n_s_GetQHYCCDLiveFrame;
 static PyObject *__pyx_n_s_GetQHYCCDMemLength;
 static PyObject *__pyx_n_s_GetQHYCCDModel;
 static PyObject *__pyx_n_s_GetQHYCCDNumberOfReadModes;
 static PyObject *__pyx_n_s_GetQHYCCDOverScanArea;
 static PyObject *__pyx_n_s_GetQHYCCDParam;
 static PyObject *__pyx_n_s_GetQHYCCDParamMinMaxStep;
+static PyObject *__pyx_n_s_GetQHYCCDPreciseExposureInfo;
 static PyObject *__pyx_n_s_GetQHYCCDReadMode;
 static PyObject *__pyx_n_s_GetQHYCCDReadModeName;
 static PyObject *__pyx_n_s_GetQHYCCDReadModeResolution;
@@ -2406,11 +2453,14 @@ static PyObject *__pyx_n_s_ImportError;
 static PyObject *__pyx_n_s_InitQHYCCD;
 static PyObject *__pyx_n_s_InitQHYCCDResource;
 static PyObject *__pyx_n_s_IsQHYCCDControlAvailable;
+static PyObject *__pyx_n_s_LinePeriod_ns;
+static PyObject *__pyx_n_s_LinesPerFrame;
 static PyObject *__pyx_kp_u_Non_native_byte_order_not_suppor;
 static PyObject *__pyx_n_s_OSError;
 static PyObject *__pyx_n_s_OpenQHYCCD;
 static PyObject *__pyx_n_s_OutputDataActualBits;
 static PyObject *__pyx_n_s_OutputDataAlignment;
+static PyObject *__pyx_n_s_PixelPeriod_ps;
 static PyObject *__pyx_n_s_QHYCCD_3A_AUTOBALANCE;
 static PyObject *__pyx_n_s_QHYCCD_3A_AUTOEXPOSURE;
 static PyObject *__pyx_n_s_QHYCCD_3A_AUTOFOCUS;
@@ -2422,15 +2472,20 @@ static PyObject *__pyx_n_s_RuntimeError;
 static PyObject *__pyx_n_s_ScanQHYCCD;
 static PyObject *__pyx_n_s_ScreenStretchB;
 static PyObject *__pyx_n_s_ScreenStretchW;
+static PyObject *__pyx_n_s_SetQHYCCDBinMode;
+static PyObject *__pyx_n_s_SetQHYCCDBitsMode;
 static PyObject *__pyx_n_s_SetQHYCCDParam;
 static PyObject *__pyx_n_s_SetQHYCCDReadMode;
 static PyObject *__pyx_n_s_SetQHYCCDResolution;
 static PyObject *__pyx_n_s_SetQHYCCDStreamMode;
+static PyObject *__pyx_n_s_StopQHYCCDLive;
 static PyObject *__pyx_n_s_ValueError;
 static PyObject *__pyx_kp_u__2;
-static PyObject *__pyx_n_s__66;
 static PyObject *__pyx_n_s__8;
+static PyObject *__pyx_n_s__82;
 static PyObject *__pyx_n_s_all;
+static PyObject *__pyx_n_s_binh;
+static PyObject *__pyx_n_s_binw;
 static PyObject *__pyx_n_s_bpp;
 static PyObject *__pyx_n_s_cam;
 static PyObject *__pyx_n_s_camid;
@@ -2448,6 +2503,7 @@ static PyObject *__pyx_n_s_doc;
 static PyObject *__pyx_kp_s_error;
 static PyObject *__pyx_n_s_h;
 static PyObject *__pyx_n_s_hasHardwareFrameCounter;
+static PyObject *__pyx_n_s_hbin;
 static PyObject *__pyx_n_s_height;
 static PyObject *__pyx_n_s_i;
 static PyObject *__pyx_n_s_imageh;
@@ -2456,11 +2512,13 @@ static PyObject *__pyx_n_s_imgdata;
 static PyObject *__pyx_n_s_import;
 static PyObject *__pyx_n_s_init_subclass;
 static PyObject *__pyx_n_s_initializing;
+static PyObject *__pyx_n_s_isLongExposureMode;
 static PyObject *__pyx_n_s_main;
 static PyObject *__pyx_n_s_memlength;
 static PyObject *__pyx_n_s_metaclass;
 static PyObject *__pyx_n_s_mode;
 static PyObject *__pyx_n_s_modeNumber;
+static PyObject *__pyx_n_s_modes;
 static PyObject *__pyx_n_s_module;
 static PyObject *__pyx_n_s_month;
 static PyObject *__pyx_n_s_name;
@@ -2488,6 +2546,7 @@ static PyObject *__pyx_n_s_spec;
 static PyObject *__pyx_n_s_startX;
 static PyObject *__pyx_n_s_startY;
 static PyObject *__pyx_n_s_stderror;
+static PyObject *__pyx_n_s_strerror;
 static PyObject *__pyx_n_s_subday;
 static PyObject *__pyx_n_s_super;
 static PyObject *__pyx_n_s_sys;
@@ -2496,6 +2555,7 @@ static PyObject *__pyx_kp_u_unknown_dtype_code_in_numpy_pxd;
 static PyObject *__pyx_n_s_value;
 static PyObject *__pyx_n_s_w;
 static PyObject *__pyx_n_s_warnings;
+static PyObject *__pyx_n_s_wbin;
 static PyObject *__pyx_n_s_width;
 static PyObject *__pyx_n_s_x;
 static PyObject *__pyx_n_s_xsize;
@@ -2523,18 +2583,30 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_30CancelQHYCCDExposing(CYTHON_UNUSED
 static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_32CancelQHYCCDExposingAndReadout(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
 static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_34GetQHYCCDSingleFrame(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
 static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_36GetQHYCCDMemLength(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_38SetQHYCCDResolution(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_x, PyObject *__pyx_v_y, PyObject *__pyx_v_xsize, PyObject *__pyx_v_ysize); /* proto */
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_40GetQHYCCDExposureRemaining(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_42GetQHYCCDType(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_44GetQHYCCDSDKVersion(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_46GetQHYCCDNumberOfReadModes(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_48GetQHYCCDReadModeResolution(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_modeNumber); /* proto */
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_50GetQHYCCDReadModeName(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_modeNumber); /* proto */
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_52GetQHYCCDReadMode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_54SetQHYCCDReadMode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_modeNumber); /* proto */
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_56GetQHYCCDOverScanArea(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_58GetQHYCCDEffectiveArea(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_38SetQHYCCDBinMode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_wbin, PyObject *__pyx_v_hbin); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_40SetQHYCCDResolution(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_x, PyObject *__pyx_v_y, PyObject *__pyx_v_xsize, PyObject *__pyx_v_ysize); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_42GetQHYCCDExposureRemaining(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_44GetQHYCCDType(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_46GetQHYCCDSDKVersion(CYTHON_UNUSED PyObject *__pyx_self); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_48GetQHYCCDNumberOfReadModes(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_50GetQHYCCDReadModeResolution(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_modeNumber); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_52GetQHYCCDReadModeName(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_modeNumber); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_54GetQHYCCDReadMode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_56SetQHYCCDReadMode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_modeNumber); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_58GetQHYCCDOverScanArea(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_60GetQHYCCDEffectiveArea(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_62SetQHYCCDBinMode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_binw, PyObject *__pyx_v_binh); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_64BeginQHYCCDLive(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_66StopQHYCCDLive(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_68GetQHYCCDLiveFrame(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_70GetQHYCCDPreciseExposureInfo(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_72SetQHYCCDBitsMode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_value); /* proto */
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_74GetBinModes(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam); /* proto */
 #if !CYTHON_COMPILING_IN_LIMITED_API
+static PyObject *__pyx_int_1;
+static PyObject *__pyx_int_2;
+static PyObject *__pyx_int_3;
+static PyObject *__pyx_int_4;
 #endif
 #if !CYTHON_COMPILING_IN_LIMITED_API
 static PyObject *__pyx_tuple__3;
@@ -2569,6 +2641,14 @@ static PyObject *__pyx_tuple__58;
 static PyObject *__pyx_tuple__60;
 static PyObject *__pyx_tuple__62;
 static PyObject *__pyx_tuple__64;
+static PyObject *__pyx_tuple__66;
+static PyObject *__pyx_tuple__68;
+static PyObject *__pyx_tuple__70;
+static PyObject *__pyx_tuple__72;
+static PyObject *__pyx_tuple__74;
+static PyObject *__pyx_tuple__76;
+static PyObject *__pyx_tuple__78;
+static PyObject *__pyx_tuple__80;
 static PyObject *__pyx_codeobj__9;
 static PyObject *__pyx_codeobj__10;
 static PyObject *__pyx_codeobj__11;
@@ -2599,6 +2679,14 @@ static PyObject *__pyx_codeobj__59;
 static PyObject *__pyx_codeobj__61;
 static PyObject *__pyx_codeobj__63;
 static PyObject *__pyx_codeobj__65;
+static PyObject *__pyx_codeobj__67;
+static PyObject *__pyx_codeobj__69;
+static PyObject *__pyx_codeobj__71;
+static PyObject *__pyx_codeobj__73;
+static PyObject *__pyx_codeobj__75;
+static PyObject *__pyx_codeobj__77;
+static PyObject *__pyx_codeobj__79;
+static PyObject *__pyx_codeobj__81;
 #endif
 /* #### Code section: late_includes ### */
 /* #### Code section: module_state ### */
@@ -2623,6 +2711,8 @@ typedef struct {
   PyTypeObject *__pyx_ptype_5numpy_ndarray;
   PyTypeObject *__pyx_ptype_5numpy_ufunc;
   PyObject *__pyx_kp_u_;
+  PyObject *__pyx_n_s_ActualExposureTime;
+  PyObject *__pyx_n_s_BeginQHYCCDLive;
   PyObject *__pyx_n_s_CAM_16BITS;
   PyObject *__pyx_n_s_CAM_8BITS;
   PyObject *__pyx_n_s_CAM_BIN1X1MODE;
@@ -2680,6 +2770,7 @@ typedef struct {
   PyObject *__pyx_n_s_CONTROL_WBR;
   PyObject *__pyx_n_s_CancelQHYCCDExposing;
   PyObject *__pyx_n_s_CancelQHYCCDExposingAndReadout;
+  PyObject *__pyx_n_s_ClocksPerLine;
   PyObject *__pyx_n_s_CloseQHYCCD;
   PyObject *__pyx_n_s_DDR_BUFFER_CAPACITY;
   PyObject *__pyx_n_s_DDR_BUFFER_READ_THRESHOLD;
@@ -2688,16 +2779,20 @@ typedef struct {
   PyObject *__pyx_n_s_ExpQHYCCDSingleFrame;
   PyObject *__pyx_kp_u_Format_string_allocated_too_shor;
   PyObject *__pyx_kp_u_Format_string_allocated_too_shor_2;
+  PyObject *__pyx_n_s_FramePeriod_us;
+  PyObject *__pyx_n_s_GetBinModes;
   PyObject *__pyx_n_s_GetQHYCCDChipInfo;
   PyObject *__pyx_n_s_GetQHYCCDEffectiveArea;
   PyObject *__pyx_n_s_GetQHYCCDExposureRemaining;
   PyObject *__pyx_n_s_GetQHYCCDId;
+  PyObject *__pyx_n_s_GetQHYCCDLiveFrame;
   PyObject *__pyx_n_s_GetQHYCCDMemLength;
   PyObject *__pyx_n_s_GetQHYCCDModel;
   PyObject *__pyx_n_s_GetQHYCCDNumberOfReadModes;
   PyObject *__pyx_n_s_GetQHYCCDOverScanArea;
   PyObject *__pyx_n_s_GetQHYCCDParam;
   PyObject *__pyx_n_s_GetQHYCCDParamMinMaxStep;
+  PyObject *__pyx_n_s_GetQHYCCDPreciseExposureInfo;
   PyObject *__pyx_n_s_GetQHYCCDReadMode;
   PyObject *__pyx_n_s_GetQHYCCDReadModeName;
   PyObject *__pyx_n_s_GetQHYCCDReadModeResolution;
@@ -2709,11 +2804,14 @@ typedef struct {
   PyObject *__pyx_n_s_InitQHYCCD;
   PyObject *__pyx_n_s_InitQHYCCDResource;
   PyObject *__pyx_n_s_IsQHYCCDControlAvailable;
+  PyObject *__pyx_n_s_LinePeriod_ns;
+  PyObject *__pyx_n_s_LinesPerFrame;
   PyObject *__pyx_kp_u_Non_native_byte_order_not_suppor;
   PyObject *__pyx_n_s_OSError;
   PyObject *__pyx_n_s_OpenQHYCCD;
   PyObject *__pyx_n_s_OutputDataActualBits;
   PyObject *__pyx_n_s_OutputDataAlignment;
+  PyObject *__pyx_n_s_PixelPeriod_ps;
   PyObject *__pyx_n_s_QHYCCD_3A_AUTOBALANCE;
   PyObject *__pyx_n_s_QHYCCD_3A_AUTOEXPOSURE;
   PyObject *__pyx_n_s_QHYCCD_3A_AUTOFOCUS;
@@ -2725,15 +2823,20 @@ typedef struct {
   PyObject *__pyx_n_s_ScanQHYCCD;
   PyObject *__pyx_n_s_ScreenStretchB;
   PyObject *__pyx_n_s_ScreenStretchW;
+  PyObject *__pyx_n_s_SetQHYCCDBinMode;
+  PyObject *__pyx_n_s_SetQHYCCDBitsMode;
   PyObject *__pyx_n_s_SetQHYCCDParam;
   PyObject *__pyx_n_s_SetQHYCCDReadMode;
   PyObject *__pyx_n_s_SetQHYCCDResolution;
   PyObject *__pyx_n_s_SetQHYCCDStreamMode;
+  PyObject *__pyx_n_s_StopQHYCCDLive;
   PyObject *__pyx_n_s_ValueError;
   PyObject *__pyx_kp_u__2;
-  PyObject *__pyx_n_s__66;
   PyObject *__pyx_n_s__8;
+  PyObject *__pyx_n_s__82;
   PyObject *__pyx_n_s_all;
+  PyObject *__pyx_n_s_binh;
+  PyObject *__pyx_n_s_binw;
   PyObject *__pyx_n_s_bpp;
   PyObject *__pyx_n_s_cam;
   PyObject *__pyx_n_s_camid;
@@ -2751,6 +2854,7 @@ typedef struct {
   PyObject *__pyx_kp_s_error;
   PyObject *__pyx_n_s_h;
   PyObject *__pyx_n_s_hasHardwareFrameCounter;
+  PyObject *__pyx_n_s_hbin;
   PyObject *__pyx_n_s_height;
   PyObject *__pyx_n_s_i;
   PyObject *__pyx_n_s_imageh;
@@ -2759,11 +2863,13 @@ typedef struct {
   PyObject *__pyx_n_s_import;
   PyObject *__pyx_n_s_init_subclass;
   PyObject *__pyx_n_s_initializing;
+  PyObject *__pyx_n_s_isLongExposureMode;
   PyObject *__pyx_n_s_main;
   PyObject *__pyx_n_s_memlength;
   PyObject *__pyx_n_s_metaclass;
   PyObject *__pyx_n_s_mode;
   PyObject *__pyx_n_s_modeNumber;
+  PyObject *__pyx_n_s_modes;
   PyObject *__pyx_n_s_module;
   PyObject *__pyx_n_s_month;
   PyObject *__pyx_n_s_name;
@@ -2791,6 +2897,7 @@ typedef struct {
   PyObject *__pyx_n_s_startX;
   PyObject *__pyx_n_s_startY;
   PyObject *__pyx_n_s_stderror;
+  PyObject *__pyx_n_s_strerror;
   PyObject *__pyx_n_s_subday;
   PyObject *__pyx_n_s_super;
   PyObject *__pyx_n_s_sys;
@@ -2799,12 +2906,17 @@ typedef struct {
   PyObject *__pyx_n_s_value;
   PyObject *__pyx_n_s_w;
   PyObject *__pyx_n_s_warnings;
+  PyObject *__pyx_n_s_wbin;
   PyObject *__pyx_n_s_width;
   PyObject *__pyx_n_s_x;
   PyObject *__pyx_n_s_xsize;
   PyObject *__pyx_n_s_y;
   PyObject *__pyx_n_s_year;
   PyObject *__pyx_n_s_ysize;
+  PyObject *__pyx_int_1;
+  PyObject *__pyx_int_2;
+  PyObject *__pyx_int_3;
+  PyObject *__pyx_int_4;
   PyObject *__pyx_tuple__3;
   PyObject *__pyx_tuple__4;
   PyObject *__pyx_tuple__5;
@@ -2837,6 +2949,14 @@ typedef struct {
   PyObject *__pyx_tuple__60;
   PyObject *__pyx_tuple__62;
   PyObject *__pyx_tuple__64;
+  PyObject *__pyx_tuple__66;
+  PyObject *__pyx_tuple__68;
+  PyObject *__pyx_tuple__70;
+  PyObject *__pyx_tuple__72;
+  PyObject *__pyx_tuple__74;
+  PyObject *__pyx_tuple__76;
+  PyObject *__pyx_tuple__78;
+  PyObject *__pyx_tuple__80;
   PyObject *__pyx_codeobj__9;
   PyObject *__pyx_codeobj__10;
   PyObject *__pyx_codeobj__11;
@@ -2867,6 +2987,14 @@ typedef struct {
   PyObject *__pyx_codeobj__61;
   PyObject *__pyx_codeobj__63;
   PyObject *__pyx_codeobj__65;
+  PyObject *__pyx_codeobj__67;
+  PyObject *__pyx_codeobj__69;
+  PyObject *__pyx_codeobj__71;
+  PyObject *__pyx_codeobj__73;
+  PyObject *__pyx_codeobj__75;
+  PyObject *__pyx_codeobj__77;
+  PyObject *__pyx_codeobj__79;
+  PyObject *__pyx_codeobj__81;
 } __pyx_mstate;
 
 #ifdef __cplusplus
@@ -2907,6 +3035,8 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_ptype_5numpy_ndarray);
   Py_CLEAR(clear_module_state->__pyx_ptype_5numpy_ufunc);
   Py_CLEAR(clear_module_state->__pyx_kp_u_);
+  Py_CLEAR(clear_module_state->__pyx_n_s_ActualExposureTime);
+  Py_CLEAR(clear_module_state->__pyx_n_s_BeginQHYCCDLive);
   Py_CLEAR(clear_module_state->__pyx_n_s_CAM_16BITS);
   Py_CLEAR(clear_module_state->__pyx_n_s_CAM_8BITS);
   Py_CLEAR(clear_module_state->__pyx_n_s_CAM_BIN1X1MODE);
@@ -2964,6 +3094,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_CONTROL_WBR);
   Py_CLEAR(clear_module_state->__pyx_n_s_CancelQHYCCDExposing);
   Py_CLEAR(clear_module_state->__pyx_n_s_CancelQHYCCDExposingAndReadout);
+  Py_CLEAR(clear_module_state->__pyx_n_s_ClocksPerLine);
   Py_CLEAR(clear_module_state->__pyx_n_s_CloseQHYCCD);
   Py_CLEAR(clear_module_state->__pyx_n_s_DDR_BUFFER_CAPACITY);
   Py_CLEAR(clear_module_state->__pyx_n_s_DDR_BUFFER_READ_THRESHOLD);
@@ -2972,16 +3103,20 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_ExpQHYCCDSingleFrame);
   Py_CLEAR(clear_module_state->__pyx_kp_u_Format_string_allocated_too_shor);
   Py_CLEAR(clear_module_state->__pyx_kp_u_Format_string_allocated_too_shor_2);
+  Py_CLEAR(clear_module_state->__pyx_n_s_FramePeriod_us);
+  Py_CLEAR(clear_module_state->__pyx_n_s_GetBinModes);
   Py_CLEAR(clear_module_state->__pyx_n_s_GetQHYCCDChipInfo);
   Py_CLEAR(clear_module_state->__pyx_n_s_GetQHYCCDEffectiveArea);
   Py_CLEAR(clear_module_state->__pyx_n_s_GetQHYCCDExposureRemaining);
   Py_CLEAR(clear_module_state->__pyx_n_s_GetQHYCCDId);
+  Py_CLEAR(clear_module_state->__pyx_n_s_GetQHYCCDLiveFrame);
   Py_CLEAR(clear_module_state->__pyx_n_s_GetQHYCCDMemLength);
   Py_CLEAR(clear_module_state->__pyx_n_s_GetQHYCCDModel);
   Py_CLEAR(clear_module_state->__pyx_n_s_GetQHYCCDNumberOfReadModes);
   Py_CLEAR(clear_module_state->__pyx_n_s_GetQHYCCDOverScanArea);
   Py_CLEAR(clear_module_state->__pyx_n_s_GetQHYCCDParam);
   Py_CLEAR(clear_module_state->__pyx_n_s_GetQHYCCDParamMinMaxStep);
+  Py_CLEAR(clear_module_state->__pyx_n_s_GetQHYCCDPreciseExposureInfo);
   Py_CLEAR(clear_module_state->__pyx_n_s_GetQHYCCDReadMode);
   Py_CLEAR(clear_module_state->__pyx_n_s_GetQHYCCDReadModeName);
   Py_CLEAR(clear_module_state->__pyx_n_s_GetQHYCCDReadModeResolution);
@@ -2993,11 +3128,14 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_InitQHYCCD);
   Py_CLEAR(clear_module_state->__pyx_n_s_InitQHYCCDResource);
   Py_CLEAR(clear_module_state->__pyx_n_s_IsQHYCCDControlAvailable);
+  Py_CLEAR(clear_module_state->__pyx_n_s_LinePeriod_ns);
+  Py_CLEAR(clear_module_state->__pyx_n_s_LinesPerFrame);
   Py_CLEAR(clear_module_state->__pyx_kp_u_Non_native_byte_order_not_suppor);
   Py_CLEAR(clear_module_state->__pyx_n_s_OSError);
   Py_CLEAR(clear_module_state->__pyx_n_s_OpenQHYCCD);
   Py_CLEAR(clear_module_state->__pyx_n_s_OutputDataActualBits);
   Py_CLEAR(clear_module_state->__pyx_n_s_OutputDataAlignment);
+  Py_CLEAR(clear_module_state->__pyx_n_s_PixelPeriod_ps);
   Py_CLEAR(clear_module_state->__pyx_n_s_QHYCCD_3A_AUTOBALANCE);
   Py_CLEAR(clear_module_state->__pyx_n_s_QHYCCD_3A_AUTOEXPOSURE);
   Py_CLEAR(clear_module_state->__pyx_n_s_QHYCCD_3A_AUTOFOCUS);
@@ -3009,15 +3147,20 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_ScanQHYCCD);
   Py_CLEAR(clear_module_state->__pyx_n_s_ScreenStretchB);
   Py_CLEAR(clear_module_state->__pyx_n_s_ScreenStretchW);
+  Py_CLEAR(clear_module_state->__pyx_n_s_SetQHYCCDBinMode);
+  Py_CLEAR(clear_module_state->__pyx_n_s_SetQHYCCDBitsMode);
   Py_CLEAR(clear_module_state->__pyx_n_s_SetQHYCCDParam);
   Py_CLEAR(clear_module_state->__pyx_n_s_SetQHYCCDReadMode);
   Py_CLEAR(clear_module_state->__pyx_n_s_SetQHYCCDResolution);
   Py_CLEAR(clear_module_state->__pyx_n_s_SetQHYCCDStreamMode);
+  Py_CLEAR(clear_module_state->__pyx_n_s_StopQHYCCDLive);
   Py_CLEAR(clear_module_state->__pyx_n_s_ValueError);
   Py_CLEAR(clear_module_state->__pyx_kp_u__2);
-  Py_CLEAR(clear_module_state->__pyx_n_s__66);
   Py_CLEAR(clear_module_state->__pyx_n_s__8);
+  Py_CLEAR(clear_module_state->__pyx_n_s__82);
   Py_CLEAR(clear_module_state->__pyx_n_s_all);
+  Py_CLEAR(clear_module_state->__pyx_n_s_binh);
+  Py_CLEAR(clear_module_state->__pyx_n_s_binw);
   Py_CLEAR(clear_module_state->__pyx_n_s_bpp);
   Py_CLEAR(clear_module_state->__pyx_n_s_cam);
   Py_CLEAR(clear_module_state->__pyx_n_s_camid);
@@ -3035,6 +3178,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_kp_s_error);
   Py_CLEAR(clear_module_state->__pyx_n_s_h);
   Py_CLEAR(clear_module_state->__pyx_n_s_hasHardwareFrameCounter);
+  Py_CLEAR(clear_module_state->__pyx_n_s_hbin);
   Py_CLEAR(clear_module_state->__pyx_n_s_height);
   Py_CLEAR(clear_module_state->__pyx_n_s_i);
   Py_CLEAR(clear_module_state->__pyx_n_s_imageh);
@@ -3043,11 +3187,13 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_import);
   Py_CLEAR(clear_module_state->__pyx_n_s_init_subclass);
   Py_CLEAR(clear_module_state->__pyx_n_s_initializing);
+  Py_CLEAR(clear_module_state->__pyx_n_s_isLongExposureMode);
   Py_CLEAR(clear_module_state->__pyx_n_s_main);
   Py_CLEAR(clear_module_state->__pyx_n_s_memlength);
   Py_CLEAR(clear_module_state->__pyx_n_s_metaclass);
   Py_CLEAR(clear_module_state->__pyx_n_s_mode);
   Py_CLEAR(clear_module_state->__pyx_n_s_modeNumber);
+  Py_CLEAR(clear_module_state->__pyx_n_s_modes);
   Py_CLEAR(clear_module_state->__pyx_n_s_module);
   Py_CLEAR(clear_module_state->__pyx_n_s_month);
   Py_CLEAR(clear_module_state->__pyx_n_s_name);
@@ -3075,6 +3221,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_startX);
   Py_CLEAR(clear_module_state->__pyx_n_s_startY);
   Py_CLEAR(clear_module_state->__pyx_n_s_stderror);
+  Py_CLEAR(clear_module_state->__pyx_n_s_strerror);
   Py_CLEAR(clear_module_state->__pyx_n_s_subday);
   Py_CLEAR(clear_module_state->__pyx_n_s_super);
   Py_CLEAR(clear_module_state->__pyx_n_s_sys);
@@ -3083,12 +3230,17 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_value);
   Py_CLEAR(clear_module_state->__pyx_n_s_w);
   Py_CLEAR(clear_module_state->__pyx_n_s_warnings);
+  Py_CLEAR(clear_module_state->__pyx_n_s_wbin);
   Py_CLEAR(clear_module_state->__pyx_n_s_width);
   Py_CLEAR(clear_module_state->__pyx_n_s_x);
   Py_CLEAR(clear_module_state->__pyx_n_s_xsize);
   Py_CLEAR(clear_module_state->__pyx_n_s_y);
   Py_CLEAR(clear_module_state->__pyx_n_s_year);
   Py_CLEAR(clear_module_state->__pyx_n_s_ysize);
+  Py_CLEAR(clear_module_state->__pyx_int_1);
+  Py_CLEAR(clear_module_state->__pyx_int_2);
+  Py_CLEAR(clear_module_state->__pyx_int_3);
+  Py_CLEAR(clear_module_state->__pyx_int_4);
   Py_CLEAR(clear_module_state->__pyx_tuple__3);
   Py_CLEAR(clear_module_state->__pyx_tuple__4);
   Py_CLEAR(clear_module_state->__pyx_tuple__5);
@@ -3121,6 +3273,14 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_tuple__60);
   Py_CLEAR(clear_module_state->__pyx_tuple__62);
   Py_CLEAR(clear_module_state->__pyx_tuple__64);
+  Py_CLEAR(clear_module_state->__pyx_tuple__66);
+  Py_CLEAR(clear_module_state->__pyx_tuple__68);
+  Py_CLEAR(clear_module_state->__pyx_tuple__70);
+  Py_CLEAR(clear_module_state->__pyx_tuple__72);
+  Py_CLEAR(clear_module_state->__pyx_tuple__74);
+  Py_CLEAR(clear_module_state->__pyx_tuple__76);
+  Py_CLEAR(clear_module_state->__pyx_tuple__78);
+  Py_CLEAR(clear_module_state->__pyx_tuple__80);
   Py_CLEAR(clear_module_state->__pyx_codeobj__9);
   Py_CLEAR(clear_module_state->__pyx_codeobj__10);
   Py_CLEAR(clear_module_state->__pyx_codeobj__11);
@@ -3151,6 +3311,14 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_codeobj__61);
   Py_CLEAR(clear_module_state->__pyx_codeobj__63);
   Py_CLEAR(clear_module_state->__pyx_codeobj__65);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__67);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__69);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__71);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__73);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__75);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__77);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__79);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__81);
   return 0;
 }
 #endif
@@ -3178,6 +3346,8 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_ptype_5numpy_ndarray);
   Py_VISIT(traverse_module_state->__pyx_ptype_5numpy_ufunc);
   Py_VISIT(traverse_module_state->__pyx_kp_u_);
+  Py_VISIT(traverse_module_state->__pyx_n_s_ActualExposureTime);
+  Py_VISIT(traverse_module_state->__pyx_n_s_BeginQHYCCDLive);
   Py_VISIT(traverse_module_state->__pyx_n_s_CAM_16BITS);
   Py_VISIT(traverse_module_state->__pyx_n_s_CAM_8BITS);
   Py_VISIT(traverse_module_state->__pyx_n_s_CAM_BIN1X1MODE);
@@ -3235,6 +3405,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_CONTROL_WBR);
   Py_VISIT(traverse_module_state->__pyx_n_s_CancelQHYCCDExposing);
   Py_VISIT(traverse_module_state->__pyx_n_s_CancelQHYCCDExposingAndReadout);
+  Py_VISIT(traverse_module_state->__pyx_n_s_ClocksPerLine);
   Py_VISIT(traverse_module_state->__pyx_n_s_CloseQHYCCD);
   Py_VISIT(traverse_module_state->__pyx_n_s_DDR_BUFFER_CAPACITY);
   Py_VISIT(traverse_module_state->__pyx_n_s_DDR_BUFFER_READ_THRESHOLD);
@@ -3243,16 +3414,20 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_ExpQHYCCDSingleFrame);
   Py_VISIT(traverse_module_state->__pyx_kp_u_Format_string_allocated_too_shor);
   Py_VISIT(traverse_module_state->__pyx_kp_u_Format_string_allocated_too_shor_2);
+  Py_VISIT(traverse_module_state->__pyx_n_s_FramePeriod_us);
+  Py_VISIT(traverse_module_state->__pyx_n_s_GetBinModes);
   Py_VISIT(traverse_module_state->__pyx_n_s_GetQHYCCDChipInfo);
   Py_VISIT(traverse_module_state->__pyx_n_s_GetQHYCCDEffectiveArea);
   Py_VISIT(traverse_module_state->__pyx_n_s_GetQHYCCDExposureRemaining);
   Py_VISIT(traverse_module_state->__pyx_n_s_GetQHYCCDId);
+  Py_VISIT(traverse_module_state->__pyx_n_s_GetQHYCCDLiveFrame);
   Py_VISIT(traverse_module_state->__pyx_n_s_GetQHYCCDMemLength);
   Py_VISIT(traverse_module_state->__pyx_n_s_GetQHYCCDModel);
   Py_VISIT(traverse_module_state->__pyx_n_s_GetQHYCCDNumberOfReadModes);
   Py_VISIT(traverse_module_state->__pyx_n_s_GetQHYCCDOverScanArea);
   Py_VISIT(traverse_module_state->__pyx_n_s_GetQHYCCDParam);
   Py_VISIT(traverse_module_state->__pyx_n_s_GetQHYCCDParamMinMaxStep);
+  Py_VISIT(traverse_module_state->__pyx_n_s_GetQHYCCDPreciseExposureInfo);
   Py_VISIT(traverse_module_state->__pyx_n_s_GetQHYCCDReadMode);
   Py_VISIT(traverse_module_state->__pyx_n_s_GetQHYCCDReadModeName);
   Py_VISIT(traverse_module_state->__pyx_n_s_GetQHYCCDReadModeResolution);
@@ -3264,11 +3439,14 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_InitQHYCCD);
   Py_VISIT(traverse_module_state->__pyx_n_s_InitQHYCCDResource);
   Py_VISIT(traverse_module_state->__pyx_n_s_IsQHYCCDControlAvailable);
+  Py_VISIT(traverse_module_state->__pyx_n_s_LinePeriod_ns);
+  Py_VISIT(traverse_module_state->__pyx_n_s_LinesPerFrame);
   Py_VISIT(traverse_module_state->__pyx_kp_u_Non_native_byte_order_not_suppor);
   Py_VISIT(traverse_module_state->__pyx_n_s_OSError);
   Py_VISIT(traverse_module_state->__pyx_n_s_OpenQHYCCD);
   Py_VISIT(traverse_module_state->__pyx_n_s_OutputDataActualBits);
   Py_VISIT(traverse_module_state->__pyx_n_s_OutputDataAlignment);
+  Py_VISIT(traverse_module_state->__pyx_n_s_PixelPeriod_ps);
   Py_VISIT(traverse_module_state->__pyx_n_s_QHYCCD_3A_AUTOBALANCE);
   Py_VISIT(traverse_module_state->__pyx_n_s_QHYCCD_3A_AUTOEXPOSURE);
   Py_VISIT(traverse_module_state->__pyx_n_s_QHYCCD_3A_AUTOFOCUS);
@@ -3280,15 +3458,20 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_ScanQHYCCD);
   Py_VISIT(traverse_module_state->__pyx_n_s_ScreenStretchB);
   Py_VISIT(traverse_module_state->__pyx_n_s_ScreenStretchW);
+  Py_VISIT(traverse_module_state->__pyx_n_s_SetQHYCCDBinMode);
+  Py_VISIT(traverse_module_state->__pyx_n_s_SetQHYCCDBitsMode);
   Py_VISIT(traverse_module_state->__pyx_n_s_SetQHYCCDParam);
   Py_VISIT(traverse_module_state->__pyx_n_s_SetQHYCCDReadMode);
   Py_VISIT(traverse_module_state->__pyx_n_s_SetQHYCCDResolution);
   Py_VISIT(traverse_module_state->__pyx_n_s_SetQHYCCDStreamMode);
+  Py_VISIT(traverse_module_state->__pyx_n_s_StopQHYCCDLive);
   Py_VISIT(traverse_module_state->__pyx_n_s_ValueError);
   Py_VISIT(traverse_module_state->__pyx_kp_u__2);
-  Py_VISIT(traverse_module_state->__pyx_n_s__66);
   Py_VISIT(traverse_module_state->__pyx_n_s__8);
+  Py_VISIT(traverse_module_state->__pyx_n_s__82);
   Py_VISIT(traverse_module_state->__pyx_n_s_all);
+  Py_VISIT(traverse_module_state->__pyx_n_s_binh);
+  Py_VISIT(traverse_module_state->__pyx_n_s_binw);
   Py_VISIT(traverse_module_state->__pyx_n_s_bpp);
   Py_VISIT(traverse_module_state->__pyx_n_s_cam);
   Py_VISIT(traverse_module_state->__pyx_n_s_camid);
@@ -3306,6 +3489,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_kp_s_error);
   Py_VISIT(traverse_module_state->__pyx_n_s_h);
   Py_VISIT(traverse_module_state->__pyx_n_s_hasHardwareFrameCounter);
+  Py_VISIT(traverse_module_state->__pyx_n_s_hbin);
   Py_VISIT(traverse_module_state->__pyx_n_s_height);
   Py_VISIT(traverse_module_state->__pyx_n_s_i);
   Py_VISIT(traverse_module_state->__pyx_n_s_imageh);
@@ -3314,11 +3498,13 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_import);
   Py_VISIT(traverse_module_state->__pyx_n_s_init_subclass);
   Py_VISIT(traverse_module_state->__pyx_n_s_initializing);
+  Py_VISIT(traverse_module_state->__pyx_n_s_isLongExposureMode);
   Py_VISIT(traverse_module_state->__pyx_n_s_main);
   Py_VISIT(traverse_module_state->__pyx_n_s_memlength);
   Py_VISIT(traverse_module_state->__pyx_n_s_metaclass);
   Py_VISIT(traverse_module_state->__pyx_n_s_mode);
   Py_VISIT(traverse_module_state->__pyx_n_s_modeNumber);
+  Py_VISIT(traverse_module_state->__pyx_n_s_modes);
   Py_VISIT(traverse_module_state->__pyx_n_s_module);
   Py_VISIT(traverse_module_state->__pyx_n_s_month);
   Py_VISIT(traverse_module_state->__pyx_n_s_name);
@@ -3346,6 +3532,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_startX);
   Py_VISIT(traverse_module_state->__pyx_n_s_startY);
   Py_VISIT(traverse_module_state->__pyx_n_s_stderror);
+  Py_VISIT(traverse_module_state->__pyx_n_s_strerror);
   Py_VISIT(traverse_module_state->__pyx_n_s_subday);
   Py_VISIT(traverse_module_state->__pyx_n_s_super);
   Py_VISIT(traverse_module_state->__pyx_n_s_sys);
@@ -3354,12 +3541,17 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_value);
   Py_VISIT(traverse_module_state->__pyx_n_s_w);
   Py_VISIT(traverse_module_state->__pyx_n_s_warnings);
+  Py_VISIT(traverse_module_state->__pyx_n_s_wbin);
   Py_VISIT(traverse_module_state->__pyx_n_s_width);
   Py_VISIT(traverse_module_state->__pyx_n_s_x);
   Py_VISIT(traverse_module_state->__pyx_n_s_xsize);
   Py_VISIT(traverse_module_state->__pyx_n_s_y);
   Py_VISIT(traverse_module_state->__pyx_n_s_year);
   Py_VISIT(traverse_module_state->__pyx_n_s_ysize);
+  Py_VISIT(traverse_module_state->__pyx_int_1);
+  Py_VISIT(traverse_module_state->__pyx_int_2);
+  Py_VISIT(traverse_module_state->__pyx_int_3);
+  Py_VISIT(traverse_module_state->__pyx_int_4);
   Py_VISIT(traverse_module_state->__pyx_tuple__3);
   Py_VISIT(traverse_module_state->__pyx_tuple__4);
   Py_VISIT(traverse_module_state->__pyx_tuple__5);
@@ -3392,6 +3584,14 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_tuple__60);
   Py_VISIT(traverse_module_state->__pyx_tuple__62);
   Py_VISIT(traverse_module_state->__pyx_tuple__64);
+  Py_VISIT(traverse_module_state->__pyx_tuple__66);
+  Py_VISIT(traverse_module_state->__pyx_tuple__68);
+  Py_VISIT(traverse_module_state->__pyx_tuple__70);
+  Py_VISIT(traverse_module_state->__pyx_tuple__72);
+  Py_VISIT(traverse_module_state->__pyx_tuple__74);
+  Py_VISIT(traverse_module_state->__pyx_tuple__76);
+  Py_VISIT(traverse_module_state->__pyx_tuple__78);
+  Py_VISIT(traverse_module_state->__pyx_tuple__80);
   Py_VISIT(traverse_module_state->__pyx_codeobj__9);
   Py_VISIT(traverse_module_state->__pyx_codeobj__10);
   Py_VISIT(traverse_module_state->__pyx_codeobj__11);
@@ -3422,6 +3622,14 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_codeobj__61);
   Py_VISIT(traverse_module_state->__pyx_codeobj__63);
   Py_VISIT(traverse_module_state->__pyx_codeobj__65);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__67);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__69);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__71);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__73);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__75);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__77);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__79);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__81);
   return 0;
 }
 #endif
@@ -3446,6 +3654,8 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_ptype_5numpy_ndarray __pyx_mstate_global->__pyx_ptype_5numpy_ndarray
 #define __pyx_ptype_5numpy_ufunc __pyx_mstate_global->__pyx_ptype_5numpy_ufunc
 #define __pyx_kp_u_ __pyx_mstate_global->__pyx_kp_u_
+#define __pyx_n_s_ActualExposureTime __pyx_mstate_global->__pyx_n_s_ActualExposureTime
+#define __pyx_n_s_BeginQHYCCDLive __pyx_mstate_global->__pyx_n_s_BeginQHYCCDLive
 #define __pyx_n_s_CAM_16BITS __pyx_mstate_global->__pyx_n_s_CAM_16BITS
 #define __pyx_n_s_CAM_8BITS __pyx_mstate_global->__pyx_n_s_CAM_8BITS
 #define __pyx_n_s_CAM_BIN1X1MODE __pyx_mstate_global->__pyx_n_s_CAM_BIN1X1MODE
@@ -3503,6 +3713,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_CONTROL_WBR __pyx_mstate_global->__pyx_n_s_CONTROL_WBR
 #define __pyx_n_s_CancelQHYCCDExposing __pyx_mstate_global->__pyx_n_s_CancelQHYCCDExposing
 #define __pyx_n_s_CancelQHYCCDExposingAndReadout __pyx_mstate_global->__pyx_n_s_CancelQHYCCDExposingAndReadout
+#define __pyx_n_s_ClocksPerLine __pyx_mstate_global->__pyx_n_s_ClocksPerLine
 #define __pyx_n_s_CloseQHYCCD __pyx_mstate_global->__pyx_n_s_CloseQHYCCD
 #define __pyx_n_s_DDR_BUFFER_CAPACITY __pyx_mstate_global->__pyx_n_s_DDR_BUFFER_CAPACITY
 #define __pyx_n_s_DDR_BUFFER_READ_THRESHOLD __pyx_mstate_global->__pyx_n_s_DDR_BUFFER_READ_THRESHOLD
@@ -3511,16 +3722,20 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_ExpQHYCCDSingleFrame __pyx_mstate_global->__pyx_n_s_ExpQHYCCDSingleFrame
 #define __pyx_kp_u_Format_string_allocated_too_shor __pyx_mstate_global->__pyx_kp_u_Format_string_allocated_too_shor
 #define __pyx_kp_u_Format_string_allocated_too_shor_2 __pyx_mstate_global->__pyx_kp_u_Format_string_allocated_too_shor_2
+#define __pyx_n_s_FramePeriod_us __pyx_mstate_global->__pyx_n_s_FramePeriod_us
+#define __pyx_n_s_GetBinModes __pyx_mstate_global->__pyx_n_s_GetBinModes
 #define __pyx_n_s_GetQHYCCDChipInfo __pyx_mstate_global->__pyx_n_s_GetQHYCCDChipInfo
 #define __pyx_n_s_GetQHYCCDEffectiveArea __pyx_mstate_global->__pyx_n_s_GetQHYCCDEffectiveArea
 #define __pyx_n_s_GetQHYCCDExposureRemaining __pyx_mstate_global->__pyx_n_s_GetQHYCCDExposureRemaining
 #define __pyx_n_s_GetQHYCCDId __pyx_mstate_global->__pyx_n_s_GetQHYCCDId
+#define __pyx_n_s_GetQHYCCDLiveFrame __pyx_mstate_global->__pyx_n_s_GetQHYCCDLiveFrame
 #define __pyx_n_s_GetQHYCCDMemLength __pyx_mstate_global->__pyx_n_s_GetQHYCCDMemLength
 #define __pyx_n_s_GetQHYCCDModel __pyx_mstate_global->__pyx_n_s_GetQHYCCDModel
 #define __pyx_n_s_GetQHYCCDNumberOfReadModes __pyx_mstate_global->__pyx_n_s_GetQHYCCDNumberOfReadModes
 #define __pyx_n_s_GetQHYCCDOverScanArea __pyx_mstate_global->__pyx_n_s_GetQHYCCDOverScanArea
 #define __pyx_n_s_GetQHYCCDParam __pyx_mstate_global->__pyx_n_s_GetQHYCCDParam
 #define __pyx_n_s_GetQHYCCDParamMinMaxStep __pyx_mstate_global->__pyx_n_s_GetQHYCCDParamMinMaxStep
+#define __pyx_n_s_GetQHYCCDPreciseExposureInfo __pyx_mstate_global->__pyx_n_s_GetQHYCCDPreciseExposureInfo
 #define __pyx_n_s_GetQHYCCDReadMode __pyx_mstate_global->__pyx_n_s_GetQHYCCDReadMode
 #define __pyx_n_s_GetQHYCCDReadModeName __pyx_mstate_global->__pyx_n_s_GetQHYCCDReadModeName
 #define __pyx_n_s_GetQHYCCDReadModeResolution __pyx_mstate_global->__pyx_n_s_GetQHYCCDReadModeResolution
@@ -3532,11 +3747,14 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_InitQHYCCD __pyx_mstate_global->__pyx_n_s_InitQHYCCD
 #define __pyx_n_s_InitQHYCCDResource __pyx_mstate_global->__pyx_n_s_InitQHYCCDResource
 #define __pyx_n_s_IsQHYCCDControlAvailable __pyx_mstate_global->__pyx_n_s_IsQHYCCDControlAvailable
+#define __pyx_n_s_LinePeriod_ns __pyx_mstate_global->__pyx_n_s_LinePeriod_ns
+#define __pyx_n_s_LinesPerFrame __pyx_mstate_global->__pyx_n_s_LinesPerFrame
 #define __pyx_kp_u_Non_native_byte_order_not_suppor __pyx_mstate_global->__pyx_kp_u_Non_native_byte_order_not_suppor
 #define __pyx_n_s_OSError __pyx_mstate_global->__pyx_n_s_OSError
 #define __pyx_n_s_OpenQHYCCD __pyx_mstate_global->__pyx_n_s_OpenQHYCCD
 #define __pyx_n_s_OutputDataActualBits __pyx_mstate_global->__pyx_n_s_OutputDataActualBits
 #define __pyx_n_s_OutputDataAlignment __pyx_mstate_global->__pyx_n_s_OutputDataAlignment
+#define __pyx_n_s_PixelPeriod_ps __pyx_mstate_global->__pyx_n_s_PixelPeriod_ps
 #define __pyx_n_s_QHYCCD_3A_AUTOBALANCE __pyx_mstate_global->__pyx_n_s_QHYCCD_3A_AUTOBALANCE
 #define __pyx_n_s_QHYCCD_3A_AUTOEXPOSURE __pyx_mstate_global->__pyx_n_s_QHYCCD_3A_AUTOEXPOSURE
 #define __pyx_n_s_QHYCCD_3A_AUTOFOCUS __pyx_mstate_global->__pyx_n_s_QHYCCD_3A_AUTOFOCUS
@@ -3548,15 +3766,20 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_ScanQHYCCD __pyx_mstate_global->__pyx_n_s_ScanQHYCCD
 #define __pyx_n_s_ScreenStretchB __pyx_mstate_global->__pyx_n_s_ScreenStretchB
 #define __pyx_n_s_ScreenStretchW __pyx_mstate_global->__pyx_n_s_ScreenStretchW
+#define __pyx_n_s_SetQHYCCDBinMode __pyx_mstate_global->__pyx_n_s_SetQHYCCDBinMode
+#define __pyx_n_s_SetQHYCCDBitsMode __pyx_mstate_global->__pyx_n_s_SetQHYCCDBitsMode
 #define __pyx_n_s_SetQHYCCDParam __pyx_mstate_global->__pyx_n_s_SetQHYCCDParam
 #define __pyx_n_s_SetQHYCCDReadMode __pyx_mstate_global->__pyx_n_s_SetQHYCCDReadMode
 #define __pyx_n_s_SetQHYCCDResolution __pyx_mstate_global->__pyx_n_s_SetQHYCCDResolution
 #define __pyx_n_s_SetQHYCCDStreamMode __pyx_mstate_global->__pyx_n_s_SetQHYCCDStreamMode
+#define __pyx_n_s_StopQHYCCDLive __pyx_mstate_global->__pyx_n_s_StopQHYCCDLive
 #define __pyx_n_s_ValueError __pyx_mstate_global->__pyx_n_s_ValueError
 #define __pyx_kp_u__2 __pyx_mstate_global->__pyx_kp_u__2
-#define __pyx_n_s__66 __pyx_mstate_global->__pyx_n_s__66
 #define __pyx_n_s__8 __pyx_mstate_global->__pyx_n_s__8
+#define __pyx_n_s__82 __pyx_mstate_global->__pyx_n_s__82
 #define __pyx_n_s_all __pyx_mstate_global->__pyx_n_s_all
+#define __pyx_n_s_binh __pyx_mstate_global->__pyx_n_s_binh
+#define __pyx_n_s_binw __pyx_mstate_global->__pyx_n_s_binw
 #define __pyx_n_s_bpp __pyx_mstate_global->__pyx_n_s_bpp
 #define __pyx_n_s_cam __pyx_mstate_global->__pyx_n_s_cam
 #define __pyx_n_s_camid __pyx_mstate_global->__pyx_n_s_camid
@@ -3574,6 +3797,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_kp_s_error __pyx_mstate_global->__pyx_kp_s_error
 #define __pyx_n_s_h __pyx_mstate_global->__pyx_n_s_h
 #define __pyx_n_s_hasHardwareFrameCounter __pyx_mstate_global->__pyx_n_s_hasHardwareFrameCounter
+#define __pyx_n_s_hbin __pyx_mstate_global->__pyx_n_s_hbin
 #define __pyx_n_s_height __pyx_mstate_global->__pyx_n_s_height
 #define __pyx_n_s_i __pyx_mstate_global->__pyx_n_s_i
 #define __pyx_n_s_imageh __pyx_mstate_global->__pyx_n_s_imageh
@@ -3582,11 +3806,13 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_import __pyx_mstate_global->__pyx_n_s_import
 #define __pyx_n_s_init_subclass __pyx_mstate_global->__pyx_n_s_init_subclass
 #define __pyx_n_s_initializing __pyx_mstate_global->__pyx_n_s_initializing
+#define __pyx_n_s_isLongExposureMode __pyx_mstate_global->__pyx_n_s_isLongExposureMode
 #define __pyx_n_s_main __pyx_mstate_global->__pyx_n_s_main
 #define __pyx_n_s_memlength __pyx_mstate_global->__pyx_n_s_memlength
 #define __pyx_n_s_metaclass __pyx_mstate_global->__pyx_n_s_metaclass
 #define __pyx_n_s_mode __pyx_mstate_global->__pyx_n_s_mode
 #define __pyx_n_s_modeNumber __pyx_mstate_global->__pyx_n_s_modeNumber
+#define __pyx_n_s_modes __pyx_mstate_global->__pyx_n_s_modes
 #define __pyx_n_s_module __pyx_mstate_global->__pyx_n_s_module
 #define __pyx_n_s_month __pyx_mstate_global->__pyx_n_s_month
 #define __pyx_n_s_name __pyx_mstate_global->__pyx_n_s_name
@@ -3614,6 +3840,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_startX __pyx_mstate_global->__pyx_n_s_startX
 #define __pyx_n_s_startY __pyx_mstate_global->__pyx_n_s_startY
 #define __pyx_n_s_stderror __pyx_mstate_global->__pyx_n_s_stderror
+#define __pyx_n_s_strerror __pyx_mstate_global->__pyx_n_s_strerror
 #define __pyx_n_s_subday __pyx_mstate_global->__pyx_n_s_subday
 #define __pyx_n_s_super __pyx_mstate_global->__pyx_n_s_super
 #define __pyx_n_s_sys __pyx_mstate_global->__pyx_n_s_sys
@@ -3622,12 +3849,17 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_value __pyx_mstate_global->__pyx_n_s_value
 #define __pyx_n_s_w __pyx_mstate_global->__pyx_n_s_w
 #define __pyx_n_s_warnings __pyx_mstate_global->__pyx_n_s_warnings
+#define __pyx_n_s_wbin __pyx_mstate_global->__pyx_n_s_wbin
 #define __pyx_n_s_width __pyx_mstate_global->__pyx_n_s_width
 #define __pyx_n_s_x __pyx_mstate_global->__pyx_n_s_x
 #define __pyx_n_s_xsize __pyx_mstate_global->__pyx_n_s_xsize
 #define __pyx_n_s_y __pyx_mstate_global->__pyx_n_s_y
 #define __pyx_n_s_year __pyx_mstate_global->__pyx_n_s_year
 #define __pyx_n_s_ysize __pyx_mstate_global->__pyx_n_s_ysize
+#define __pyx_int_1 __pyx_mstate_global->__pyx_int_1
+#define __pyx_int_2 __pyx_mstate_global->__pyx_int_2
+#define __pyx_int_3 __pyx_mstate_global->__pyx_int_3
+#define __pyx_int_4 __pyx_mstate_global->__pyx_int_4
 #define __pyx_tuple__3 __pyx_mstate_global->__pyx_tuple__3
 #define __pyx_tuple__4 __pyx_mstate_global->__pyx_tuple__4
 #define __pyx_tuple__5 __pyx_mstate_global->__pyx_tuple__5
@@ -3660,6 +3892,14 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_tuple__60 __pyx_mstate_global->__pyx_tuple__60
 #define __pyx_tuple__62 __pyx_mstate_global->__pyx_tuple__62
 #define __pyx_tuple__64 __pyx_mstate_global->__pyx_tuple__64
+#define __pyx_tuple__66 __pyx_mstate_global->__pyx_tuple__66
+#define __pyx_tuple__68 __pyx_mstate_global->__pyx_tuple__68
+#define __pyx_tuple__70 __pyx_mstate_global->__pyx_tuple__70
+#define __pyx_tuple__72 __pyx_mstate_global->__pyx_tuple__72
+#define __pyx_tuple__74 __pyx_mstate_global->__pyx_tuple__74
+#define __pyx_tuple__76 __pyx_mstate_global->__pyx_tuple__76
+#define __pyx_tuple__78 __pyx_mstate_global->__pyx_tuple__78
+#define __pyx_tuple__80 __pyx_mstate_global->__pyx_tuple__80
 #define __pyx_codeobj__9 __pyx_mstate_global->__pyx_codeobj__9
 #define __pyx_codeobj__10 __pyx_mstate_global->__pyx_codeobj__10
 #define __pyx_codeobj__11 __pyx_mstate_global->__pyx_codeobj__11
@@ -3690,10 +3930,18 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_codeobj__61 __pyx_mstate_global->__pyx_codeobj__61
 #define __pyx_codeobj__63 __pyx_mstate_global->__pyx_codeobj__63
 #define __pyx_codeobj__65 __pyx_mstate_global->__pyx_codeobj__65
+#define __pyx_codeobj__67 __pyx_mstate_global->__pyx_codeobj__67
+#define __pyx_codeobj__69 __pyx_mstate_global->__pyx_codeobj__69
+#define __pyx_codeobj__71 __pyx_mstate_global->__pyx_codeobj__71
+#define __pyx_codeobj__73 __pyx_mstate_global->__pyx_codeobj__73
+#define __pyx_codeobj__75 __pyx_mstate_global->__pyx_codeobj__75
+#define __pyx_codeobj__77 __pyx_mstate_global->__pyx_codeobj__77
+#define __pyx_codeobj__79 __pyx_mstate_global->__pyx_codeobj__79
+#define __pyx_codeobj__81 __pyx_mstate_global->__pyx_codeobj__81
 #endif
 /* #### Code section: module_code ### */
 
-/* "QHYCCD/pyqhyccd.pyx":122
+/* "QHYCCD/pyqhyccd.pyx":130
  *     CONTROL_MAX_ID=qhy.CONTROL_MAX_ID
  * 
  * cdef int chkerr(long err):             # <<<<<<<<<<<<<<
@@ -3707,31 +3955,35 @@ static int __pyx_f_6QHYCCD_8pyqhyccd_chkerr(long __pyx_v_err) {
   int __pyx_t_1;
   PyObject *__pyx_t_2 = NULL;
   PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_6 = NULL;
+  int __pyx_t_7;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("chkerr", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":123
+  /* "QHYCCD/pyqhyccd.pyx":131
  * 
  * cdef int chkerr(long err):
  *     if err != qhy.QHYCCD_SUCCESS:             # <<<<<<<<<<<<<<
  *         print("error: ", err)
- *         # raise OSError(-err, os.strerror(-err))
+ *         raise OSError(-err, os.strerror(-err))
  */
   __pyx_t_1 = ((__pyx_v_err != QHYCCD_SUCCESS) != 0);
-  if (__pyx_t_1) {
+  if (unlikely(__pyx_t_1)) {
 
-    /* "QHYCCD/pyqhyccd.pyx":124
+    /* "QHYCCD/pyqhyccd.pyx":132
  * cdef int chkerr(long err):
  *     if err != qhy.QHYCCD_SUCCESS:
  *         print("error: ", err)             # <<<<<<<<<<<<<<
- *         # raise OSError(-err, os.strerror(-err))
+ *         raise OSError(-err, os.strerror(-err))
  * 
  */
-    __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_err); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 124, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyInt_From_long(__pyx_v_err); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 132, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 124, __pyx_L1_error)
+    __pyx_t_3 = PyTuple_New(2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 132, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_INCREF(__pyx_kp_s_error);
     __Pyx_GIVEREF(__pyx_kp_s_error);
@@ -3739,21 +3991,73 @@ static int __pyx_f_6QHYCCD_8pyqhyccd_chkerr(long __pyx_v_err) {
     __Pyx_GIVEREF(__pyx_t_2);
     PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_2);
     __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 124, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 132, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "QHYCCD/pyqhyccd.pyx":123
+    /* "QHYCCD/pyqhyccd.pyx":133
+ *     if err != qhy.QHYCCD_SUCCESS:
+ *         print("error: ", err)
+ *         raise OSError(-err, os.strerror(-err))             # <<<<<<<<<<<<<<
+ * 
+ * 
+ */
+    __pyx_t_2 = __Pyx_PyInt_From_long((-__pyx_v_err)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 133, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_os); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 133, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_strerror); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 133, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+    __pyx_t_4 = __Pyx_PyInt_From_long((-__pyx_v_err)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 133, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_4);
+    __pyx_t_6 = NULL;
+    __pyx_t_7 = 0;
+    if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_5))) {
+      __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_5);
+      if (likely(__pyx_t_6)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
+        __Pyx_INCREF(__pyx_t_6);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_5, function);
+        __pyx_t_7 = 1;
+      }
+    }
+    {
+      PyObject *__pyx_callargs[2] = {__pyx_t_6, __pyx_t_4};
+      __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_5, __pyx_callargs+1-__pyx_t_7, 1+__pyx_t_7);
+      __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 133, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_3);
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    }
+    __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 133, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __Pyx_GIVEREF(__pyx_t_2);
+    PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_2);
+    __Pyx_GIVEREF(__pyx_t_3);
+    PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_3);
+    __pyx_t_2 = 0;
+    __pyx_t_3 = 0;
+    __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_OSError, __pyx_t_5, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 133, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __Pyx_Raise(__pyx_t_3, 0, 0, 0);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __PYX_ERR(0, 133, __pyx_L1_error)
+
+    /* "QHYCCD/pyqhyccd.pyx":131
  * 
  * cdef int chkerr(long err):
  *     if err != qhy.QHYCCD_SUCCESS:             # <<<<<<<<<<<<<<
  *         print("error: ", err)
- *         # raise OSError(-err, os.strerror(-err))
+ *         raise OSError(-err, os.strerror(-err))
  */
   }
 
-  /* "QHYCCD/pyqhyccd.pyx":122
+  /* "QHYCCD/pyqhyccd.pyx":130
  *     CONTROL_MAX_ID=qhy.CONTROL_MAX_ID
  * 
  * cdef int chkerr(long err):             # <<<<<<<<<<<<<<
@@ -3767,6 +4071,9 @@ static int __pyx_f_6QHYCCD_8pyqhyccd_chkerr(long __pyx_v_err) {
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
   __Pyx_WriteUnraisable("QHYCCD.pyqhyccd.chkerr", __pyx_clineno, __pyx_lineno, __pyx_filename, 1, 0);
   __pyx_r = 0;
   __pyx_L0:;
@@ -3774,7 +4081,7 @@ static int __pyx_f_6QHYCCD_8pyqhyccd_chkerr(long __pyx_v_err) {
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":128
+/* "QHYCCD/pyqhyccd.pyx":136
  * 
  * 
  * def InitQHYCCDResource():             # <<<<<<<<<<<<<<
@@ -3802,7 +4109,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_InitQHYCCDResource(CYTHON_UNUSED PyO
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("InitQHYCCDResource", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":129
+  /* "QHYCCD/pyqhyccd.pyx":137
  * 
  * def InitQHYCCDResource():
  *     chkerr(qhy.InitQHYCCDResource())             # <<<<<<<<<<<<<<
@@ -3811,7 +4118,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_InitQHYCCDResource(CYTHON_UNUSED PyO
  */
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(InitQHYCCDResource()));
 
-  /* "QHYCCD/pyqhyccd.pyx":128
+  /* "QHYCCD/pyqhyccd.pyx":136
  * 
  * 
  * def InitQHYCCDResource():             # <<<<<<<<<<<<<<
@@ -3826,7 +4133,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_InitQHYCCDResource(CYTHON_UNUSED PyO
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":131
+/* "QHYCCD/pyqhyccd.pyx":139
  *     chkerr(qhy.InitQHYCCDResource())
  * 
  * def ReleaseQHYCCDResource():             # <<<<<<<<<<<<<<
@@ -3854,7 +4161,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_2ReleaseQHYCCDResource(CYTHON_UNUSED
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("ReleaseQHYCCDResource", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":132
+  /* "QHYCCD/pyqhyccd.pyx":140
  * 
  * def ReleaseQHYCCDResource():
  *     chkerr(qhy.ReleaseQHYCCDResource())             # <<<<<<<<<<<<<<
@@ -3863,7 +4170,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_2ReleaseQHYCCDResource(CYTHON_UNUSED
  */
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(ReleaseQHYCCDResource()));
 
-  /* "QHYCCD/pyqhyccd.pyx":131
+  /* "QHYCCD/pyqhyccd.pyx":139
  *     chkerr(qhy.InitQHYCCDResource())
  * 
  * def ReleaseQHYCCDResource():             # <<<<<<<<<<<<<<
@@ -3878,7 +4185,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_2ReleaseQHYCCDResource(CYTHON_UNUSED
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":134
+/* "QHYCCD/pyqhyccd.pyx":142
  *     chkerr(qhy.ReleaseQHYCCDResource())
  * 
  * def ScanQHYCCD():             # <<<<<<<<<<<<<<
@@ -3910,7 +4217,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_4ScanQHYCCD(CYTHON_UNUSED PyObject *
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("ScanQHYCCD", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":135
+  /* "QHYCCD/pyqhyccd.pyx":143
  * 
  * def ScanQHYCCD():
  *     return(qhy.ScanQHYCCD())             # <<<<<<<<<<<<<<
@@ -3918,13 +4225,13 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_4ScanQHYCCD(CYTHON_UNUSED PyObject *
  * def GetQHYCCDId(i):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(ScanQHYCCD()); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 135, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(ScanQHYCCD()); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 143, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "QHYCCD/pyqhyccd.pyx":134
+  /* "QHYCCD/pyqhyccd.pyx":142
  *     chkerr(qhy.ReleaseQHYCCDResource())
  * 
  * def ScanQHYCCD():             # <<<<<<<<<<<<<<
@@ -3943,7 +4250,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_4ScanQHYCCD(CYTHON_UNUSED PyObject *
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":137
+/* "QHYCCD/pyqhyccd.pyx":145
  *     return(qhy.ScanQHYCCD())
  * 
  * def GetQHYCCDId(i):             # <<<<<<<<<<<<<<
@@ -3997,12 +4304,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_i)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 137, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 145, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDId") < 0)) __PYX_ERR(0, 137, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDId") < 0)) __PYX_ERR(0, 145, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -4013,7 +4320,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetQHYCCDId", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 137, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetQHYCCDId", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 145, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDId", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4037,17 +4344,17 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_6GetQHYCCDId(CYTHON_UNUSED PyObject 
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("GetQHYCCDId", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":139
+  /* "QHYCCD/pyqhyccd.pyx":147
  * def GetQHYCCDId(i):
  *     cdef char camid[256]
  *     chkerr(qhy.GetQHYCCDId(i, camid))             # <<<<<<<<<<<<<<
  *     return camid
  * 
  */
-  __pyx_t_1 = __Pyx_PyInt_As_uint32_t(__pyx_v_i); if (unlikely((__pyx_t_1 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 139, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_uint32_t(__pyx_v_i); if (unlikely((__pyx_t_1 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 147, __pyx_L1_error)
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(GetQHYCCDId(__pyx_t_1, __pyx_v_camid)));
 
-  /* "QHYCCD/pyqhyccd.pyx":140
+  /* "QHYCCD/pyqhyccd.pyx":148
  *     cdef char camid[256]
  *     chkerr(qhy.GetQHYCCDId(i, camid))
  *     return camid             # <<<<<<<<<<<<<<
@@ -4055,13 +4362,13 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_6GetQHYCCDId(CYTHON_UNUSED PyObject 
  * def OpenQHYCCD(camid):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyObject_FromString(__pyx_v_camid); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 140, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_FromString(__pyx_v_camid); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 148, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "QHYCCD/pyqhyccd.pyx":137
+  /* "QHYCCD/pyqhyccd.pyx":145
  *     return(qhy.ScanQHYCCD())
  * 
  * def GetQHYCCDId(i):             # <<<<<<<<<<<<<<
@@ -4080,7 +4387,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_6GetQHYCCDId(CYTHON_UNUSED PyObject 
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":142
+/* "QHYCCD/pyqhyccd.pyx":150
  *     return camid
  * 
  * def OpenQHYCCD(camid):             # <<<<<<<<<<<<<<
@@ -4134,12 +4441,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_camid)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 142, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 150, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "OpenQHYCCD") < 0)) __PYX_ERR(0, 142, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "OpenQHYCCD") < 0)) __PYX_ERR(0, 150, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -4150,7 +4457,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("OpenQHYCCD", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 142, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("OpenQHYCCD", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 150, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.OpenQHYCCD", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4173,7 +4480,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_8OpenQHYCCD(CYTHON_UNUSED PyObject *
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("OpenQHYCCD", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":143
+  /* "QHYCCD/pyqhyccd.pyx":151
  * 
  * def OpenQHYCCD(camid):
  *     return PyLong_FromVoidPtr(qhy.OpenQHYCCD(<char *>camid))             # <<<<<<<<<<<<<<
@@ -4181,14 +4488,14 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_8OpenQHYCCD(CYTHON_UNUSED PyObject *
  * def SetQHYCCDStreamMode(cam, mode):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_AsWritableString(__pyx_v_camid); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) __PYX_ERR(0, 143, __pyx_L1_error)
-  __pyx_t_2 = PyLong_FromVoidPtr(OpenQHYCCD(((char *)__pyx_t_1))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 143, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_AsWritableString(__pyx_v_camid); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) __PYX_ERR(0, 151, __pyx_L1_error)
+  __pyx_t_2 = PyLong_FromVoidPtr(OpenQHYCCD(((char *)__pyx_t_1))); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 151, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "QHYCCD/pyqhyccd.pyx":142
+  /* "QHYCCD/pyqhyccd.pyx":150
  *     return camid
  * 
  * def OpenQHYCCD(camid):             # <<<<<<<<<<<<<<
@@ -4207,7 +4514,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_8OpenQHYCCD(CYTHON_UNUSED PyObject *
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":145
+/* "QHYCCD/pyqhyccd.pyx":153
  *     return PyLong_FromVoidPtr(qhy.OpenQHYCCD(<char *>camid))
  * 
  * def SetQHYCCDStreamMode(cam, mode):             # <<<<<<<<<<<<<<
@@ -4264,19 +4571,19 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 145, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 153, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
         if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_mode)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 145, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 153, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("SetQHYCCDStreamMode", 1, 2, 2, 1); __PYX_ERR(0, 145, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("SetQHYCCDStreamMode", 1, 2, 2, 1); __PYX_ERR(0, 153, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "SetQHYCCDStreamMode") < 0)) __PYX_ERR(0, 145, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "SetQHYCCDStreamMode") < 0)) __PYX_ERR(0, 153, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
@@ -4289,7 +4596,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("SetQHYCCDStreamMode", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 145, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("SetQHYCCDStreamMode", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 153, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.SetQHYCCDStreamMode", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4311,17 +4618,17 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_10SetQHYCCDStreamMode(CYTHON_UNUSED 
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("SetQHYCCDStreamMode", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":146
+  /* "QHYCCD/pyqhyccd.pyx":154
  * 
  * def SetQHYCCDStreamMode(cam, mode):
  *     chkerr(qhy.SetQHYCCDStreamMode(PyLong_AsVoidPtr(cam), mode))             # <<<<<<<<<<<<<<
  * 
  * def InitQHYCCD(cam):
  */
-  __pyx_t_1 = __Pyx_PyInt_As_uint8_t(__pyx_v_mode); if (unlikely((__pyx_t_1 == ((uint8_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 146, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_uint8_t(__pyx_v_mode); if (unlikely((__pyx_t_1 == ((uint8_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 154, __pyx_L1_error)
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(SetQHYCCDStreamMode(PyLong_AsVoidPtr(__pyx_v_cam), __pyx_t_1)));
 
-  /* "QHYCCD/pyqhyccd.pyx":145
+  /* "QHYCCD/pyqhyccd.pyx":153
  *     return PyLong_FromVoidPtr(qhy.OpenQHYCCD(<char *>camid))
  * 
  * def SetQHYCCDStreamMode(cam, mode):             # <<<<<<<<<<<<<<
@@ -4341,7 +4648,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_10SetQHYCCDStreamMode(CYTHON_UNUSED 
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":148
+/* "QHYCCD/pyqhyccd.pyx":156
  *     chkerr(qhy.SetQHYCCDStreamMode(PyLong_AsVoidPtr(cam), mode))
  * 
  * def InitQHYCCD(cam):             # <<<<<<<<<<<<<<
@@ -4395,12 +4702,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 148, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 156, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "InitQHYCCD") < 0)) __PYX_ERR(0, 148, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "InitQHYCCD") < 0)) __PYX_ERR(0, 156, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -4411,7 +4718,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("InitQHYCCD", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 148, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("InitQHYCCD", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 156, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.InitQHYCCD", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4429,7 +4736,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_12InitQHYCCD(CYTHON_UNUSED PyObject 
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("InitQHYCCD", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":149
+  /* "QHYCCD/pyqhyccd.pyx":157
  * 
  * def InitQHYCCD(cam):
  *     chkerr(qhy.InitQHYCCD(PyLong_AsVoidPtr(cam)))             # <<<<<<<<<<<<<<
@@ -4438,7 +4745,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_12InitQHYCCD(CYTHON_UNUSED PyObject 
  */
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(InitQHYCCD(PyLong_AsVoidPtr(__pyx_v_cam))));
 
-  /* "QHYCCD/pyqhyccd.pyx":148
+  /* "QHYCCD/pyqhyccd.pyx":156
  *     chkerr(qhy.SetQHYCCDStreamMode(PyLong_AsVoidPtr(cam), mode))
  * 
  * def InitQHYCCD(cam):             # <<<<<<<<<<<<<<
@@ -4453,7 +4760,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_12InitQHYCCD(CYTHON_UNUSED PyObject 
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":151
+/* "QHYCCD/pyqhyccd.pyx":159
  *     chkerr(qhy.InitQHYCCD(PyLong_AsVoidPtr(cam)))
  * 
  * def CloseQHYCCD(cam):             # <<<<<<<<<<<<<<
@@ -4507,12 +4814,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 151, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 159, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "CloseQHYCCD") < 0)) __PYX_ERR(0, 151, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "CloseQHYCCD") < 0)) __PYX_ERR(0, 159, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -4523,7 +4830,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("CloseQHYCCD", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 151, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("CloseQHYCCD", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 159, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.CloseQHYCCD", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4541,7 +4848,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_14CloseQHYCCD(CYTHON_UNUSED PyObject
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("CloseQHYCCD", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":152
+  /* "QHYCCD/pyqhyccd.pyx":160
  * 
  * def CloseQHYCCD(cam):
  *     chkerr(qhy.CloseQHYCCD(PyLong_AsVoidPtr(cam)))             # <<<<<<<<<<<<<<
@@ -4550,7 +4857,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_14CloseQHYCCD(CYTHON_UNUSED PyObject
  */
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(CloseQHYCCD(PyLong_AsVoidPtr(__pyx_v_cam))));
 
-  /* "QHYCCD/pyqhyccd.pyx":151
+  /* "QHYCCD/pyqhyccd.pyx":159
  *     chkerr(qhy.InitQHYCCD(PyLong_AsVoidPtr(cam)))
  * 
  * def CloseQHYCCD(cam):             # <<<<<<<<<<<<<<
@@ -4565,7 +4872,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_14CloseQHYCCD(CYTHON_UNUSED PyObject
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":154
+/* "QHYCCD/pyqhyccd.pyx":162
  *     chkerr(qhy.CloseQHYCCD(PyLong_AsVoidPtr(cam)))
  * 
  * def GetQHYCCDChipInfo(cam):             # <<<<<<<<<<<<<<
@@ -4619,12 +4926,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 154, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 162, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDChipInfo") < 0)) __PYX_ERR(0, 154, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDChipInfo") < 0)) __PYX_ERR(0, 162, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -4635,7 +4942,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetQHYCCDChipInfo", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 154, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetQHYCCDChipInfo", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 162, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDChipInfo", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4671,7 +4978,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_16GetQHYCCDChipInfo(CYTHON_UNUSED Py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("GetQHYCCDChipInfo", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":157
+  /* "QHYCCD/pyqhyccd.pyx":165
  *     cdef double chipw, chiph, pixelw, pixelh
  *     cdef uint32_t imagew, imageh, bpp
  *     chkerr(qhy.GetQHYCCDChipInfo(PyLong_AsVoidPtr(cam), &chipw, &chiph, &imagew, &imageh, &pixelw, &pixelh, &bpp))             # <<<<<<<<<<<<<<
@@ -4680,7 +4987,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_16GetQHYCCDChipInfo(CYTHON_UNUSED Py
  */
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(GetQHYCCDChipInfo(PyLong_AsVoidPtr(__pyx_v_cam), (&__pyx_v_chipw), (&__pyx_v_chiph), (&__pyx_v_imagew), (&__pyx_v_imageh), (&__pyx_v_pixelw), (&__pyx_v_pixelh), (&__pyx_v_bpp))));
 
-  /* "QHYCCD/pyqhyccd.pyx":158
+  /* "QHYCCD/pyqhyccd.pyx":166
  *     cdef uint32_t imagew, imageh, bpp
  *     chkerr(qhy.GetQHYCCDChipInfo(PyLong_AsVoidPtr(cam), &chipw, &chiph, &imagew, &imageh, &pixelw, &pixelh, &bpp))
  *     return (chipw, chiph, imagew, imageh, pixelw, pixelh, bpp)             # <<<<<<<<<<<<<<
@@ -4688,21 +4995,21 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_16GetQHYCCDChipInfo(CYTHON_UNUSED Py
  * def GetQHYCCDModel(camid):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_chipw); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_1 = PyFloat_FromDouble(__pyx_v_chipw); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_chiph); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_chiph); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyInt_From_uint32_t(__pyx_v_imagew); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_uint32_t(__pyx_v_imagew); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyInt_From_uint32_t(__pyx_v_imageh); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_uint32_t(__pyx_v_imageh); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_pixelw); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_5 = PyFloat_FromDouble(__pyx_v_pixelw); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_pixelh); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_6 = PyFloat_FromDouble(__pyx_v_pixelh); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_7 = __Pyx_PyInt_From_uint32_t(__pyx_v_bpp); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyInt_From_uint32_t(__pyx_v_bpp); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_8 = PyTuple_New(7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 158, __pyx_L1_error)
+  __pyx_t_8 = PyTuple_New(7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 166, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_1);
@@ -4729,7 +5036,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_16GetQHYCCDChipInfo(CYTHON_UNUSED Py
   __pyx_t_8 = 0;
   goto __pyx_L0;
 
-  /* "QHYCCD/pyqhyccd.pyx":154
+  /* "QHYCCD/pyqhyccd.pyx":162
  *     chkerr(qhy.CloseQHYCCD(PyLong_AsVoidPtr(cam)))
  * 
  * def GetQHYCCDChipInfo(cam):             # <<<<<<<<<<<<<<
@@ -4755,7 +5062,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_16GetQHYCCDChipInfo(CYTHON_UNUSED Py
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":160
+/* "QHYCCD/pyqhyccd.pyx":168
  *     return (chipw, chiph, imagew, imageh, pixelw, pixelh, bpp)
  * 
  * def GetQHYCCDModel(camid):             # <<<<<<<<<<<<<<
@@ -4809,12 +5116,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_camid)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 160, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 168, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDModel") < 0)) __PYX_ERR(0, 160, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDModel") < 0)) __PYX_ERR(0, 168, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -4825,7 +5132,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetQHYCCDModel", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 160, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetQHYCCDModel", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 168, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDModel", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4849,17 +5156,17 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_18GetQHYCCDModel(CYTHON_UNUSED PyObj
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("GetQHYCCDModel", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":162
+  /* "QHYCCD/pyqhyccd.pyx":170
  * def GetQHYCCDModel(camid):
  *     cdef char cammodel[256]
  *     chkerr(qhy.GetQHYCCDModel(camid, cammodel))             # <<<<<<<<<<<<<<
  *     return cammodel
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_AsWritableString(__pyx_v_camid); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) __PYX_ERR(0, 162, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_AsWritableString(__pyx_v_camid); if (unlikely((!__pyx_t_1) && PyErr_Occurred())) __PYX_ERR(0, 170, __pyx_L1_error)
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(GetQHYCCDModel(__pyx_t_1, __pyx_v_cammodel)));
 
-  /* "QHYCCD/pyqhyccd.pyx":163
+  /* "QHYCCD/pyqhyccd.pyx":171
  *     cdef char cammodel[256]
  *     chkerr(qhy.GetQHYCCDModel(camid, cammodel))
  *     return cammodel             # <<<<<<<<<<<<<<
@@ -4867,13 +5174,13 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_18GetQHYCCDModel(CYTHON_UNUSED PyObj
  * def IsQHYCCDControlAvailable(cam, controlId):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyObject_FromString(__pyx_v_cammodel); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 163, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_FromString(__pyx_v_cammodel); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 171, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "QHYCCD/pyqhyccd.pyx":160
+  /* "QHYCCD/pyqhyccd.pyx":168
  *     return (chipw, chiph, imagew, imageh, pixelw, pixelh, bpp)
  * 
  * def GetQHYCCDModel(camid):             # <<<<<<<<<<<<<<
@@ -4892,7 +5199,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_18GetQHYCCDModel(CYTHON_UNUSED PyObj
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":165
+/* "QHYCCD/pyqhyccd.pyx":173
  *     return cammodel
  * 
  * def IsQHYCCDControlAvailable(cam, controlId):             # <<<<<<<<<<<<<<
@@ -4949,19 +5256,19 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 165, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 173, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
         if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_controlId)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 165, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 173, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("IsQHYCCDControlAvailable", 1, 2, 2, 1); __PYX_ERR(0, 165, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("IsQHYCCDControlAvailable", 1, 2, 2, 1); __PYX_ERR(0, 173, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "IsQHYCCDControlAvailable") < 0)) __PYX_ERR(0, 165, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "IsQHYCCDControlAvailable") < 0)) __PYX_ERR(0, 173, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
@@ -4974,7 +5281,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("IsQHYCCDControlAvailable", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 165, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("IsQHYCCDControlAvailable", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 173, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.IsQHYCCDControlAvailable", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -4998,17 +5305,17 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_20IsQHYCCDControlAvailable(CYTHON_UN
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("IsQHYCCDControlAvailable", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":166
+  /* "QHYCCD/pyqhyccd.pyx":174
  * 
  * def IsQHYCCDControlAvailable(cam, controlId):
  *     ret = qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), controlId)             # <<<<<<<<<<<<<<
  *     if ret == qhy.QHYCCD_SUCCESS:
  *         return True
  */
-  __pyx_t_1 = ((CONTROL_ID)__Pyx_PyInt_As_CONTROL_ID(__pyx_v_controlId)); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 166, __pyx_L1_error)
+  __pyx_t_1 = ((CONTROL_ID)__Pyx_PyInt_As_CONTROL_ID(__pyx_v_controlId)); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 174, __pyx_L1_error)
   __pyx_v_ret = IsQHYCCDControlAvailable(PyLong_AsVoidPtr(__pyx_v_cam), __pyx_t_1);
 
-  /* "QHYCCD/pyqhyccd.pyx":167
+  /* "QHYCCD/pyqhyccd.pyx":175
  * def IsQHYCCDControlAvailable(cam, controlId):
  *     ret = qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), controlId)
  *     if ret == qhy.QHYCCD_SUCCESS:             # <<<<<<<<<<<<<<
@@ -5018,7 +5325,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_20IsQHYCCDControlAvailable(CYTHON_UN
   __pyx_t_2 = ((__pyx_v_ret == QHYCCD_SUCCESS) != 0);
   if (__pyx_t_2) {
 
-    /* "QHYCCD/pyqhyccd.pyx":168
+    /* "QHYCCD/pyqhyccd.pyx":176
  *     ret = qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), controlId)
  *     if ret == qhy.QHYCCD_SUCCESS:
  *         return True             # <<<<<<<<<<<<<<
@@ -5030,7 +5337,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_20IsQHYCCDControlAvailable(CYTHON_UN
     __pyx_r = Py_True;
     goto __pyx_L0;
 
-    /* "QHYCCD/pyqhyccd.pyx":167
+    /* "QHYCCD/pyqhyccd.pyx":175
  * def IsQHYCCDControlAvailable(cam, controlId):
  *     ret = qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), controlId)
  *     if ret == qhy.QHYCCD_SUCCESS:             # <<<<<<<<<<<<<<
@@ -5039,7 +5346,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_20IsQHYCCDControlAvailable(CYTHON_UN
  */
   }
 
-  /* "QHYCCD/pyqhyccd.pyx":170
+  /* "QHYCCD/pyqhyccd.pyx":178
  *         return True
  *     else:
  *         return False             # <<<<<<<<<<<<<<
@@ -5053,7 +5360,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_20IsQHYCCDControlAvailable(CYTHON_UN
     goto __pyx_L0;
   }
 
-  /* "QHYCCD/pyqhyccd.pyx":165
+  /* "QHYCCD/pyqhyccd.pyx":173
  *     return cammodel
  * 
  * def IsQHYCCDControlAvailable(cam, controlId):             # <<<<<<<<<<<<<<
@@ -5071,7 +5378,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_20IsQHYCCDControlAvailable(CYTHON_UN
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":172
+/* "QHYCCD/pyqhyccd.pyx":180
  *         return False
  * 
  * def GetQHYCCDParam(cam, controlId):             # <<<<<<<<<<<<<<
@@ -5128,19 +5435,19 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 172, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 180, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
         if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_controlId)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 172, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 180, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("GetQHYCCDParam", 1, 2, 2, 1); __PYX_ERR(0, 172, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetQHYCCDParam", 1, 2, 2, 1); __PYX_ERR(0, 180, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDParam") < 0)) __PYX_ERR(0, 172, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDParam") < 0)) __PYX_ERR(0, 180, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
@@ -5153,7 +5460,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetQHYCCDParam", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 172, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetQHYCCDParam", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 180, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDParam", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5178,17 +5485,17 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_22GetQHYCCDParam(CYTHON_UNUSED PyObj
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("GetQHYCCDParam", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":173
+  /* "QHYCCD/pyqhyccd.pyx":181
  * 
  * def GetQHYCCDParam(cam, controlId):
  *     ret = qhy.GetQHYCCDParam(PyLong_AsVoidPtr(cam), controlId)             # <<<<<<<<<<<<<<
  *     if ret != qhy.QHYCCD_ERROR:
  *         return ret
  */
-  __pyx_t_1 = ((CONTROL_ID)__Pyx_PyInt_As_CONTROL_ID(__pyx_v_controlId)); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 173, __pyx_L1_error)
+  __pyx_t_1 = ((CONTROL_ID)__Pyx_PyInt_As_CONTROL_ID(__pyx_v_controlId)); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 181, __pyx_L1_error)
   __pyx_v_ret = GetQHYCCDParam(PyLong_AsVoidPtr(__pyx_v_cam), __pyx_t_1);
 
-  /* "QHYCCD/pyqhyccd.pyx":174
+  /* "QHYCCD/pyqhyccd.pyx":182
  * def GetQHYCCDParam(cam, controlId):
  *     ret = qhy.GetQHYCCDParam(PyLong_AsVoidPtr(cam), controlId)
  *     if ret != qhy.QHYCCD_ERROR:             # <<<<<<<<<<<<<<
@@ -5198,7 +5505,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_22GetQHYCCDParam(CYTHON_UNUSED PyObj
   __pyx_t_2 = ((__pyx_v_ret != QHYCCD_ERROR) != 0);
   if (__pyx_t_2) {
 
-    /* "QHYCCD/pyqhyccd.pyx":175
+    /* "QHYCCD/pyqhyccd.pyx":183
  *     ret = qhy.GetQHYCCDParam(PyLong_AsVoidPtr(cam), controlId)
  *     if ret != qhy.QHYCCD_ERROR:
  *         return ret             # <<<<<<<<<<<<<<
@@ -5206,13 +5513,13 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_22GetQHYCCDParam(CYTHON_UNUSED PyObj
  *         return None
  */
     __Pyx_XDECREF(__pyx_r);
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_ret); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 175, __pyx_L1_error)
+    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_ret); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 183, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_r = __pyx_t_3;
     __pyx_t_3 = 0;
     goto __pyx_L0;
 
-    /* "QHYCCD/pyqhyccd.pyx":174
+    /* "QHYCCD/pyqhyccd.pyx":182
  * def GetQHYCCDParam(cam, controlId):
  *     ret = qhy.GetQHYCCDParam(PyLong_AsVoidPtr(cam), controlId)
  *     if ret != qhy.QHYCCD_ERROR:             # <<<<<<<<<<<<<<
@@ -5221,7 +5528,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_22GetQHYCCDParam(CYTHON_UNUSED PyObj
  */
   }
 
-  /* "QHYCCD/pyqhyccd.pyx":177
+  /* "QHYCCD/pyqhyccd.pyx":185
  *         return ret
  *     else:
  *         return None             # <<<<<<<<<<<<<<
@@ -5234,7 +5541,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_22GetQHYCCDParam(CYTHON_UNUSED PyObj
     goto __pyx_L0;
   }
 
-  /* "QHYCCD/pyqhyccd.pyx":172
+  /* "QHYCCD/pyqhyccd.pyx":180
  *         return False
  * 
  * def GetQHYCCDParam(cam, controlId):             # <<<<<<<<<<<<<<
@@ -5253,7 +5560,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_22GetQHYCCDParam(CYTHON_UNUSED PyObj
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":179
+/* "QHYCCD/pyqhyccd.pyx":187
  *         return None
  * 
  * def SetQHYCCDParam(cam, controlId, value):             # <<<<<<<<<<<<<<
@@ -5313,26 +5620,26 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 179, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 187, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
         if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_controlId)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 179, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 187, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("SetQHYCCDParam", 1, 3, 3, 1); __PYX_ERR(0, 179, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("SetQHYCCDParam", 1, 3, 3, 1); __PYX_ERR(0, 187, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_value)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 179, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 187, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("SetQHYCCDParam", 1, 3, 3, 2); __PYX_ERR(0, 179, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("SetQHYCCDParam", 1, 3, 3, 2); __PYX_ERR(0, 187, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "SetQHYCCDParam") < 0)) __PYX_ERR(0, 179, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "SetQHYCCDParam") < 0)) __PYX_ERR(0, 187, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 3)) {
       goto __pyx_L5_argtuple_error;
@@ -5347,7 +5654,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("SetQHYCCDParam", 1, 3, 3, __pyx_nargs); __PYX_ERR(0, 179, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("SetQHYCCDParam", 1, 3, 3, __pyx_nargs); __PYX_ERR(0, 187, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.SetQHYCCDParam", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5370,18 +5677,18 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_24SetQHYCCDParam(CYTHON_UNUSED PyObj
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("SetQHYCCDParam", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":180
+  /* "QHYCCD/pyqhyccd.pyx":188
  * 
  * def SetQHYCCDParam(cam, controlId, value):
  *     chkerr(qhy.SetQHYCCDParam(PyLong_AsVoidPtr(cam), controlId, value))             # <<<<<<<<<<<<<<
  * 
  * def GetQHYCCDParamMinMaxStep(cam, controlId):
  */
-  __pyx_t_1 = ((CONTROL_ID)__Pyx_PyInt_As_CONTROL_ID(__pyx_v_controlId)); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 180, __pyx_L1_error)
-  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 180, __pyx_L1_error)
+  __pyx_t_1 = ((CONTROL_ID)__Pyx_PyInt_As_CONTROL_ID(__pyx_v_controlId)); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 188, __pyx_L1_error)
+  __pyx_t_2 = __pyx_PyFloat_AsDouble(__pyx_v_value); if (unlikely((__pyx_t_2 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 188, __pyx_L1_error)
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(SetQHYCCDParam(PyLong_AsVoidPtr(__pyx_v_cam), __pyx_t_1, __pyx_t_2)));
 
-  /* "QHYCCD/pyqhyccd.pyx":179
+  /* "QHYCCD/pyqhyccd.pyx":187
  *         return None
  * 
  * def SetQHYCCDParam(cam, controlId, value):             # <<<<<<<<<<<<<<
@@ -5401,7 +5708,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_24SetQHYCCDParam(CYTHON_UNUSED PyObj
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":182
+/* "QHYCCD/pyqhyccd.pyx":190
  *     chkerr(qhy.SetQHYCCDParam(PyLong_AsVoidPtr(cam), controlId, value))
  * 
  * def GetQHYCCDParamMinMaxStep(cam, controlId):             # <<<<<<<<<<<<<<
@@ -5458,19 +5765,19 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 182, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 190, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
         if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_controlId)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 182, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 190, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("GetQHYCCDParamMinMaxStep", 1, 2, 2, 1); __PYX_ERR(0, 182, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetQHYCCDParamMinMaxStep", 1, 2, 2, 1); __PYX_ERR(0, 190, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDParamMinMaxStep") < 0)) __PYX_ERR(0, 182, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDParamMinMaxStep") < 0)) __PYX_ERR(0, 190, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
@@ -5483,7 +5790,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetQHYCCDParamMinMaxStep", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 182, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetQHYCCDParamMinMaxStep", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 190, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDParamMinMaxStep", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5512,17 +5819,17 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_26GetQHYCCDParamMinMaxStep(CYTHON_UN
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("GetQHYCCDParamMinMaxStep", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":184
+  /* "QHYCCD/pyqhyccd.pyx":192
  * def GetQHYCCDParamMinMaxStep(cam, controlId):
  *     cdef double pmin, pmax, pstep
  *     chkerr(qhy.GetQHYCCDParamMinMaxStep(PyLong_AsVoidPtr(cam), controlId, &pmin, &pmax, &pstep))             # <<<<<<<<<<<<<<
  *     return (pmin, pmax, pstep)
  * 
  */
-  __pyx_t_1 = ((CONTROL_ID)__Pyx_PyInt_As_CONTROL_ID(__pyx_v_controlId)); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 184, __pyx_L1_error)
+  __pyx_t_1 = ((CONTROL_ID)__Pyx_PyInt_As_CONTROL_ID(__pyx_v_controlId)); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 192, __pyx_L1_error)
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(GetQHYCCDParamMinMaxStep(PyLong_AsVoidPtr(__pyx_v_cam), __pyx_t_1, (&__pyx_v_pmin), (&__pyx_v_pmax), (&__pyx_v_pstep))));
 
-  /* "QHYCCD/pyqhyccd.pyx":185
+  /* "QHYCCD/pyqhyccd.pyx":193
  *     cdef double pmin, pmax, pstep
  *     chkerr(qhy.GetQHYCCDParamMinMaxStep(PyLong_AsVoidPtr(cam), controlId, &pmin, &pmax, &pstep))
  *     return (pmin, pmax, pstep)             # <<<<<<<<<<<<<<
@@ -5530,13 +5837,13 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_26GetQHYCCDParamMinMaxStep(CYTHON_UN
  * def ExpQHYCCDSingleFrame(cam):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_pmin); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble(__pyx_v_pmin); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 193, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_pmax); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __pyx_t_3 = PyFloat_FromDouble(__pyx_v_pmax); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 193, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_pstep); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __pyx_t_4 = PyFloat_FromDouble(__pyx_v_pstep); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 193, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 185, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 193, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_2);
@@ -5551,7 +5858,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_26GetQHYCCDParamMinMaxStep(CYTHON_UN
   __pyx_t_5 = 0;
   goto __pyx_L0;
 
-  /* "QHYCCD/pyqhyccd.pyx":182
+  /* "QHYCCD/pyqhyccd.pyx":190
  *     chkerr(qhy.SetQHYCCDParam(PyLong_AsVoidPtr(cam), controlId, value))
  * 
  * def GetQHYCCDParamMinMaxStep(cam, controlId):             # <<<<<<<<<<<<<<
@@ -5573,7 +5880,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_26GetQHYCCDParamMinMaxStep(CYTHON_UN
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":187
+/* "QHYCCD/pyqhyccd.pyx":195
  *     return (pmin, pmax, pstep)
  * 
  * def ExpQHYCCDSingleFrame(cam):             # <<<<<<<<<<<<<<
@@ -5627,12 +5934,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 187, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 195, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "ExpQHYCCDSingleFrame") < 0)) __PYX_ERR(0, 187, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "ExpQHYCCDSingleFrame") < 0)) __PYX_ERR(0, 195, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -5643,7 +5950,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("ExpQHYCCDSingleFrame", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 187, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("ExpQHYCCDSingleFrame", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 195, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.ExpQHYCCDSingleFrame", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5661,7 +5968,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_28ExpQHYCCDSingleFrame(CYTHON_UNUSED
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("ExpQHYCCDSingleFrame", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":188
+  /* "QHYCCD/pyqhyccd.pyx":196
  * 
  * def ExpQHYCCDSingleFrame(cam):
  *     chkerr(qhy.ExpQHYCCDSingleFrame(PyLong_AsVoidPtr(cam)))             # <<<<<<<<<<<<<<
@@ -5670,7 +5977,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_28ExpQHYCCDSingleFrame(CYTHON_UNUSED
  */
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(ExpQHYCCDSingleFrame(PyLong_AsVoidPtr(__pyx_v_cam))));
 
-  /* "QHYCCD/pyqhyccd.pyx":187
+  /* "QHYCCD/pyqhyccd.pyx":195
  *     return (pmin, pmax, pstep)
  * 
  * def ExpQHYCCDSingleFrame(cam):             # <<<<<<<<<<<<<<
@@ -5685,7 +5992,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_28ExpQHYCCDSingleFrame(CYTHON_UNUSED
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":190
+/* "QHYCCD/pyqhyccd.pyx":198
  *     chkerr(qhy.ExpQHYCCDSingleFrame(PyLong_AsVoidPtr(cam)))
  * 
  * def CancelQHYCCDExposing(cam):             # <<<<<<<<<<<<<<
@@ -5739,12 +6046,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 190, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 198, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "CancelQHYCCDExposing") < 0)) __PYX_ERR(0, 190, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "CancelQHYCCDExposing") < 0)) __PYX_ERR(0, 198, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -5755,7 +6062,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("CancelQHYCCDExposing", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 190, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("CancelQHYCCDExposing", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 198, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.CancelQHYCCDExposing", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5773,7 +6080,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_30CancelQHYCCDExposing(CYTHON_UNUSED
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("CancelQHYCCDExposing", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":191
+  /* "QHYCCD/pyqhyccd.pyx":199
  * 
  * def CancelQHYCCDExposing(cam):
  *     chkerr(qhy.CancelQHYCCDExposing(PyLong_AsVoidPtr(cam)))             # <<<<<<<<<<<<<<
@@ -5782,7 +6089,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_30CancelQHYCCDExposing(CYTHON_UNUSED
  */
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(CancelQHYCCDExposing(PyLong_AsVoidPtr(__pyx_v_cam))));
 
-  /* "QHYCCD/pyqhyccd.pyx":190
+  /* "QHYCCD/pyqhyccd.pyx":198
  *     chkerr(qhy.ExpQHYCCDSingleFrame(PyLong_AsVoidPtr(cam)))
  * 
  * def CancelQHYCCDExposing(cam):             # <<<<<<<<<<<<<<
@@ -5797,7 +6104,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_30CancelQHYCCDExposing(CYTHON_UNUSED
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":193
+/* "QHYCCD/pyqhyccd.pyx":201
  *     chkerr(qhy.CancelQHYCCDExposing(PyLong_AsVoidPtr(cam)))
  * 
  * def CancelQHYCCDExposingAndReadout(cam):             # <<<<<<<<<<<<<<
@@ -5851,12 +6158,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 193, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 201, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "CancelQHYCCDExposingAndReadout") < 0)) __PYX_ERR(0, 193, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "CancelQHYCCDExposingAndReadout") < 0)) __PYX_ERR(0, 201, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -5867,7 +6174,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("CancelQHYCCDExposingAndReadout", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 193, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("CancelQHYCCDExposingAndReadout", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 201, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.CancelQHYCCDExposingAndReadout", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -5885,7 +6192,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_32CancelQHYCCDExposingAndReadout(CYT
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("CancelQHYCCDExposingAndReadout", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":194
+  /* "QHYCCD/pyqhyccd.pyx":202
  * 
  * def CancelQHYCCDExposingAndReadout(cam):
  *     chkerr(qhy.CancelQHYCCDExposingAndReadout(PyLong_AsVoidPtr(cam)))             # <<<<<<<<<<<<<<
@@ -5894,7 +6201,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_32CancelQHYCCDExposingAndReadout(CYT
  */
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(CancelQHYCCDExposingAndReadout(PyLong_AsVoidPtr(__pyx_v_cam))));
 
-  /* "QHYCCD/pyqhyccd.pyx":193
+  /* "QHYCCD/pyqhyccd.pyx":201
  *     chkerr(qhy.CancelQHYCCDExposing(PyLong_AsVoidPtr(cam)))
  * 
  * def CancelQHYCCDExposingAndReadout(cam):             # <<<<<<<<<<<<<<
@@ -5909,7 +6216,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_32CancelQHYCCDExposingAndReadout(CYT
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":196
+/* "QHYCCD/pyqhyccd.pyx":204
  *     chkerr(qhy.CancelQHYCCDExposingAndReadout(PyLong_AsVoidPtr(cam)))
  * 
  * def GetQHYCCDSingleFrame(cam):             # <<<<<<<<<<<<<<
@@ -5963,12 +6270,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 196, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 204, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDSingleFrame") < 0)) __PYX_ERR(0, 196, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDSingleFrame") < 0)) __PYX_ERR(0, 204, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -5979,7 +6286,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetQHYCCDSingleFrame", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 196, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetQHYCCDSingleFrame", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 204, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDSingleFrame", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -6009,7 +6316,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_34GetQHYCCDSingleFrame(CYTHON_UNUSED
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("GetQHYCCDSingleFrame", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":200
+  /* "QHYCCD/pyqhyccd.pyx":208
  *     cdef uint8_t *imgdata
  *     cdef uint32_t memlength
  *     memlength = qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))             # <<<<<<<<<<<<<<
@@ -6018,7 +6325,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_34GetQHYCCDSingleFrame(CYTHON_UNUSED
  */
   __pyx_v_memlength = GetQHYCCDMemLength(PyLong_AsVoidPtr(__pyx_v_cam));
 
-  /* "QHYCCD/pyqhyccd.pyx":201
+  /* "QHYCCD/pyqhyccd.pyx":209
  *     cdef uint32_t memlength
  *     memlength = qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))
  *     imgdata = <uint8_t *>malloc(memlength * sizeof(uint8_t))             # <<<<<<<<<<<<<<
@@ -6027,7 +6334,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_34GetQHYCCDSingleFrame(CYTHON_UNUSED
  */
   __pyx_v_imgdata = ((uint8_t *)malloc((__pyx_v_memlength * (sizeof(uint8_t)))));
 
-  /* "QHYCCD/pyqhyccd.pyx":202
+  /* "QHYCCD/pyqhyccd.pyx":210
  *     memlength = qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))
  *     imgdata = <uint8_t *>malloc(memlength * sizeof(uint8_t))
  *     chkerr(qhy.GetQHYCCDSingleFrame(PyLong_AsVoidPtr(cam), &w, &h, &bpp, &channels, imgdata))             # <<<<<<<<<<<<<<
@@ -6036,7 +6343,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_34GetQHYCCDSingleFrame(CYTHON_UNUSED
  */
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(GetQHYCCDSingleFrame(PyLong_AsVoidPtr(__pyx_v_cam), (&__pyx_v_w), (&__pyx_v_h), (&__pyx_v_bpp), (&__pyx_v_channels), __pyx_v_imgdata)));
 
-  /* "QHYCCD/pyqhyccd.pyx":204
+  /* "QHYCCD/pyqhyccd.pyx":212
  *     chkerr(qhy.GetQHYCCDSingleFrame(PyLong_AsVoidPtr(cam), &w, &h, &bpp, &channels, imgdata))
  *     cdef np.npy_intp shape[2]
  *     shape[0] = <np.npy_intp> h             # <<<<<<<<<<<<<<
@@ -6045,7 +6352,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_34GetQHYCCDSingleFrame(CYTHON_UNUSED
  */
   (__pyx_v_shape[0]) = ((npy_intp)__pyx_v_h);
 
-  /* "QHYCCD/pyqhyccd.pyx":205
+  /* "QHYCCD/pyqhyccd.pyx":213
  *     cdef np.npy_intp shape[2]
  *     shape[0] = <np.npy_intp> h
  *     shape[1] = <np.npy_intp> w             # <<<<<<<<<<<<<<
@@ -6054,29 +6361,29 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_34GetQHYCCDSingleFrame(CYTHON_UNUSED
  */
   (__pyx_v_shape[1]) = ((npy_intp)__pyx_v_w);
 
-  /* "QHYCCD/pyqhyccd.pyx":206
+  /* "QHYCCD/pyqhyccd.pyx":214
  *     shape[0] = <np.npy_intp> h
  *     shape[1] = <np.npy_intp> w
  *     data = np.PyArray_SimpleNewFromData(2, shape, np.NPY_UINT16, <void *>imgdata)             # <<<<<<<<<<<<<<
  *     np.PyArray_ENABLEFLAGS(data, np.NPY_ARRAY_OWNDATA)
  *     return data
  */
-  __pyx_t_1 = PyArray_SimpleNewFromData(2, __pyx_v_shape, NPY_UINT16, ((void *)__pyx_v_imgdata)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 206, __pyx_L1_error)
+  __pyx_t_1 = PyArray_SimpleNewFromData(2, __pyx_v_shape, NPY_UINT16, ((void *)__pyx_v_imgdata)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 214, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_data = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":207
+  /* "QHYCCD/pyqhyccd.pyx":215
  *     shape[1] = <np.npy_intp> w
  *     data = np.PyArray_SimpleNewFromData(2, shape, np.NPY_UINT16, <void *>imgdata)
  *     np.PyArray_ENABLEFLAGS(data, np.NPY_ARRAY_OWNDATA)             # <<<<<<<<<<<<<<
  *     return data
  * 
  */
-  if (!(likely(((__pyx_v_data) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_data, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 207, __pyx_L1_error)
+  if (!(likely(((__pyx_v_data) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_data, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 215, __pyx_L1_error)
   PyArray_ENABLEFLAGS(((PyArrayObject *)__pyx_v_data), NPY_ARRAY_OWNDATA);
 
-  /* "QHYCCD/pyqhyccd.pyx":208
+  /* "QHYCCD/pyqhyccd.pyx":216
  *     data = np.PyArray_SimpleNewFromData(2, shape, np.NPY_UINT16, <void *>imgdata)
  *     np.PyArray_ENABLEFLAGS(data, np.NPY_ARRAY_OWNDATA)
  *     return data             # <<<<<<<<<<<<<<
@@ -6088,7 +6395,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_34GetQHYCCDSingleFrame(CYTHON_UNUSED
   __pyx_r = __pyx_v_data;
   goto __pyx_L0;
 
-  /* "QHYCCD/pyqhyccd.pyx":196
+  /* "QHYCCD/pyqhyccd.pyx":204
  *     chkerr(qhy.CancelQHYCCDExposingAndReadout(PyLong_AsVoidPtr(cam)))
  * 
  * def GetQHYCCDSingleFrame(cam):             # <<<<<<<<<<<<<<
@@ -6108,7 +6415,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_34GetQHYCCDSingleFrame(CYTHON_UNUSED
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":210
+/* "QHYCCD/pyqhyccd.pyx":218
  *     return data
  * 
  * def GetQHYCCDMemLength(cam):             # <<<<<<<<<<<<<<
@@ -6162,12 +6469,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 210, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 218, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDMemLength") < 0)) __PYX_ERR(0, 210, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDMemLength") < 0)) __PYX_ERR(0, 218, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -6178,7 +6485,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetQHYCCDMemLength", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 210, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetQHYCCDMemLength", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 218, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDMemLength", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
@@ -6200,21 +6507,21 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_36GetQHYCCDMemLength(CYTHON_UNUSED P
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("GetQHYCCDMemLength", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":211
+  /* "QHYCCD/pyqhyccd.pyx":219
  * 
  * def GetQHYCCDMemLength(cam):
  *     return qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))             # <<<<<<<<<<<<<<
  * 
- * def SetQHYCCDResolution(cam, x, y, xsize, ysize):
+ * def SetQHYCCDBinMode(cam, wbin, hbin):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(GetQHYCCDMemLength(PyLong_AsVoidPtr(__pyx_v_cam))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 211, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(GetQHYCCDMemLength(PyLong_AsVoidPtr(__pyx_v_cam))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 219, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "QHYCCD/pyqhyccd.pyx":210
+  /* "QHYCCD/pyqhyccd.pyx":218
  *     return data
  * 
  * def GetQHYCCDMemLength(cam):             # <<<<<<<<<<<<<<
@@ -6233,8 +6540,156 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_36GetQHYCCDMemLength(CYTHON_UNUSED P
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":213
+/* "QHYCCD/pyqhyccd.pyx":221
  *     return qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))
+ * 
+ * def SetQHYCCDBinMode(cam, wbin, hbin):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), <uint32_t> wbin, <uint32_t> hbin))
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_39SetQHYCCDBinMode(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_39SetQHYCCDBinMode = {"SetQHYCCDBinMode", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_39SetQHYCCDBinMode, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_39SetQHYCCDBinMode(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_cam = 0;
+  PyObject *__pyx_v_wbin = 0;
+  PyObject *__pyx_v_hbin = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED const Py_ssize_t __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("SetQHYCCDBinMode (wrapper)", 0);
+  {
+    #if CYTHON_COMPILING_IN_LIMITED_API
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_cam,&__pyx_n_s_wbin,&__pyx_n_s_hbin,0};
+    #else
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_cam,&__pyx_n_s_wbin,&__pyx_n_s_hbin,0};
+    #endif
+    PyObject* values[3] = {0,0,0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  3: values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 221, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_wbin)) != 0)) kw_args--;
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 221, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("SetQHYCCDBinMode", 1, 3, 3, 1); __PYX_ERR(0, 221, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (likely((values[2] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_hbin)) != 0)) kw_args--;
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 221, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("SetQHYCCDBinMode", 1, 3, 3, 2); __PYX_ERR(0, 221, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "SetQHYCCDBinMode") < 0)) __PYX_ERR(0, 221, __pyx_L3_error)
+      }
+    } else if (unlikely(__pyx_nargs != 3)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+      values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+      values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+    }
+    __pyx_v_cam = values[0];
+    __pyx_v_wbin = values[1];
+    __pyx_v_hbin = values[2];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("SetQHYCCDBinMode", 1, 3, 3, __pyx_nargs); __PYX_ERR(0, 221, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("QHYCCD.pyqhyccd.SetQHYCCDBinMode", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_38SetQHYCCDBinMode(__pyx_self, __pyx_v_cam, __pyx_v_wbin, __pyx_v_hbin);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_38SetQHYCCDBinMode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_wbin, PyObject *__pyx_v_hbin) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  uint32_t __pyx_t_1;
+  uint32_t __pyx_t_2;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("SetQHYCCDBinMode", 0);
+
+  /* "QHYCCD/pyqhyccd.pyx":222
+ * 
+ * def SetQHYCCDBinMode(cam, wbin, hbin):
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), <uint32_t> wbin, <uint32_t> hbin))             # <<<<<<<<<<<<<<
+ * 
+ * def SetQHYCCDResolution(cam, x, y, xsize, ysize):
+ */
+  __pyx_t_1 = __Pyx_PyInt_As_uint32_t(__pyx_v_wbin); if (unlikely((__pyx_t_1 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 222, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_As_uint32_t(__pyx_v_hbin); if (unlikely((__pyx_t_2 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 222, __pyx_L1_error)
+  (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(SetQHYCCDBinMode(PyLong_AsVoidPtr(__pyx_v_cam), ((uint32_t)__pyx_t_1), ((uint32_t)__pyx_t_2))));
+
+  /* "QHYCCD/pyqhyccd.pyx":221
+ *     return qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))
+ * 
+ * def SetQHYCCDBinMode(cam, wbin, hbin):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), <uint32_t> wbin, <uint32_t> hbin))
+ * 
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("QHYCCD.pyqhyccd.SetQHYCCDBinMode", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "QHYCCD/pyqhyccd.pyx":224
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), <uint32_t> wbin, <uint32_t> hbin))
  * 
  * def SetQHYCCDResolution(cam, x, y, xsize, ysize):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.SetQHYCCDResolution(PyLong_AsVoidPtr(cam), <uint32_t> x, <uint32_t> y, <uint32_t> xsize, <uint32_t> ysize))
@@ -6242,15 +6697,15 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_36GetQHYCCDMemLength(CYTHON_UNUSED P
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_39SetQHYCCDResolution(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_41SetQHYCCDResolution(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_39SetQHYCCDResolution = {"SetQHYCCDResolution", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_39SetQHYCCDResolution, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_39SetQHYCCDResolution(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_41SetQHYCCDResolution = {"SetQHYCCDResolution", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_41SetQHYCCDResolution, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_41SetQHYCCDResolution(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -6299,40 +6754,40 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 213, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 224, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
         if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_x)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 213, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 224, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("SetQHYCCDResolution", 1, 5, 5, 1); __PYX_ERR(0, 213, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("SetQHYCCDResolution", 1, 5, 5, 1); __PYX_ERR(0, 224, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
         if (likely((values[2] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_y)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 213, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 224, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("SetQHYCCDResolution", 1, 5, 5, 2); __PYX_ERR(0, 213, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("SetQHYCCDResolution", 1, 5, 5, 2); __PYX_ERR(0, 224, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (likely((values[3] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_xsize)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 213, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 224, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("SetQHYCCDResolution", 1, 5, 5, 3); __PYX_ERR(0, 213, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("SetQHYCCDResolution", 1, 5, 5, 3); __PYX_ERR(0, 224, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (likely((values[4] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_ysize)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 213, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 224, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("SetQHYCCDResolution", 1, 5, 5, 4); __PYX_ERR(0, 213, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("SetQHYCCDResolution", 1, 5, 5, 4); __PYX_ERR(0, 224, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "SetQHYCCDResolution") < 0)) __PYX_ERR(0, 213, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "SetQHYCCDResolution") < 0)) __PYX_ERR(0, 224, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 5)) {
       goto __pyx_L5_argtuple_error;
@@ -6351,20 +6806,20 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("SetQHYCCDResolution", 1, 5, 5, __pyx_nargs); __PYX_ERR(0, 213, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("SetQHYCCDResolution", 1, 5, 5, __pyx_nargs); __PYX_ERR(0, 224, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.SetQHYCCDResolution", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_38SetQHYCCDResolution(__pyx_self, __pyx_v_cam, __pyx_v_x, __pyx_v_y, __pyx_v_xsize, __pyx_v_ysize);
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_40SetQHYCCDResolution(__pyx_self, __pyx_v_cam, __pyx_v_x, __pyx_v_y, __pyx_v_xsize, __pyx_v_ysize);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_38SetQHYCCDResolution(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_x, PyObject *__pyx_v_y, PyObject *__pyx_v_xsize, PyObject *__pyx_v_ysize) {
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_40SetQHYCCDResolution(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_x, PyObject *__pyx_v_y, PyObject *__pyx_v_xsize, PyObject *__pyx_v_ysize) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   uint32_t __pyx_t_1;
@@ -6376,21 +6831,21 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_38SetQHYCCDResolution(CYTHON_UNUSED 
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("SetQHYCCDResolution", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":214
+  /* "QHYCCD/pyqhyccd.pyx":225
  * 
  * def SetQHYCCDResolution(cam, x, y, xsize, ysize):
  *     chkerr(qhy.SetQHYCCDResolution(PyLong_AsVoidPtr(cam), <uint32_t> x, <uint32_t> y, <uint32_t> xsize, <uint32_t> ysize))             # <<<<<<<<<<<<<<
  * 
  * def GetQHYCCDExposureRemaining(cam):
  */
-  __pyx_t_1 = __Pyx_PyInt_As_uint32_t(__pyx_v_x); if (unlikely((__pyx_t_1 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 214, __pyx_L1_error)
-  __pyx_t_2 = __Pyx_PyInt_As_uint32_t(__pyx_v_y); if (unlikely((__pyx_t_2 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 214, __pyx_L1_error)
-  __pyx_t_3 = __Pyx_PyInt_As_uint32_t(__pyx_v_xsize); if (unlikely((__pyx_t_3 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 214, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_PyInt_As_uint32_t(__pyx_v_ysize); if (unlikely((__pyx_t_4 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 214, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_uint32_t(__pyx_v_x); if (unlikely((__pyx_t_1 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 225, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_As_uint32_t(__pyx_v_y); if (unlikely((__pyx_t_2 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 225, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_As_uint32_t(__pyx_v_xsize); if (unlikely((__pyx_t_3 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 225, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_As_uint32_t(__pyx_v_ysize); if (unlikely((__pyx_t_4 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 225, __pyx_L1_error)
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(SetQHYCCDResolution(PyLong_AsVoidPtr(__pyx_v_cam), ((uint32_t)__pyx_t_1), ((uint32_t)__pyx_t_2), ((uint32_t)__pyx_t_3), ((uint32_t)__pyx_t_4))));
 
-  /* "QHYCCD/pyqhyccd.pyx":213
- *     return qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))
+  /* "QHYCCD/pyqhyccd.pyx":224
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), <uint32_t> wbin, <uint32_t> hbin))
  * 
  * def SetQHYCCDResolution(cam, x, y, xsize, ysize):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.SetQHYCCDResolution(PyLong_AsVoidPtr(cam), <uint32_t> x, <uint32_t> y, <uint32_t> xsize, <uint32_t> ysize))
@@ -6409,7 +6864,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_38SetQHYCCDResolution(CYTHON_UNUSED 
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":216
+/* "QHYCCD/pyqhyccd.pyx":227
  *     chkerr(qhy.SetQHYCCDResolution(PyLong_AsVoidPtr(cam), <uint32_t> x, <uint32_t> y, <uint32_t> xsize, <uint32_t> ysize))
  * 
  * def GetQHYCCDExposureRemaining(cam):             # <<<<<<<<<<<<<<
@@ -6418,15 +6873,15 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_38SetQHYCCDResolution(CYTHON_UNUSED 
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_41GetQHYCCDExposureRemaining(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_43GetQHYCCDExposureRemaining(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_41GetQHYCCDExposureRemaining = {"GetQHYCCDExposureRemaining", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_41GetQHYCCDExposureRemaining, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_41GetQHYCCDExposureRemaining(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_43GetQHYCCDExposureRemaining = {"GetQHYCCDExposureRemaining", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_43GetQHYCCDExposureRemaining, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_43GetQHYCCDExposureRemaining(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -6463,12 +6918,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 216, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 227, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDExposureRemaining") < 0)) __PYX_ERR(0, 216, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDExposureRemaining") < 0)) __PYX_ERR(0, 227, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -6479,20 +6934,20 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetQHYCCDExposureRemaining", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 216, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetQHYCCDExposureRemaining", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 227, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDExposureRemaining", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_40GetQHYCCDExposureRemaining(__pyx_self, __pyx_v_cam);
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_42GetQHYCCDExposureRemaining(__pyx_self, __pyx_v_cam);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_40GetQHYCCDExposureRemaining(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam) {
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_42GetQHYCCDExposureRemaining(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -6501,7 +6956,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_40GetQHYCCDExposureRemaining(CYTHON_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("GetQHYCCDExposureRemaining", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":217
+  /* "QHYCCD/pyqhyccd.pyx":228
  * 
  * def GetQHYCCDExposureRemaining(cam):
  *     return(qhy.GetQHYCCDExposureRemaining(PyLong_AsVoidPtr(cam)))             # <<<<<<<<<<<<<<
@@ -6509,13 +6964,13 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_40GetQHYCCDExposureRemaining(CYTHON_
  * def GetQHYCCDType(cam):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(GetQHYCCDExposureRemaining(PyLong_AsVoidPtr(__pyx_v_cam))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 217, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(GetQHYCCDExposureRemaining(PyLong_AsVoidPtr(__pyx_v_cam))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 228, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "QHYCCD/pyqhyccd.pyx":216
+  /* "QHYCCD/pyqhyccd.pyx":227
  *     chkerr(qhy.SetQHYCCDResolution(PyLong_AsVoidPtr(cam), <uint32_t> x, <uint32_t> y, <uint32_t> xsize, <uint32_t> ysize))
  * 
  * def GetQHYCCDExposureRemaining(cam):             # <<<<<<<<<<<<<<
@@ -6534,7 +6989,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_40GetQHYCCDExposureRemaining(CYTHON_
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":219
+/* "QHYCCD/pyqhyccd.pyx":230
  *     return(qhy.GetQHYCCDExposureRemaining(PyLong_AsVoidPtr(cam)))
  * 
  * def GetQHYCCDType(cam):             # <<<<<<<<<<<<<<
@@ -6543,15 +6998,15 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_40GetQHYCCDExposureRemaining(CYTHON_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_43GetQHYCCDType(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_45GetQHYCCDType(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_43GetQHYCCDType = {"GetQHYCCDType", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_43GetQHYCCDType, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_43GetQHYCCDType(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_45GetQHYCCDType = {"GetQHYCCDType", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_45GetQHYCCDType, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_45GetQHYCCDType(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -6588,12 +7043,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 219, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 230, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDType") < 0)) __PYX_ERR(0, 219, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDType") < 0)) __PYX_ERR(0, 230, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -6604,20 +7059,20 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetQHYCCDType", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 219, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetQHYCCDType", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 230, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDType", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_42GetQHYCCDType(__pyx_self, __pyx_v_cam);
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_44GetQHYCCDType(__pyx_self, __pyx_v_cam);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_42GetQHYCCDType(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam) {
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_44GetQHYCCDType(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam) {
   PyObject *__pyx_v_ret = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -6633,34 +7088,34 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_42GetQHYCCDType(CYTHON_UNUSED PyObje
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("GetQHYCCDType", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":220
+  /* "QHYCCD/pyqhyccd.pyx":231
  * 
  * def GetQHYCCDType(cam):
  *     ret = qhy.GetQHYCCDType(PyLong_AsVoidPtr(cam))             # <<<<<<<<<<<<<<
  *     if ret != qhy.QHYCCD_ERROR:
  *         return ret
  */
-  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(GetQHYCCDType(PyLong_AsVoidPtr(__pyx_v_cam))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 220, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(GetQHYCCDType(PyLong_AsVoidPtr(__pyx_v_cam))); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 231, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_ret = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":221
+  /* "QHYCCD/pyqhyccd.pyx":232
  * def GetQHYCCDType(cam):
  *     ret = qhy.GetQHYCCDType(PyLong_AsVoidPtr(cam))
  *     if ret != qhy.QHYCCD_ERROR:             # <<<<<<<<<<<<<<
  *         return ret
  *     else:
  */
-  __pyx_t_1 = __Pyx_PyInt_From_int(QHYCCD_ERROR); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 221, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(QHYCCD_ERROR); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 232, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_RichCompare(__pyx_v_ret, __pyx_t_1, Py_NE); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 221, __pyx_L1_error)
+  __pyx_t_2 = PyObject_RichCompare(__pyx_v_ret, __pyx_t_1, Py_NE); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 232, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 221, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_3 < 0)) __PYX_ERR(0, 232, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (likely(__pyx_t_3)) {
 
-    /* "QHYCCD/pyqhyccd.pyx":222
+    /* "QHYCCD/pyqhyccd.pyx":233
  *     ret = qhy.GetQHYCCDType(PyLong_AsVoidPtr(cam))
  *     if ret != qhy.QHYCCD_ERROR:
  *         return ret             # <<<<<<<<<<<<<<
@@ -6672,7 +7127,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_42GetQHYCCDType(CYTHON_UNUSED PyObje
     __pyx_r = __pyx_v_ret;
     goto __pyx_L0;
 
-    /* "QHYCCD/pyqhyccd.pyx":221
+    /* "QHYCCD/pyqhyccd.pyx":232
  * def GetQHYCCDType(cam):
  *     ret = qhy.GetQHYCCDType(PyLong_AsVoidPtr(cam))
  *     if ret != qhy.QHYCCD_ERROR:             # <<<<<<<<<<<<<<
@@ -6681,7 +7136,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_42GetQHYCCDType(CYTHON_UNUSED PyObje
  */
   }
 
-  /* "QHYCCD/pyqhyccd.pyx":224
+  /* "QHYCCD/pyqhyccd.pyx":235
  *         return ret
  *     else:
  *         raise OSError(-ret, os.stderror(-ret))             # <<<<<<<<<<<<<<
@@ -6689,14 +7144,14 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_42GetQHYCCDType(CYTHON_UNUSED PyObje
  * def GetQHYCCDSDKVersion():
  */
   /*else*/ {
-    __pyx_t_2 = PyNumber_Negative(__pyx_v_ret); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_Negative(__pyx_v_ret); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 235, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_os); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 224, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_os); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 235, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_stderror); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 224, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_stderror); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 235, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = PyNumber_Negative(__pyx_v_ret); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 224, __pyx_L1_error)
+    __pyx_t_4 = PyNumber_Negative(__pyx_v_ret); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 235, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_6 = NULL;
     __pyx_t_7 = 0;
@@ -6715,11 +7170,11 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_42GetQHYCCDType(CYTHON_UNUSED PyObje
       __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_5, __pyx_callargs+1-__pyx_t_7, 1+__pyx_t_7);
       __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 224, __pyx_L1_error)
+      if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 235, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_1);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     }
-    __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 224, __pyx_L1_error)
+    __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 235, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_GIVEREF(__pyx_t_2);
     PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_2);
@@ -6727,15 +7182,15 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_42GetQHYCCDType(CYTHON_UNUSED PyObje
     PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_1);
     __pyx_t_2 = 0;
     __pyx_t_1 = 0;
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_OSError, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 224, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_builtin_OSError, __pyx_t_5, NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 235, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_Raise(__pyx_t_1, 0, 0, 0);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-    __PYX_ERR(0, 224, __pyx_L1_error)
+    __PYX_ERR(0, 235, __pyx_L1_error)
   }
 
-  /* "QHYCCD/pyqhyccd.pyx":219
+  /* "QHYCCD/pyqhyccd.pyx":230
  *     return(qhy.GetQHYCCDExposureRemaining(PyLong_AsVoidPtr(cam)))
  * 
  * def GetQHYCCDType(cam):             # <<<<<<<<<<<<<<
@@ -6759,7 +7214,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_42GetQHYCCDType(CYTHON_UNUSED PyObje
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":226
+/* "QHYCCD/pyqhyccd.pyx":237
  *         raise OSError(-ret, os.stderror(-ret))
  * 
  * def GetQHYCCDSDKVersion():             # <<<<<<<<<<<<<<
@@ -6768,21 +7223,21 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_42GetQHYCCDType(CYTHON_UNUSED PyObje
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_45GetQHYCCDSDKVersion(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
-static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_45GetQHYCCDSDKVersion = {"GetQHYCCDSDKVersion", (PyCFunction)__pyx_pw_6QHYCCD_8pyqhyccd_45GetQHYCCDSDKVersion, METH_NOARGS, 0};
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_45GetQHYCCDSDKVersion(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_47GetQHYCCDSDKVersion(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused); /*proto*/
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_47GetQHYCCDSDKVersion = {"GetQHYCCDSDKVersion", (PyCFunction)__pyx_pw_6QHYCCD_8pyqhyccd_47GetQHYCCDSDKVersion, METH_NOARGS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_47GetQHYCCDSDKVersion(PyObject *__pyx_self, CYTHON_UNUSED PyObject *unused) {
   CYTHON_UNUSED PyObject *const *__pyx_kwvalues = __Pyx_KwValues_VARARGS(__pyx_args, __pyx_nargs);
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("GetQHYCCDSDKVersion (wrapper)", 0);
-  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_44GetQHYCCDSDKVersion(__pyx_self);
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_46GetQHYCCDSDKVersion(__pyx_self);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_44GetQHYCCDSDKVersion(CYTHON_UNUSED PyObject *__pyx_self) {
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_46GetQHYCCDSDKVersion(CYTHON_UNUSED PyObject *__pyx_self) {
   uint32_t __pyx_v_year;
   uint32_t __pyx_v_month;
   uint32_t __pyx_v_day;
@@ -6799,7 +7254,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_44GetQHYCCDSDKVersion(CYTHON_UNUSED 
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("GetQHYCCDSDKVersion", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":228
+  /* "QHYCCD/pyqhyccd.pyx":239
  * def GetQHYCCDSDKVersion():
  *     cdef uint32_t year, month, day, subday
  *     chkerr(qhy.GetQHYCCDSDKVersion(&year, &month, &day, &subday))             # <<<<<<<<<<<<<<
@@ -6808,7 +7263,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_44GetQHYCCDSDKVersion(CYTHON_UNUSED 
  */
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(GetQHYCCDSDKVersion((&__pyx_v_year), (&__pyx_v_month), (&__pyx_v_day), (&__pyx_v_subday))));
 
-  /* "QHYCCD/pyqhyccd.pyx":229
+  /* "QHYCCD/pyqhyccd.pyx":240
  *     cdef uint32_t year, month, day, subday
  *     chkerr(qhy.GetQHYCCDSDKVersion(&year, &month, &day, &subday))
  *     return f"QHYCCD SDK {year}-{month}-{day},{subday}"             # <<<<<<<<<<<<<<
@@ -6816,7 +7271,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_44GetQHYCCDSDKVersion(CYTHON_UNUSED 
  * def GetQHYCCDNumberOfReadModes(cam):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = PyTuple_New(8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 229, __pyx_L1_error)
+  __pyx_t_1 = PyTuple_New(8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 240, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_2 = 0;
   __pyx_t_3 = 127;
@@ -6824,9 +7279,9 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_44GetQHYCCDSDKVersion(CYTHON_UNUSED 
   __pyx_t_2 += 11;
   __Pyx_GIVEREF(__pyx_kp_u_QHYCCD_SDK);
   PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_kp_u_QHYCCD_SDK);
-  __pyx_t_4 = __Pyx_PyInt_From_uint32_t(__pyx_v_year); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 229, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_uint32_t(__pyx_v_year); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 240, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 229, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 240, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
@@ -6838,9 +7293,9 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_44GetQHYCCDSDKVersion(CYTHON_UNUSED 
   __pyx_t_2 += 1;
   __Pyx_GIVEREF(__pyx_kp_u_);
   PyTuple_SET_ITEM(__pyx_t_1, 2, __pyx_kp_u_);
-  __pyx_t_5 = __Pyx_PyInt_From_uint32_t(__pyx_v_month); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 229, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_From_uint32_t(__pyx_v_month); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 240, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 229, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 240, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) : __pyx_t_3;
@@ -6852,9 +7307,9 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_44GetQHYCCDSDKVersion(CYTHON_UNUSED 
   __pyx_t_2 += 1;
   __Pyx_GIVEREF(__pyx_kp_u_);
   PyTuple_SET_ITEM(__pyx_t_1, 4, __pyx_kp_u_);
-  __pyx_t_4 = __Pyx_PyInt_From_uint32_t(__pyx_v_day); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 229, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_uint32_t(__pyx_v_day); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 240, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 229, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_FormatSimple(__pyx_t_4, __pyx_empty_unicode); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 240, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_5) : __pyx_t_3;
@@ -6866,9 +7321,9 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_44GetQHYCCDSDKVersion(CYTHON_UNUSED 
   __pyx_t_2 += 1;
   __Pyx_GIVEREF(__pyx_kp_u__2);
   PyTuple_SET_ITEM(__pyx_t_1, 6, __pyx_kp_u__2);
-  __pyx_t_5 = __Pyx_PyInt_From_uint32_t(__pyx_v_subday); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 229, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyInt_From_uint32_t(__pyx_v_subday); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 240, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 229, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_FormatSimple(__pyx_t_5, __pyx_empty_unicode); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 240, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_3 = (__Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) > __pyx_t_3) ? __Pyx_PyUnicode_MAX_CHAR_VALUE(__pyx_t_4) : __pyx_t_3;
@@ -6876,14 +7331,14 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_44GetQHYCCDSDKVersion(CYTHON_UNUSED 
   __Pyx_GIVEREF(__pyx_t_4);
   PyTuple_SET_ITEM(__pyx_t_1, 7, __pyx_t_4);
   __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_1, 8, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 229, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyUnicode_Join(__pyx_t_1, 8, __pyx_t_2, __pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 240, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_4;
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "QHYCCD/pyqhyccd.pyx":226
+  /* "QHYCCD/pyqhyccd.pyx":237
  *         raise OSError(-ret, os.stderror(-ret))
  * 
  * def GetQHYCCDSDKVersion():             # <<<<<<<<<<<<<<
@@ -6904,7 +7359,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_44GetQHYCCDSDKVersion(CYTHON_UNUSED 
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":231
+/* "QHYCCD/pyqhyccd.pyx":242
  *     return f"QHYCCD SDK {year}-{month}-{day},{subday}"
  * 
  * def GetQHYCCDNumberOfReadModes(cam):             # <<<<<<<<<<<<<<
@@ -6913,15 +7368,15 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_44GetQHYCCDSDKVersion(CYTHON_UNUSED 
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_47GetQHYCCDNumberOfReadModes(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_49GetQHYCCDNumberOfReadModes(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_47GetQHYCCDNumberOfReadModes = {"GetQHYCCDNumberOfReadModes", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_47GetQHYCCDNumberOfReadModes, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_47GetQHYCCDNumberOfReadModes(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_49GetQHYCCDNumberOfReadModes = {"GetQHYCCDNumberOfReadModes", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_49GetQHYCCDNumberOfReadModes, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_49GetQHYCCDNumberOfReadModes(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -6958,12 +7413,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 231, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 242, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDNumberOfReadModes") < 0)) __PYX_ERR(0, 231, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDNumberOfReadModes") < 0)) __PYX_ERR(0, 242, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -6974,20 +7429,20 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetQHYCCDNumberOfReadModes", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 231, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetQHYCCDNumberOfReadModes", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 242, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDNumberOfReadModes", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_46GetQHYCCDNumberOfReadModes(__pyx_self, __pyx_v_cam);
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_48GetQHYCCDNumberOfReadModes(__pyx_self, __pyx_v_cam);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_46GetQHYCCDNumberOfReadModes(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam) {
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_48GetQHYCCDNumberOfReadModes(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam) {
   uint32_t __pyx_v_numModes;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -6997,7 +7452,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_46GetQHYCCDNumberOfReadModes(CYTHON_
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("GetQHYCCDNumberOfReadModes", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":233
+  /* "QHYCCD/pyqhyccd.pyx":244
  * def GetQHYCCDNumberOfReadModes(cam):
  *     cdef uint32_t numModes
  *     chkerr(qhy.GetQHYCCDNumberOfReadModes(PyLong_AsVoidPtr(cam), &numModes))             # <<<<<<<<<<<<<<
@@ -7006,7 +7461,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_46GetQHYCCDNumberOfReadModes(CYTHON_
  */
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(GetQHYCCDNumberOfReadModes(PyLong_AsVoidPtr(__pyx_v_cam), (&__pyx_v_numModes))));
 
-  /* "QHYCCD/pyqhyccd.pyx":234
+  /* "QHYCCD/pyqhyccd.pyx":245
  *     cdef uint32_t numModes
  *     chkerr(qhy.GetQHYCCDNumberOfReadModes(PyLong_AsVoidPtr(cam), &numModes))
  *     return numModes             # <<<<<<<<<<<<<<
@@ -7014,13 +7469,13 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_46GetQHYCCDNumberOfReadModes(CYTHON_
  * def GetQHYCCDReadModeResolution(cam, modeNumber):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(__pyx_v_numModes); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 234, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(__pyx_v_numModes); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 245, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "QHYCCD/pyqhyccd.pyx":231
+  /* "QHYCCD/pyqhyccd.pyx":242
  *     return f"QHYCCD SDK {year}-{month}-{day},{subday}"
  * 
  * def GetQHYCCDNumberOfReadModes(cam):             # <<<<<<<<<<<<<<
@@ -7039,7 +7494,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_46GetQHYCCDNumberOfReadModes(CYTHON_
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":236
+/* "QHYCCD/pyqhyccd.pyx":247
  *     return numModes
  * 
  * def GetQHYCCDReadModeResolution(cam, modeNumber):             # <<<<<<<<<<<<<<
@@ -7048,15 +7503,15 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_46GetQHYCCDNumberOfReadModes(CYTHON_
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_49GetQHYCCDReadModeResolution(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_51GetQHYCCDReadModeResolution(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_49GetQHYCCDReadModeResolution = {"GetQHYCCDReadModeResolution", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_49GetQHYCCDReadModeResolution, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_49GetQHYCCDReadModeResolution(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_51GetQHYCCDReadModeResolution = {"GetQHYCCDReadModeResolution", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_51GetQHYCCDReadModeResolution, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_51GetQHYCCDReadModeResolution(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -7096,19 +7551,19 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 236, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 247, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
         if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_modeNumber)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 236, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 247, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("GetQHYCCDReadModeResolution", 1, 2, 2, 1); __PYX_ERR(0, 236, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetQHYCCDReadModeResolution", 1, 2, 2, 1); __PYX_ERR(0, 247, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDReadModeResolution") < 0)) __PYX_ERR(0, 236, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDReadModeResolution") < 0)) __PYX_ERR(0, 247, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
@@ -7121,20 +7576,20 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetQHYCCDReadModeResolution", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 236, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetQHYCCDReadModeResolution", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 247, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDReadModeResolution", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_48GetQHYCCDReadModeResolution(__pyx_self, __pyx_v_cam, __pyx_v_modeNumber);
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_50GetQHYCCDReadModeResolution(__pyx_self, __pyx_v_cam, __pyx_v_modeNumber);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_48GetQHYCCDReadModeResolution(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_modeNumber) {
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_50GetQHYCCDReadModeResolution(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_modeNumber) {
   uint32_t __pyx_v_width;
   uint32_t __pyx_v_height;
   PyObject *__pyx_r = NULL;
@@ -7148,17 +7603,17 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_48GetQHYCCDReadModeResolution(CYTHON
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("GetQHYCCDReadModeResolution", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":238
+  /* "QHYCCD/pyqhyccd.pyx":249
  * def GetQHYCCDReadModeResolution(cam, modeNumber):
  *     cdef uint32_t width, height
  *     chkerr(qhy.GetQHYCCDReadModeResolution(PyLong_AsVoidPtr(cam), <uint32_t> modeNumber, &width, &height))             # <<<<<<<<<<<<<<
  *     return (width, height)
  * 
  */
-  __pyx_t_1 = __Pyx_PyInt_As_uint32_t(__pyx_v_modeNumber); if (unlikely((__pyx_t_1 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 238, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_uint32_t(__pyx_v_modeNumber); if (unlikely((__pyx_t_1 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 249, __pyx_L1_error)
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(GetQHYCCDReadModeResolution(PyLong_AsVoidPtr(__pyx_v_cam), ((uint32_t)__pyx_t_1), (&__pyx_v_width), (&__pyx_v_height))));
 
-  /* "QHYCCD/pyqhyccd.pyx":239
+  /* "QHYCCD/pyqhyccd.pyx":250
  *     cdef uint32_t width, height
  *     chkerr(qhy.GetQHYCCDReadModeResolution(PyLong_AsVoidPtr(cam), <uint32_t> modeNumber, &width, &height))
  *     return (width, height)             # <<<<<<<<<<<<<<
@@ -7166,11 +7621,11 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_48GetQHYCCDReadModeResolution(CYTHON
  * def GetQHYCCDReadModeName(cam, modeNumber):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyInt_From_uint32_t(__pyx_v_width); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 239, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_uint32_t(__pyx_v_width); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 250, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyInt_From_uint32_t(__pyx_v_height); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 239, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_uint32_t(__pyx_v_height); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 250, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 239, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 250, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_2);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_2);
@@ -7182,7 +7637,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_48GetQHYCCDReadModeResolution(CYTHON
   __pyx_t_4 = 0;
   goto __pyx_L0;
 
-  /* "QHYCCD/pyqhyccd.pyx":236
+  /* "QHYCCD/pyqhyccd.pyx":247
  *     return numModes
  * 
  * def GetQHYCCDReadModeResolution(cam, modeNumber):             # <<<<<<<<<<<<<<
@@ -7203,7 +7658,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_48GetQHYCCDReadModeResolution(CYTHON
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":241
+/* "QHYCCD/pyqhyccd.pyx":252
  *     return (width, height)
  * 
  * def GetQHYCCDReadModeName(cam, modeNumber):             # <<<<<<<<<<<<<<
@@ -7212,15 +7667,15 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_48GetQHYCCDReadModeResolution(CYTHON
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_51GetQHYCCDReadModeName(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_53GetQHYCCDReadModeName(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_51GetQHYCCDReadModeName = {"GetQHYCCDReadModeName", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_51GetQHYCCDReadModeName, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_51GetQHYCCDReadModeName(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_53GetQHYCCDReadModeName = {"GetQHYCCDReadModeName", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_53GetQHYCCDReadModeName, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_53GetQHYCCDReadModeName(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -7260,19 +7715,19 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 241, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 252, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
         if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_modeNumber)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 241, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 252, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("GetQHYCCDReadModeName", 1, 2, 2, 1); __PYX_ERR(0, 241, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("GetQHYCCDReadModeName", 1, 2, 2, 1); __PYX_ERR(0, 252, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDReadModeName") < 0)) __PYX_ERR(0, 241, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDReadModeName") < 0)) __PYX_ERR(0, 252, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
@@ -7285,20 +7740,20 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetQHYCCDReadModeName", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 241, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetQHYCCDReadModeName", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 252, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDReadModeName", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_50GetQHYCCDReadModeName(__pyx_self, __pyx_v_cam, __pyx_v_modeNumber);
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_52GetQHYCCDReadModeName(__pyx_self, __pyx_v_cam, __pyx_v_modeNumber);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_50GetQHYCCDReadModeName(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_modeNumber) {
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_52GetQHYCCDReadModeName(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_modeNumber) {
   char __pyx_v_name[32];
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -7309,17 +7764,17 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_50GetQHYCCDReadModeName(CYTHON_UNUSE
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("GetQHYCCDReadModeName", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":243
+  /* "QHYCCD/pyqhyccd.pyx":254
  * def GetQHYCCDReadModeName(cam, modeNumber):
  *     cdef char name[32]
  *     chkerr(qhy.GetQHYCCDReadModeName(PyLong_AsVoidPtr(cam), <uint32_t> modeNumber, name))             # <<<<<<<<<<<<<<
  *     return name
  * 
  */
-  __pyx_t_1 = __Pyx_PyInt_As_uint32_t(__pyx_v_modeNumber); if (unlikely((__pyx_t_1 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 243, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_uint32_t(__pyx_v_modeNumber); if (unlikely((__pyx_t_1 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 254, __pyx_L1_error)
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(GetQHYCCDReadModeName(PyLong_AsVoidPtr(__pyx_v_cam), ((uint32_t)__pyx_t_1), __pyx_v_name)));
 
-  /* "QHYCCD/pyqhyccd.pyx":244
+  /* "QHYCCD/pyqhyccd.pyx":255
  *     cdef char name[32]
  *     chkerr(qhy.GetQHYCCDReadModeName(PyLong_AsVoidPtr(cam), <uint32_t> modeNumber, name))
  *     return name             # <<<<<<<<<<<<<<
@@ -7327,13 +7782,13 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_50GetQHYCCDReadModeName(CYTHON_UNUSE
  * def GetQHYCCDReadMode(cam):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_2 = __Pyx_PyObject_FromString(__pyx_v_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 244, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_FromString(__pyx_v_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 255, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __pyx_r = __pyx_t_2;
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "QHYCCD/pyqhyccd.pyx":241
+  /* "QHYCCD/pyqhyccd.pyx":252
  *     return (width, height)
  * 
  * def GetQHYCCDReadModeName(cam, modeNumber):             # <<<<<<<<<<<<<<
@@ -7352,7 +7807,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_50GetQHYCCDReadModeName(CYTHON_UNUSE
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":246
+/* "QHYCCD/pyqhyccd.pyx":257
  *     return name
  * 
  * def GetQHYCCDReadMode(cam):             # <<<<<<<<<<<<<<
@@ -7361,15 +7816,15 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_50GetQHYCCDReadModeName(CYTHON_UNUSE
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_53GetQHYCCDReadMode(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_55GetQHYCCDReadMode(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_53GetQHYCCDReadMode = {"GetQHYCCDReadMode", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_53GetQHYCCDReadMode, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_53GetQHYCCDReadMode(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_55GetQHYCCDReadMode = {"GetQHYCCDReadMode", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_55GetQHYCCDReadMode, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_55GetQHYCCDReadMode(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -7406,12 +7861,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 246, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 257, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDReadMode") < 0)) __PYX_ERR(0, 246, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDReadMode") < 0)) __PYX_ERR(0, 257, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -7422,20 +7877,20 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetQHYCCDReadMode", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 246, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetQHYCCDReadMode", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 257, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDReadMode", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_52GetQHYCCDReadMode(__pyx_self, __pyx_v_cam);
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_54GetQHYCCDReadMode(__pyx_self, __pyx_v_cam);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_52GetQHYCCDReadMode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam) {
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_54GetQHYCCDReadMode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam) {
   uint32_t __pyx_v_modeNumber;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -7445,7 +7900,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_52GetQHYCCDReadMode(CYTHON_UNUSED Py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("GetQHYCCDReadMode", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":248
+  /* "QHYCCD/pyqhyccd.pyx":259
  * def GetQHYCCDReadMode(cam):
  *     cdef uint32_t modeNumber
  *     chkerr(qhy.GetQHYCCDReadMode(PyLong_AsVoidPtr(cam), &modeNumber))             # <<<<<<<<<<<<<<
@@ -7454,7 +7909,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_52GetQHYCCDReadMode(CYTHON_UNUSED Py
  */
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(GetQHYCCDReadMode(PyLong_AsVoidPtr(__pyx_v_cam), (&__pyx_v_modeNumber))));
 
-  /* "QHYCCD/pyqhyccd.pyx":249
+  /* "QHYCCD/pyqhyccd.pyx":260
  *     cdef uint32_t modeNumber
  *     chkerr(qhy.GetQHYCCDReadMode(PyLong_AsVoidPtr(cam), &modeNumber))
  *     return modeNumber             # <<<<<<<<<<<<<<
@@ -7462,13 +7917,13 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_52GetQHYCCDReadMode(CYTHON_UNUSED Py
  * def SetQHYCCDReadMode(cam, modeNumber):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(__pyx_v_modeNumber); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 249, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(__pyx_v_modeNumber); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 260, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_r = __pyx_t_1;
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "QHYCCD/pyqhyccd.pyx":246
+  /* "QHYCCD/pyqhyccd.pyx":257
  *     return name
  * 
  * def GetQHYCCDReadMode(cam):             # <<<<<<<<<<<<<<
@@ -7487,7 +7942,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_52GetQHYCCDReadMode(CYTHON_UNUSED Py
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":251
+/* "QHYCCD/pyqhyccd.pyx":262
  *     return modeNumber
  * 
  * def SetQHYCCDReadMode(cam, modeNumber):             # <<<<<<<<<<<<<<
@@ -7496,15 +7951,15 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_52GetQHYCCDReadMode(CYTHON_UNUSED Py
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_55SetQHYCCDReadMode(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_57SetQHYCCDReadMode(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_55SetQHYCCDReadMode = {"SetQHYCCDReadMode", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_55SetQHYCCDReadMode, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_55SetQHYCCDReadMode(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_57SetQHYCCDReadMode = {"SetQHYCCDReadMode", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_57SetQHYCCDReadMode, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_57SetQHYCCDReadMode(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -7544,19 +7999,19 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 251, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 262, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
         if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_modeNumber)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 251, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 262, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("SetQHYCCDReadMode", 1, 2, 2, 1); __PYX_ERR(0, 251, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("SetQHYCCDReadMode", 1, 2, 2, 1); __PYX_ERR(0, 262, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "SetQHYCCDReadMode") < 0)) __PYX_ERR(0, 251, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "SetQHYCCDReadMode") < 0)) __PYX_ERR(0, 262, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
@@ -7569,20 +8024,20 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("SetQHYCCDReadMode", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 251, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("SetQHYCCDReadMode", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 262, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.SetQHYCCDReadMode", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_54SetQHYCCDReadMode(__pyx_self, __pyx_v_cam, __pyx_v_modeNumber);
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_56SetQHYCCDReadMode(__pyx_self, __pyx_v_cam, __pyx_v_modeNumber);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_54SetQHYCCDReadMode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_modeNumber) {
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_56SetQHYCCDReadMode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_modeNumber) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   uint32_t __pyx_t_1;
@@ -7591,17 +8046,17 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_54SetQHYCCDReadMode(CYTHON_UNUSED Py
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("SetQHYCCDReadMode", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":252
+  /* "QHYCCD/pyqhyccd.pyx":263
  * 
  * def SetQHYCCDReadMode(cam, modeNumber):
  *     chkerr(qhy.SetQHYCCDReadMode(PyLong_AsVoidPtr(cam), <uint32_t> modeNumber))             # <<<<<<<<<<<<<<
  * 
  * def GetQHYCCDOverScanArea(cam):
  */
-  __pyx_t_1 = __Pyx_PyInt_As_uint32_t(__pyx_v_modeNumber); if (unlikely((__pyx_t_1 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 252, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_As_uint32_t(__pyx_v_modeNumber); if (unlikely((__pyx_t_1 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 263, __pyx_L1_error)
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(SetQHYCCDReadMode(PyLong_AsVoidPtr(__pyx_v_cam), ((uint32_t)__pyx_t_1))));
 
-  /* "QHYCCD/pyqhyccd.pyx":251
+  /* "QHYCCD/pyqhyccd.pyx":262
  *     return modeNumber
  * 
  * def SetQHYCCDReadMode(cam, modeNumber):             # <<<<<<<<<<<<<<
@@ -7621,7 +8076,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_54SetQHYCCDReadMode(CYTHON_UNUSED Py
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":254
+/* "QHYCCD/pyqhyccd.pyx":265
  *     chkerr(qhy.SetQHYCCDReadMode(PyLong_AsVoidPtr(cam), <uint32_t> modeNumber))
  * 
  * def GetQHYCCDOverScanArea(cam):             # <<<<<<<<<<<<<<
@@ -7630,15 +8085,15 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_54SetQHYCCDReadMode(CYTHON_UNUSED Py
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_57GetQHYCCDOverScanArea(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_59GetQHYCCDOverScanArea(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_57GetQHYCCDOverScanArea = {"GetQHYCCDOverScanArea", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_57GetQHYCCDOverScanArea, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_57GetQHYCCDOverScanArea(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_59GetQHYCCDOverScanArea = {"GetQHYCCDOverScanArea", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_59GetQHYCCDOverScanArea, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_59GetQHYCCDOverScanArea(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -7675,12 +8130,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 254, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 265, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDOverScanArea") < 0)) __PYX_ERR(0, 254, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDOverScanArea") < 0)) __PYX_ERR(0, 265, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -7691,20 +8146,20 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetQHYCCDOverScanArea", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 254, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetQHYCCDOverScanArea", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 265, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDOverScanArea", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_56GetQHYCCDOverScanArea(__pyx_self, __pyx_v_cam);
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_58GetQHYCCDOverScanArea(__pyx_self, __pyx_v_cam);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_56GetQHYCCDOverScanArea(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam) {
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_58GetQHYCCDOverScanArea(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam) {
   uint32_t __pyx_v_startX;
   uint32_t __pyx_v_startY;
   uint32_t __pyx_v_sizeX;
@@ -7721,7 +8176,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_56GetQHYCCDOverScanArea(CYTHON_UNUSE
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("GetQHYCCDOverScanArea", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":256
+  /* "QHYCCD/pyqhyccd.pyx":267
  * def GetQHYCCDOverScanArea(cam):
  *     cdef uint32_t startX, startY, sizeX, sizeY
  *     chkerr(qhy.GetQHYCCDOverScanArea(PyLong_AsVoidPtr(cam), &startX, &startY, &sizeX, &sizeY))             # <<<<<<<<<<<<<<
@@ -7730,7 +8185,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_56GetQHYCCDOverScanArea(CYTHON_UNUSE
  */
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(GetQHYCCDOverScanArea(PyLong_AsVoidPtr(__pyx_v_cam), (&__pyx_v_startX), (&__pyx_v_startY), (&__pyx_v_sizeX), (&__pyx_v_sizeY))));
 
-  /* "QHYCCD/pyqhyccd.pyx":257
+  /* "QHYCCD/pyqhyccd.pyx":268
  *     cdef uint32_t startX, startY, sizeX, sizeY
  *     chkerr(qhy.GetQHYCCDOverScanArea(PyLong_AsVoidPtr(cam), &startX, &startY, &sizeX, &sizeY))
  *     return (startX, startY, sizeX, sizeY)             # <<<<<<<<<<<<<<
@@ -7738,15 +8193,15 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_56GetQHYCCDOverScanArea(CYTHON_UNUSE
  * def GetQHYCCDEffectiveArea(cam):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(__pyx_v_startX); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 257, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(__pyx_v_startX); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 268, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_From_uint32_t(__pyx_v_startY); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 257, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_uint32_t(__pyx_v_startY); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 268, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyInt_From_uint32_t(__pyx_v_sizeX); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 257, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_uint32_t(__pyx_v_sizeX); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 268, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyInt_From_uint32_t(__pyx_v_sizeY); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 257, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_uint32_t(__pyx_v_sizeY); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 268, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = PyTuple_New(4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 257, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 268, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_1);
@@ -7764,7 +8219,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_56GetQHYCCDOverScanArea(CYTHON_UNUSE
   __pyx_t_5 = 0;
   goto __pyx_L0;
 
-  /* "QHYCCD/pyqhyccd.pyx":254
+  /* "QHYCCD/pyqhyccd.pyx":265
  *     chkerr(qhy.SetQHYCCDReadMode(PyLong_AsVoidPtr(cam), <uint32_t> modeNumber))
  * 
  * def GetQHYCCDOverScanArea(cam):             # <<<<<<<<<<<<<<
@@ -7787,7 +8242,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_56GetQHYCCDOverScanArea(CYTHON_UNUSE
   return __pyx_r;
 }
 
-/* "QHYCCD/pyqhyccd.pyx":259
+/* "QHYCCD/pyqhyccd.pyx":270
  *     return (startX, startY, sizeX, sizeY)
  * 
  * def GetQHYCCDEffectiveArea(cam):             # <<<<<<<<<<<<<<
@@ -7796,15 +8251,15 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_56GetQHYCCDOverScanArea(CYTHON_UNUSE
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_59GetQHYCCDEffectiveArea(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_61GetQHYCCDEffectiveArea(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_59GetQHYCCDEffectiveArea = {"GetQHYCCDEffectiveArea", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_59GetQHYCCDEffectiveArea, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_59GetQHYCCDEffectiveArea(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_61GetQHYCCDEffectiveArea = {"GetQHYCCDEffectiveArea", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_61GetQHYCCDEffectiveArea, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_61GetQHYCCDEffectiveArea(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -7841,12 +8296,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
       switch (__pyx_nargs) {
         case  0:
         if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 259, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 270, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDEffectiveArea") < 0)) __PYX_ERR(0, 259, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDEffectiveArea") < 0)) __PYX_ERR(0, 270, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -7857,20 +8312,20 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("GetQHYCCDEffectiveArea", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 259, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("GetQHYCCDEffectiveArea", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 270, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDEffectiveArea", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_58GetQHYCCDEffectiveArea(__pyx_self, __pyx_v_cam);
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_60GetQHYCCDEffectiveArea(__pyx_self, __pyx_v_cam);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_58GetQHYCCDEffectiveArea(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam) {
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_60GetQHYCCDEffectiveArea(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam) {
   uint32_t __pyx_v_startX;
   uint32_t __pyx_v_startY;
   uint32_t __pyx_v_sizeX;
@@ -7887,29 +8342,32 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_58GetQHYCCDEffectiveArea(CYTHON_UNUS
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("GetQHYCCDEffectiveArea", 0);
 
-  /* "QHYCCD/pyqhyccd.pyx":261
+  /* "QHYCCD/pyqhyccd.pyx":272
  * def GetQHYCCDEffectiveArea(cam):
  *     cdef uint32_t startX, startY, sizeX, sizeY
  *     chkerr(qhy.GetQHYCCDEffectiveArea(PyLong_AsVoidPtr(cam), &startX, &startY, &sizeX, &sizeY))             # <<<<<<<<<<<<<<
  *     return (startX, startY, sizeX, sizeY)
+ * 
  */
   (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(GetQHYCCDEffectiveArea(PyLong_AsVoidPtr(__pyx_v_cam), (&__pyx_v_startX), (&__pyx_v_startY), (&__pyx_v_sizeX), (&__pyx_v_sizeY))));
 
-  /* "QHYCCD/pyqhyccd.pyx":262
+  /* "QHYCCD/pyqhyccd.pyx":273
  *     cdef uint32_t startX, startY, sizeX, sizeY
  *     chkerr(qhy.GetQHYCCDEffectiveArea(PyLong_AsVoidPtr(cam), &startX, &startY, &sizeX, &sizeY))
  *     return (startX, startY, sizeX, sizeY)             # <<<<<<<<<<<<<<
+ * 
+ * def SetQHYCCDBinMode(cam, binw, binh):
  */
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(__pyx_v_startX); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(__pyx_v_startX); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 273, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyInt_From_uint32_t(__pyx_v_startY); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_From_uint32_t(__pyx_v_startY); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 273, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyInt_From_uint32_t(__pyx_v_sizeX); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_uint32_t(__pyx_v_sizeX); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 273, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyInt_From_uint32_t(__pyx_v_sizeY); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyInt_From_uint32_t(__pyx_v_sizeY); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 273, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = PyTuple_New(4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 273, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_1);
   PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_1);
@@ -7927,7 +8385,7 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_58GetQHYCCDEffectiveArea(CYTHON_UNUS
   __pyx_t_5 = 0;
   goto __pyx_L0;
 
-  /* "QHYCCD/pyqhyccd.pyx":259
+  /* "QHYCCD/pyqhyccd.pyx":270
  *     return (startX, startY, sizeX, sizeY)
  * 
  * def GetQHYCCDEffectiveArea(cam):             # <<<<<<<<<<<<<<
@@ -7945,6 +8403,1171 @@ static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_58GetQHYCCDEffectiveArea(CYTHON_UNUS
   __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDEffectiveArea", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "QHYCCD/pyqhyccd.pyx":275
+ *     return (startX, startY, sizeX, sizeY)
+ * 
+ * def SetQHYCCDBinMode(cam, binw, binh):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), binw, binh))
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_63SetQHYCCDBinMode(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_63SetQHYCCDBinMode = {"SetQHYCCDBinMode", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_63SetQHYCCDBinMode, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_63SetQHYCCDBinMode(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_cam = 0;
+  PyObject *__pyx_v_binw = 0;
+  PyObject *__pyx_v_binh = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED const Py_ssize_t __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("SetQHYCCDBinMode (wrapper)", 0);
+  {
+    #if CYTHON_COMPILING_IN_LIMITED_API
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_cam,&__pyx_n_s_binw,&__pyx_n_s_binh,0};
+    #else
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_cam,&__pyx_n_s_binw,&__pyx_n_s_binh,0};
+    #endif
+    PyObject* values[3] = {0,0,0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  3: values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 275, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_binw)) != 0)) kw_args--;
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 275, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("SetQHYCCDBinMode", 1, 3, 3, 1); __PYX_ERR(0, 275, __pyx_L3_error)
+        }
+        CYTHON_FALLTHROUGH;
+        case  2:
+        if (likely((values[2] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_binh)) != 0)) kw_args--;
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 275, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("SetQHYCCDBinMode", 1, 3, 3, 2); __PYX_ERR(0, 275, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "SetQHYCCDBinMode") < 0)) __PYX_ERR(0, 275, __pyx_L3_error)
+      }
+    } else if (unlikely(__pyx_nargs != 3)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+      values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+      values[2] = __Pyx_Arg_FASTCALL(__pyx_args, 2);
+    }
+    __pyx_v_cam = values[0];
+    __pyx_v_binw = values[1];
+    __pyx_v_binh = values[2];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("SetQHYCCDBinMode", 1, 3, 3, __pyx_nargs); __PYX_ERR(0, 275, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("QHYCCD.pyqhyccd.SetQHYCCDBinMode", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_62SetQHYCCDBinMode(__pyx_self, __pyx_v_cam, __pyx_v_binw, __pyx_v_binh);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_62SetQHYCCDBinMode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_binw, PyObject *__pyx_v_binh) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  uint32_t __pyx_t_1;
+  uint32_t __pyx_t_2;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("SetQHYCCDBinMode", 0);
+
+  /* "QHYCCD/pyqhyccd.pyx":276
+ * 
+ * def SetQHYCCDBinMode(cam, binw, binh):
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), binw, binh))             # <<<<<<<<<<<<<<
+ * 
+ * def BeginQHYCCDLive(cam):
+ */
+  __pyx_t_1 = __Pyx_PyInt_As_uint32_t(__pyx_v_binw); if (unlikely((__pyx_t_1 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 276, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyInt_As_uint32_t(__pyx_v_binh); if (unlikely((__pyx_t_2 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 276, __pyx_L1_error)
+  (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(SetQHYCCDBinMode(PyLong_AsVoidPtr(__pyx_v_cam), __pyx_t_1, __pyx_t_2)));
+
+  /* "QHYCCD/pyqhyccd.pyx":275
+ *     return (startX, startY, sizeX, sizeY)
+ * 
+ * def SetQHYCCDBinMode(cam, binw, binh):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), binw, binh))
+ * 
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("QHYCCD.pyqhyccd.SetQHYCCDBinMode", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "QHYCCD/pyqhyccd.pyx":278
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), binw, binh))
+ * 
+ * def BeginQHYCCDLive(cam):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.BeginQHYCCDLive(PyLong_AsVoidPtr(cam)))
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_65BeginQHYCCDLive(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_65BeginQHYCCDLive = {"BeginQHYCCDLive", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_65BeginQHYCCDLive, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_65BeginQHYCCDLive(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_cam = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED const Py_ssize_t __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("BeginQHYCCDLive (wrapper)", 0);
+  {
+    #if CYTHON_COMPILING_IN_LIMITED_API
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_cam,0};
+    #else
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_cam,0};
+    #endif
+    PyObject* values[1] = {0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 278, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "BeginQHYCCDLive") < 0)) __PYX_ERR(0, 278, __pyx_L3_error)
+      }
+    } else if (unlikely(__pyx_nargs != 1)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+    }
+    __pyx_v_cam = values[0];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("BeginQHYCCDLive", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 278, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("QHYCCD.pyqhyccd.BeginQHYCCDLive", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_64BeginQHYCCDLive(__pyx_self, __pyx_v_cam);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_64BeginQHYCCDLive(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("BeginQHYCCDLive", 0);
+
+  /* "QHYCCD/pyqhyccd.pyx":279
+ * 
+ * def BeginQHYCCDLive(cam):
+ *     chkerr(qhy.BeginQHYCCDLive(PyLong_AsVoidPtr(cam)))             # <<<<<<<<<<<<<<
+ * 
+ * def StopQHYCCDLive(cam):
+ */
+  (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(BeginQHYCCDLive(PyLong_AsVoidPtr(__pyx_v_cam))));
+
+  /* "QHYCCD/pyqhyccd.pyx":278
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), binw, binh))
+ * 
+ * def BeginQHYCCDLive(cam):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.BeginQHYCCDLive(PyLong_AsVoidPtr(cam)))
+ * 
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "QHYCCD/pyqhyccd.pyx":281
+ *     chkerr(qhy.BeginQHYCCDLive(PyLong_AsVoidPtr(cam)))
+ * 
+ * def StopQHYCCDLive(cam):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.StopQHYCCDLive(PyLong_AsVoidPtr(cam)))
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_67StopQHYCCDLive(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_67StopQHYCCDLive = {"StopQHYCCDLive", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_67StopQHYCCDLive, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_67StopQHYCCDLive(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_cam = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED const Py_ssize_t __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("StopQHYCCDLive (wrapper)", 0);
+  {
+    #if CYTHON_COMPILING_IN_LIMITED_API
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_cam,0};
+    #else
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_cam,0};
+    #endif
+    PyObject* values[1] = {0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 281, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "StopQHYCCDLive") < 0)) __PYX_ERR(0, 281, __pyx_L3_error)
+      }
+    } else if (unlikely(__pyx_nargs != 1)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+    }
+    __pyx_v_cam = values[0];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("StopQHYCCDLive", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 281, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("QHYCCD.pyqhyccd.StopQHYCCDLive", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_66StopQHYCCDLive(__pyx_self, __pyx_v_cam);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_66StopQHYCCDLive(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("StopQHYCCDLive", 0);
+
+  /* "QHYCCD/pyqhyccd.pyx":282
+ * 
+ * def StopQHYCCDLive(cam):
+ *     chkerr(qhy.StopQHYCCDLive(PyLong_AsVoidPtr(cam)))             # <<<<<<<<<<<<<<
+ * 
+ * def GetQHYCCDLiveFrame(cam):
+ */
+  (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(StopQHYCCDLive(PyLong_AsVoidPtr(__pyx_v_cam))));
+
+  /* "QHYCCD/pyqhyccd.pyx":281
+ *     chkerr(qhy.BeginQHYCCDLive(PyLong_AsVoidPtr(cam)))
+ * 
+ * def StopQHYCCDLive(cam):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.StopQHYCCDLive(PyLong_AsVoidPtr(cam)))
+ * 
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "QHYCCD/pyqhyccd.pyx":284
+ *     chkerr(qhy.StopQHYCCDLive(PyLong_AsVoidPtr(cam)))
+ * 
+ * def GetQHYCCDLiveFrame(cam):             # <<<<<<<<<<<<<<
+ *     cdef uint32_t w, h, bpp, channels
+ *     cdef uint8_t *imgdata
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_69GetQHYCCDLiveFrame(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_69GetQHYCCDLiveFrame = {"GetQHYCCDLiveFrame", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_69GetQHYCCDLiveFrame, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_69GetQHYCCDLiveFrame(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_cam = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED const Py_ssize_t __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("GetQHYCCDLiveFrame (wrapper)", 0);
+  {
+    #if CYTHON_COMPILING_IN_LIMITED_API
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_cam,0};
+    #else
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_cam,0};
+    #endif
+    PyObject* values[1] = {0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 284, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDLiveFrame") < 0)) __PYX_ERR(0, 284, __pyx_L3_error)
+      }
+    } else if (unlikely(__pyx_nargs != 1)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+    }
+    __pyx_v_cam = values[0];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("GetQHYCCDLiveFrame", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 284, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDLiveFrame", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_68GetQHYCCDLiveFrame(__pyx_self, __pyx_v_cam);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_68GetQHYCCDLiveFrame(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam) {
+  uint32_t __pyx_v_w;
+  uint32_t __pyx_v_h;
+  uint32_t __pyx_v_bpp;
+  uint32_t __pyx_v_channels;
+  uint8_t *__pyx_v_imgdata;
+  uint32_t __pyx_v_memlength;
+  uint32_t __pyx_v_ret;
+  npy_intp __pyx_v_shape[2];
+  PyObject *__pyx_v_data = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  PyObject *__pyx_t_2 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("GetQHYCCDLiveFrame", 0);
+
+  /* "QHYCCD/pyqhyccd.pyx":288
+ *     cdef uint8_t *imgdata
+ *     cdef uint32_t memlength
+ *     memlength = qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))             # <<<<<<<<<<<<<<
+ *     imgdata = <uint8_t *>malloc(memlength * sizeof(uint8_t))
+ *     ret = qhy.QHYCCD_ERROR
+ */
+  __pyx_v_memlength = GetQHYCCDMemLength(PyLong_AsVoidPtr(__pyx_v_cam));
+
+  /* "QHYCCD/pyqhyccd.pyx":289
+ *     cdef uint32_t memlength
+ *     memlength = qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))
+ *     imgdata = <uint8_t *>malloc(memlength * sizeof(uint8_t))             # <<<<<<<<<<<<<<
+ *     ret = qhy.QHYCCD_ERROR
+ *     while(ret == qhy.QHYCCD_ERROR):
+ */
+  __pyx_v_imgdata = ((uint8_t *)malloc((__pyx_v_memlength * (sizeof(uint8_t)))));
+
+  /* "QHYCCD/pyqhyccd.pyx":290
+ *     memlength = qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))
+ *     imgdata = <uint8_t *>malloc(memlength * sizeof(uint8_t))
+ *     ret = qhy.QHYCCD_ERROR             # <<<<<<<<<<<<<<
+ *     while(ret == qhy.QHYCCD_ERROR):
+ *         ret = qhy.GetQHYCCDLiveFrame(PyLong_AsVoidPtr(cam), &w, &h, &bpp, &channels, imgdata)
+ */
+  __pyx_v_ret = QHYCCD_ERROR;
+
+  /* "QHYCCD/pyqhyccd.pyx":291
+ *     imgdata = <uint8_t *>malloc(memlength * sizeof(uint8_t))
+ *     ret = qhy.QHYCCD_ERROR
+ *     while(ret == qhy.QHYCCD_ERROR):             # <<<<<<<<<<<<<<
+ *         ret = qhy.GetQHYCCDLiveFrame(PyLong_AsVoidPtr(cam), &w, &h, &bpp, &channels, imgdata)
+ *     cdef np.npy_intp shape[2]
+ */
+  while (1) {
+    __pyx_t_1 = ((__pyx_v_ret == QHYCCD_ERROR) != 0);
+    if (!__pyx_t_1) break;
+
+    /* "QHYCCD/pyqhyccd.pyx":292
+ *     ret = qhy.QHYCCD_ERROR
+ *     while(ret == qhy.QHYCCD_ERROR):
+ *         ret = qhy.GetQHYCCDLiveFrame(PyLong_AsVoidPtr(cam), &w, &h, &bpp, &channels, imgdata)             # <<<<<<<<<<<<<<
+ *     cdef np.npy_intp shape[2]
+ *     shape[0] = <np.npy_intp> h
+ */
+    __pyx_v_ret = GetQHYCCDLiveFrame(PyLong_AsVoidPtr(__pyx_v_cam), (&__pyx_v_w), (&__pyx_v_h), (&__pyx_v_bpp), (&__pyx_v_channels), __pyx_v_imgdata);
+  }
+
+  /* "QHYCCD/pyqhyccd.pyx":294
+ *         ret = qhy.GetQHYCCDLiveFrame(PyLong_AsVoidPtr(cam), &w, &h, &bpp, &channels, imgdata)
+ *     cdef np.npy_intp shape[2]
+ *     shape[0] = <np.npy_intp> h             # <<<<<<<<<<<<<<
+ *     shape[1] = <np.npy_intp> w
+ *     data = np.PyArray_SimpleNewFromData(2, shape, np.NPY_UINT16, <void *>imgdata)
+ */
+  (__pyx_v_shape[0]) = ((npy_intp)__pyx_v_h);
+
+  /* "QHYCCD/pyqhyccd.pyx":295
+ *     cdef np.npy_intp shape[2]
+ *     shape[0] = <np.npy_intp> h
+ *     shape[1] = <np.npy_intp> w             # <<<<<<<<<<<<<<
+ *     data = np.PyArray_SimpleNewFromData(2, shape, np.NPY_UINT16, <void *>imgdata)
+ *     np.PyArray_ENABLEFLAGS(data, np.NPY_ARRAY_OWNDATA)
+ */
+  (__pyx_v_shape[1]) = ((npy_intp)__pyx_v_w);
+
+  /* "QHYCCD/pyqhyccd.pyx":296
+ *     shape[0] = <np.npy_intp> h
+ *     shape[1] = <np.npy_intp> w
+ *     data = np.PyArray_SimpleNewFromData(2, shape, np.NPY_UINT16, <void *>imgdata)             # <<<<<<<<<<<<<<
+ *     np.PyArray_ENABLEFLAGS(data, np.NPY_ARRAY_OWNDATA)
+ *     return data
+ */
+  __pyx_t_2 = PyArray_SimpleNewFromData(2, __pyx_v_shape, NPY_UINT16, ((void *)__pyx_v_imgdata)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 296, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_v_data = __pyx_t_2;
+  __pyx_t_2 = 0;
+
+  /* "QHYCCD/pyqhyccd.pyx":297
+ *     shape[1] = <np.npy_intp> w
+ *     data = np.PyArray_SimpleNewFromData(2, shape, np.NPY_UINT16, <void *>imgdata)
+ *     np.PyArray_ENABLEFLAGS(data, np.NPY_ARRAY_OWNDATA)             # <<<<<<<<<<<<<<
+ *     return data
+ * 
+ */
+  if (!(likely(((__pyx_v_data) == Py_None) || likely(__Pyx_TypeTest(__pyx_v_data, __pyx_ptype_5numpy_ndarray))))) __PYX_ERR(0, 297, __pyx_L1_error)
+  PyArray_ENABLEFLAGS(((PyArrayObject *)__pyx_v_data), NPY_ARRAY_OWNDATA);
+
+  /* "QHYCCD/pyqhyccd.pyx":298
+ *     data = np.PyArray_SimpleNewFromData(2, shape, np.NPY_UINT16, <void *>imgdata)
+ *     np.PyArray_ENABLEFLAGS(data, np.NPY_ARRAY_OWNDATA)
+ *     return data             # <<<<<<<<<<<<<<
+ * 
+ * def GetQHYCCDPreciseExposureInfo(cam):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_data);
+  __pyx_r = __pyx_v_data;
+  goto __pyx_L0;
+
+  /* "QHYCCD/pyqhyccd.pyx":284
+ *     chkerr(qhy.StopQHYCCDLive(PyLong_AsVoidPtr(cam)))
+ * 
+ * def GetQHYCCDLiveFrame(cam):             # <<<<<<<<<<<<<<
+ *     cdef uint32_t w, h, bpp, channels
+ *     cdef uint8_t *imgdata
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDLiveFrame", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_data);
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "QHYCCD/pyqhyccd.pyx":300
+ *     return data
+ * 
+ * def GetQHYCCDPreciseExposureInfo(cam):             # <<<<<<<<<<<<<<
+ *     cdef uint32_t PixelPeriod_ps, LinePeriod_ns, FramePeriod_us, ClocksPerLine, LinesPerFrame, ActualExposureTime
+ *     cdef uint8_t isLongExposureMode
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_71GetQHYCCDPreciseExposureInfo(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_71GetQHYCCDPreciseExposureInfo = {"GetQHYCCDPreciseExposureInfo", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_71GetQHYCCDPreciseExposureInfo, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_71GetQHYCCDPreciseExposureInfo(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_cam = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED const Py_ssize_t __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("GetQHYCCDPreciseExposureInfo (wrapper)", 0);
+  {
+    #if CYTHON_COMPILING_IN_LIMITED_API
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_cam,0};
+    #else
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_cam,0};
+    #endif
+    PyObject* values[1] = {0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 300, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetQHYCCDPreciseExposureInfo") < 0)) __PYX_ERR(0, 300, __pyx_L3_error)
+      }
+    } else if (unlikely(__pyx_nargs != 1)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+    }
+    __pyx_v_cam = values[0];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("GetQHYCCDPreciseExposureInfo", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 300, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDPreciseExposureInfo", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_70GetQHYCCDPreciseExposureInfo(__pyx_self, __pyx_v_cam);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_70GetQHYCCDPreciseExposureInfo(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam) {
+  uint32_t __pyx_v_PixelPeriod_ps;
+  uint32_t __pyx_v_LinePeriod_ns;
+  uint32_t __pyx_v_FramePeriod_us;
+  uint32_t __pyx_v_ClocksPerLine;
+  uint32_t __pyx_v_LinesPerFrame;
+  uint32_t __pyx_v_ActualExposureTime;
+  uint8_t __pyx_v_isLongExposureMode;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  PyObject *__pyx_t_3 = NULL;
+  PyObject *__pyx_t_4 = NULL;
+  PyObject *__pyx_t_5 = NULL;
+  PyObject *__pyx_t_6 = NULL;
+  PyObject *__pyx_t_7 = NULL;
+  PyObject *__pyx_t_8 = NULL;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("GetQHYCCDPreciseExposureInfo", 0);
+
+  /* "QHYCCD/pyqhyccd.pyx":303
+ *     cdef uint32_t PixelPeriod_ps, LinePeriod_ns, FramePeriod_us, ClocksPerLine, LinesPerFrame, ActualExposureTime
+ *     cdef uint8_t isLongExposureMode
+ *     chkerr(qhy.GetQHYCCDPreciseExposureInfo(PyLong_AsVoidPtr(cam),             # <<<<<<<<<<<<<<
+ *                                             &PixelPeriod_ps,
+ *                                             &LinePeriod_ns,
+ */
+  (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(GetQHYCCDPreciseExposureInfo(PyLong_AsVoidPtr(__pyx_v_cam), (&__pyx_v_PixelPeriod_ps), (&__pyx_v_LinePeriod_ns), (&__pyx_v_FramePeriod_us), (&__pyx_v_ClocksPerLine), (&__pyx_v_LinesPerFrame), (&__pyx_v_ActualExposureTime), (&__pyx_v_isLongExposureMode))));
+
+  /* "QHYCCD/pyqhyccd.pyx":311
+ *                                             &ActualExposureTime,
+ *                                             &isLongExposureMode))
+ *     return (PixelPeriod_ps, LinePeriod_ns, FramePeriod_us, ClocksPerLine, LinesPerFrame, ActualExposureTime, isLongExposureMode)             # <<<<<<<<<<<<<<
+ * 
+ * def SetQHYCCDBitsMode(cam, value):
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __pyx_t_1 = __Pyx_PyInt_From_uint32_t(__pyx_v_PixelPeriod_ps); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 311, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyInt_From_uint32_t(__pyx_v_LinePeriod_ns); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 311, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_3 = __Pyx_PyInt_From_uint32_t(__pyx_v_FramePeriod_us); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 311, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_3);
+  __pyx_t_4 = __Pyx_PyInt_From_uint32_t(__pyx_v_ClocksPerLine); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 311, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __Pyx_PyInt_From_uint32_t(__pyx_v_LinesPerFrame); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 311, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_6 = __Pyx_PyInt_From_uint32_t(__pyx_v_ActualExposureTime); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 311, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_6);
+  __pyx_t_7 = __Pyx_PyInt_From_uint8_t(__pyx_v_isLongExposureMode); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 311, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_7);
+  __pyx_t_8 = PyTuple_New(7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 311, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_8);
+  __Pyx_GIVEREF(__pyx_t_1);
+  PyTuple_SET_ITEM(__pyx_t_8, 0, __pyx_t_1);
+  __Pyx_GIVEREF(__pyx_t_2);
+  PyTuple_SET_ITEM(__pyx_t_8, 1, __pyx_t_2);
+  __Pyx_GIVEREF(__pyx_t_3);
+  PyTuple_SET_ITEM(__pyx_t_8, 2, __pyx_t_3);
+  __Pyx_GIVEREF(__pyx_t_4);
+  PyTuple_SET_ITEM(__pyx_t_8, 3, __pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_5);
+  PyTuple_SET_ITEM(__pyx_t_8, 4, __pyx_t_5);
+  __Pyx_GIVEREF(__pyx_t_6);
+  PyTuple_SET_ITEM(__pyx_t_8, 5, __pyx_t_6);
+  __Pyx_GIVEREF(__pyx_t_7);
+  PyTuple_SET_ITEM(__pyx_t_8, 6, __pyx_t_7);
+  __pyx_t_1 = 0;
+  __pyx_t_2 = 0;
+  __pyx_t_3 = 0;
+  __pyx_t_4 = 0;
+  __pyx_t_5 = 0;
+  __pyx_t_6 = 0;
+  __pyx_t_7 = 0;
+  __pyx_r = __pyx_t_8;
+  __pyx_t_8 = 0;
+  goto __pyx_L0;
+
+  /* "QHYCCD/pyqhyccd.pyx":300
+ *     return data
+ * 
+ * def GetQHYCCDPreciseExposureInfo(cam):             # <<<<<<<<<<<<<<
+ *     cdef uint32_t PixelPeriod_ps, LinePeriod_ns, FramePeriod_us, ClocksPerLine, LinesPerFrame, ActualExposureTime
+ *     cdef uint8_t isLongExposureMode
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_XDECREF(__pyx_t_3);
+  __Pyx_XDECREF(__pyx_t_4);
+  __Pyx_XDECREF(__pyx_t_5);
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_7);
+  __Pyx_XDECREF(__pyx_t_8);
+  __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetQHYCCDPreciseExposureInfo", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "QHYCCD/pyqhyccd.pyx":313
+ *     return (PixelPeriod_ps, LinePeriod_ns, FramePeriod_us, ClocksPerLine, LinesPerFrame, ActualExposureTime, isLongExposureMode)
+ * 
+ * def SetQHYCCDBitsMode(cam, value):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.SetQHYCCDBitsMode(PyLong_AsVoidPtr(cam), <uint32_t> value))
+ * 
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_73SetQHYCCDBitsMode(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_73SetQHYCCDBitsMode = {"SetQHYCCDBitsMode", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_73SetQHYCCDBitsMode, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_73SetQHYCCDBitsMode(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_cam = 0;
+  PyObject *__pyx_v_value = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED const Py_ssize_t __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("SetQHYCCDBitsMode (wrapper)", 0);
+  {
+    #if CYTHON_COMPILING_IN_LIMITED_API
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_cam,&__pyx_n_s_value,0};
+    #else
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_cam,&__pyx_n_s_value,0};
+    #endif
+    PyObject* values[2] = {0,0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  2: values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 313, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+        CYTHON_FALLTHROUGH;
+        case  1:
+        if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_value)) != 0)) kw_args--;
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 313, __pyx_L3_error)
+        else {
+          __Pyx_RaiseArgtupleInvalid("SetQHYCCDBitsMode", 1, 2, 2, 1); __PYX_ERR(0, 313, __pyx_L3_error)
+        }
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "SetQHYCCDBitsMode") < 0)) __PYX_ERR(0, 313, __pyx_L3_error)
+      }
+    } else if (unlikely(__pyx_nargs != 2)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+      values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
+    }
+    __pyx_v_cam = values[0];
+    __pyx_v_value = values[1];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("SetQHYCCDBitsMode", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 313, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("QHYCCD.pyqhyccd.SetQHYCCDBitsMode", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_72SetQHYCCDBitsMode(__pyx_self, __pyx_v_cam, __pyx_v_value);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_72SetQHYCCDBitsMode(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam, PyObject *__pyx_v_value) {
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  uint32_t __pyx_t_1;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("SetQHYCCDBitsMode", 0);
+
+  /* "QHYCCD/pyqhyccd.pyx":314
+ * 
+ * def SetQHYCCDBitsMode(cam, value):
+ *     chkerr(qhy.SetQHYCCDBitsMode(PyLong_AsVoidPtr(cam), <uint32_t> value))             # <<<<<<<<<<<<<<
+ * 
+ * def GetBinModes(cam):
+ */
+  __pyx_t_1 = __Pyx_PyInt_As_uint32_t(__pyx_v_value); if (unlikely((__pyx_t_1 == ((uint32_t)-1)) && PyErr_Occurred())) __PYX_ERR(0, 314, __pyx_L1_error)
+  (void)(__pyx_f_6QHYCCD_8pyqhyccd_chkerr(SetQHYCCDBitsMode(PyLong_AsVoidPtr(__pyx_v_cam), ((uint32_t)__pyx_t_1))));
+
+  /* "QHYCCD/pyqhyccd.pyx":313
+ *     return (PixelPeriod_ps, LinePeriod_ns, FramePeriod_us, ClocksPerLine, LinesPerFrame, ActualExposureTime, isLongExposureMode)
+ * 
+ * def SetQHYCCDBitsMode(cam, value):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.SetQHYCCDBitsMode(PyLong_AsVoidPtr(cam), <uint32_t> value))
+ * 
+ */
+
+  /* function exit code */
+  __pyx_r = Py_None; __Pyx_INCREF(Py_None);
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("QHYCCD.pyqhyccd.SetQHYCCDBitsMode", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XGIVEREF(__pyx_r);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "QHYCCD/pyqhyccd.pyx":316
+ *     chkerr(qhy.SetQHYCCDBitsMode(PyLong_AsVoidPtr(cam), <uint32_t> value))
+ * 
+ * def GetBinModes(cam):             # <<<<<<<<<<<<<<
+ *     modes = [1]
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN2X2MODE) == qhy.QHYCCD_SUCCESS:
+ */
+
+/* Python wrapper */
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_75GetBinModes(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+); /*proto*/
+static PyMethodDef __pyx_mdef_6QHYCCD_8pyqhyccd_75GetBinModes = {"GetBinModes", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_6QHYCCD_8pyqhyccd_75GetBinModes, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_6QHYCCD_8pyqhyccd_75GetBinModes(PyObject *__pyx_self, 
+#if CYTHON_METH_FASTCALL
+PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
+#else
+PyObject *__pyx_args, PyObject *__pyx_kwds
+#endif
+) {
+  PyObject *__pyx_v_cam = 0;
+  #if !CYTHON_METH_FASTCALL
+  CYTHON_UNUSED const Py_ssize_t __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
+  #endif
+  CYTHON_UNUSED PyObject *const *__pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  PyObject *__pyx_r = 0;
+  __Pyx_RefNannyDeclarations
+  __Pyx_RefNannySetupContext("GetBinModes (wrapper)", 0);
+  {
+    #if CYTHON_COMPILING_IN_LIMITED_API
+    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_cam,0};
+    #else
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_cam,0};
+    #endif
+    PyObject* values[1] = {0};
+    if (__pyx_kwds) {
+      Py_ssize_t kw_args;
+      switch (__pyx_nargs) {
+        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+        CYTHON_FALLTHROUGH;
+        case  0: break;
+        default: goto __pyx_L5_argtuple_error;
+      }
+      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
+      switch (__pyx_nargs) {
+        case  0:
+        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_cam)) != 0)) kw_args--;
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 316, __pyx_L3_error)
+        else goto __pyx_L5_argtuple_error;
+      }
+      if (unlikely(kw_args > 0)) {
+        const Py_ssize_t kwd_pos_args = __pyx_nargs;
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "GetBinModes") < 0)) __PYX_ERR(0, 316, __pyx_L3_error)
+      }
+    } else if (unlikely(__pyx_nargs != 1)) {
+      goto __pyx_L5_argtuple_error;
+    } else {
+      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
+    }
+    __pyx_v_cam = values[0];
+  }
+  goto __pyx_L4_argument_unpacking_done;
+  __pyx_L5_argtuple_error:;
+  __Pyx_RaiseArgtupleInvalid("GetBinModes", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 316, __pyx_L3_error)
+  __pyx_L3_error:;
+  __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetBinModes", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_RefNannyFinishContext();
+  return NULL;
+  __pyx_L4_argument_unpacking_done:;
+  __pyx_r = __pyx_pf_6QHYCCD_8pyqhyccd_74GetBinModes(__pyx_self, __pyx_v_cam);
+
+  /* function exit code */
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+static PyObject *__pyx_pf_6QHYCCD_8pyqhyccd_74GetBinModes(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cam) {
+  PyObject *__pyx_v_modes = NULL;
+  PyObject *__pyx_r = NULL;
+  __Pyx_RefNannyDeclarations
+  PyObject *__pyx_t_1 = NULL;
+  PyObject *__pyx_t_2 = NULL;
+  CONTROL_ID __pyx_t_3;
+  int __pyx_t_4;
+  int __pyx_t_5;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("GetBinModes", 0);
+
+  /* "QHYCCD/pyqhyccd.pyx":317
+ * 
+ * def GetBinModes(cam):
+ *     modes = [1]             # <<<<<<<<<<<<<<
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN2X2MODE) == qhy.QHYCCD_SUCCESS:
+ *         modes.append(2)
+ */
+  __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 317, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_INCREF(__pyx_int_1);
+  __Pyx_GIVEREF(__pyx_int_1);
+  PyList_SET_ITEM(__pyx_t_1, 0, __pyx_int_1);
+  __pyx_v_modes = ((PyObject*)__pyx_t_1);
+  __pyx_t_1 = 0;
+
+  /* "QHYCCD/pyqhyccd.pyx":318
+ * def GetBinModes(cam):
+ *     modes = [1]
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN2X2MODE) == qhy.QHYCCD_SUCCESS:             # <<<<<<<<<<<<<<
+ *         modes.append(2)
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN3X3MODE) == qhy.QHYCCD_SUCCESS:
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_CONTROL_ID); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 318, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_CAM_BIN2X2MODE); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 318, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((CONTROL_ID)__Pyx_PyInt_As_CONTROL_ID(__pyx_t_2)); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 318, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_4 = ((IsQHYCCDControlAvailable(PyLong_AsVoidPtr(__pyx_v_cam), __pyx_t_3) == QHYCCD_SUCCESS) != 0);
+  if (__pyx_t_4) {
+
+    /* "QHYCCD/pyqhyccd.pyx":319
+ *     modes = [1]
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN2X2MODE) == qhy.QHYCCD_SUCCESS:
+ *         modes.append(2)             # <<<<<<<<<<<<<<
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN3X3MODE) == qhy.QHYCCD_SUCCESS:
+ *         modes.append(3)
+ */
+    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_modes, __pyx_int_2); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 319, __pyx_L1_error)
+
+    /* "QHYCCD/pyqhyccd.pyx":318
+ * def GetBinModes(cam):
+ *     modes = [1]
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN2X2MODE) == qhy.QHYCCD_SUCCESS:             # <<<<<<<<<<<<<<
+ *         modes.append(2)
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN3X3MODE) == qhy.QHYCCD_SUCCESS:
+ */
+  }
+
+  /* "QHYCCD/pyqhyccd.pyx":320
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN2X2MODE) == qhy.QHYCCD_SUCCESS:
+ *         modes.append(2)
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN3X3MODE) == qhy.QHYCCD_SUCCESS:             # <<<<<<<<<<<<<<
+ *         modes.append(3)
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN4X4MODE) == qhy.QHYCCD_SUCCESS:
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_CONTROL_ID); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 320, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_CAM_BIN3X3MODE); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 320, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_3 = ((CONTROL_ID)__Pyx_PyInt_As_CONTROL_ID(__pyx_t_1)); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 320, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_4 = ((IsQHYCCDControlAvailable(PyLong_AsVoidPtr(__pyx_v_cam), __pyx_t_3) == QHYCCD_SUCCESS) != 0);
+  if (__pyx_t_4) {
+
+    /* "QHYCCD/pyqhyccd.pyx":321
+ *         modes.append(2)
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN3X3MODE) == qhy.QHYCCD_SUCCESS:
+ *         modes.append(3)             # <<<<<<<<<<<<<<
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN4X4MODE) == qhy.QHYCCD_SUCCESS:
+ *         modes.append(4)
+ */
+    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_modes, __pyx_int_3); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 321, __pyx_L1_error)
+
+    /* "QHYCCD/pyqhyccd.pyx":320
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN2X2MODE) == qhy.QHYCCD_SUCCESS:
+ *         modes.append(2)
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN3X3MODE) == qhy.QHYCCD_SUCCESS:             # <<<<<<<<<<<<<<
+ *         modes.append(3)
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN4X4MODE) == qhy.QHYCCD_SUCCESS:
+ */
+  }
+
+  /* "QHYCCD/pyqhyccd.pyx":322
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN3X3MODE) == qhy.QHYCCD_SUCCESS:
+ *         modes.append(3)
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN4X4MODE) == qhy.QHYCCD_SUCCESS:             # <<<<<<<<<<<<<<
+ *         modes.append(4)
+ *     return modes
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_CONTROL_ID); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 322, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_CAM_BIN4X4MODE); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 322, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_2);
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+  __pyx_t_3 = ((CONTROL_ID)__Pyx_PyInt_As_CONTROL_ID(__pyx_t_2)); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 322, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_4 = ((IsQHYCCDControlAvailable(PyLong_AsVoidPtr(__pyx_v_cam), __pyx_t_3) == QHYCCD_SUCCESS) != 0);
+  if (__pyx_t_4) {
+
+    /* "QHYCCD/pyqhyccd.pyx":323
+ *         modes.append(3)
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN4X4MODE) == qhy.QHYCCD_SUCCESS:
+ *         modes.append(4)             # <<<<<<<<<<<<<<
+ *     return modes
+ */
+    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_modes, __pyx_int_4); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 323, __pyx_L1_error)
+
+    /* "QHYCCD/pyqhyccd.pyx":322
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN3X3MODE) == qhy.QHYCCD_SUCCESS:
+ *         modes.append(3)
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN4X4MODE) == qhy.QHYCCD_SUCCESS:             # <<<<<<<<<<<<<<
+ *         modes.append(4)
+ *     return modes
+ */
+  }
+
+  /* "QHYCCD/pyqhyccd.pyx":324
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN4X4MODE) == qhy.QHYCCD_SUCCESS:
+ *         modes.append(4)
+ *     return modes             # <<<<<<<<<<<<<<
+ */
+  __Pyx_XDECREF(__pyx_r);
+  __Pyx_INCREF(__pyx_v_modes);
+  __pyx_r = __pyx_v_modes;
+  goto __pyx_L0;
+
+  /* "QHYCCD/pyqhyccd.pyx":316
+ *     chkerr(qhy.SetQHYCCDBitsMode(PyLong_AsVoidPtr(cam), <uint32_t> value))
+ * 
+ * def GetBinModes(cam):             # <<<<<<<<<<<<<<
+ *     modes = [1]
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN2X2MODE) == qhy.QHYCCD_SUCCESS:
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_1);
+  __Pyx_XDECREF(__pyx_t_2);
+  __Pyx_AddTraceback("QHYCCD.pyqhyccd.GetBinModes", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_r = NULL;
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_modes);
   __Pyx_XGIVEREF(__pyx_r);
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
@@ -9975,6 +11598,8 @@ static PyMethodDef __pyx_methods[] = {
 static __Pyx_StringTabEntry __pyx_string_tab[] = {
   #if CYTHON_COMPILING_IN_LIMITED_API
   {0, __pyx_k_, sizeof(__pyx_k_), 0, 1, 0, 0},
+  {0, __pyx_k_ActualExposureTime, sizeof(__pyx_k_ActualExposureTime), 0, 0, 1, 1},
+  {0, __pyx_k_BeginQHYCCDLive, sizeof(__pyx_k_BeginQHYCCDLive), 0, 0, 1, 1},
   {0, __pyx_k_CAM_16BITS, sizeof(__pyx_k_CAM_16BITS), 0, 0, 1, 1},
   {0, __pyx_k_CAM_8BITS, sizeof(__pyx_k_CAM_8BITS), 0, 0, 1, 1},
   {0, __pyx_k_CAM_BIN1X1MODE, sizeof(__pyx_k_CAM_BIN1X1MODE), 0, 0, 1, 1},
@@ -10032,6 +11657,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, __pyx_k_CONTROL_WBR, sizeof(__pyx_k_CONTROL_WBR), 0, 0, 1, 1},
   {0, __pyx_k_CancelQHYCCDExposing, sizeof(__pyx_k_CancelQHYCCDExposing), 0, 0, 1, 1},
   {0, __pyx_k_CancelQHYCCDExposingAndReadout, sizeof(__pyx_k_CancelQHYCCDExposingAndReadout), 0, 0, 1, 1},
+  {0, __pyx_k_ClocksPerLine, sizeof(__pyx_k_ClocksPerLine), 0, 0, 1, 1},
   {0, __pyx_k_CloseQHYCCD, sizeof(__pyx_k_CloseQHYCCD), 0, 0, 1, 1},
   {0, __pyx_k_DDR_BUFFER_CAPACITY, sizeof(__pyx_k_DDR_BUFFER_CAPACITY), 0, 0, 1, 1},
   {0, __pyx_k_DDR_BUFFER_READ_THRESHOLD, sizeof(__pyx_k_DDR_BUFFER_READ_THRESHOLD), 0, 0, 1, 1},
@@ -10040,16 +11666,20 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, __pyx_k_ExpQHYCCDSingleFrame, sizeof(__pyx_k_ExpQHYCCDSingleFrame), 0, 0, 1, 1},
   {0, __pyx_k_Format_string_allocated_too_shor, sizeof(__pyx_k_Format_string_allocated_too_shor), 0, 1, 0, 0},
   {0, __pyx_k_Format_string_allocated_too_shor_2, sizeof(__pyx_k_Format_string_allocated_too_shor_2), 0, 1, 0, 0},
+  {0, __pyx_k_FramePeriod_us, sizeof(__pyx_k_FramePeriod_us), 0, 0, 1, 1},
+  {0, __pyx_k_GetBinModes, sizeof(__pyx_k_GetBinModes), 0, 0, 1, 1},
   {0, __pyx_k_GetQHYCCDChipInfo, sizeof(__pyx_k_GetQHYCCDChipInfo), 0, 0, 1, 1},
   {0, __pyx_k_GetQHYCCDEffectiveArea, sizeof(__pyx_k_GetQHYCCDEffectiveArea), 0, 0, 1, 1},
   {0, __pyx_k_GetQHYCCDExposureRemaining, sizeof(__pyx_k_GetQHYCCDExposureRemaining), 0, 0, 1, 1},
   {0, __pyx_k_GetQHYCCDId, sizeof(__pyx_k_GetQHYCCDId), 0, 0, 1, 1},
+  {0, __pyx_k_GetQHYCCDLiveFrame, sizeof(__pyx_k_GetQHYCCDLiveFrame), 0, 0, 1, 1},
   {0, __pyx_k_GetQHYCCDMemLength, sizeof(__pyx_k_GetQHYCCDMemLength), 0, 0, 1, 1},
   {0, __pyx_k_GetQHYCCDModel, sizeof(__pyx_k_GetQHYCCDModel), 0, 0, 1, 1},
   {0, __pyx_k_GetQHYCCDNumberOfReadModes, sizeof(__pyx_k_GetQHYCCDNumberOfReadModes), 0, 0, 1, 1},
   {0, __pyx_k_GetQHYCCDOverScanArea, sizeof(__pyx_k_GetQHYCCDOverScanArea), 0, 0, 1, 1},
   {0, __pyx_k_GetQHYCCDParam, sizeof(__pyx_k_GetQHYCCDParam), 0, 0, 1, 1},
   {0, __pyx_k_GetQHYCCDParamMinMaxStep, sizeof(__pyx_k_GetQHYCCDParamMinMaxStep), 0, 0, 1, 1},
+  {0, __pyx_k_GetQHYCCDPreciseExposureInfo, sizeof(__pyx_k_GetQHYCCDPreciseExposureInfo), 0, 0, 1, 1},
   {0, __pyx_k_GetQHYCCDReadMode, sizeof(__pyx_k_GetQHYCCDReadMode), 0, 0, 1, 1},
   {0, __pyx_k_GetQHYCCDReadModeName, sizeof(__pyx_k_GetQHYCCDReadModeName), 0, 0, 1, 1},
   {0, __pyx_k_GetQHYCCDReadModeResolution, sizeof(__pyx_k_GetQHYCCDReadModeResolution), 0, 0, 1, 1},
@@ -10061,11 +11691,14 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, __pyx_k_InitQHYCCD, sizeof(__pyx_k_InitQHYCCD), 0, 0, 1, 1},
   {0, __pyx_k_InitQHYCCDResource, sizeof(__pyx_k_InitQHYCCDResource), 0, 0, 1, 1},
   {0, __pyx_k_IsQHYCCDControlAvailable, sizeof(__pyx_k_IsQHYCCDControlAvailable), 0, 0, 1, 1},
+  {0, __pyx_k_LinePeriod_ns, sizeof(__pyx_k_LinePeriod_ns), 0, 0, 1, 1},
+  {0, __pyx_k_LinesPerFrame, sizeof(__pyx_k_LinesPerFrame), 0, 0, 1, 1},
   {0, __pyx_k_Non_native_byte_order_not_suppor, sizeof(__pyx_k_Non_native_byte_order_not_suppor), 0, 1, 0, 0},
   {0, __pyx_k_OSError, sizeof(__pyx_k_OSError), 0, 0, 1, 1},
   {0, __pyx_k_OpenQHYCCD, sizeof(__pyx_k_OpenQHYCCD), 0, 0, 1, 1},
   {0, __pyx_k_OutputDataActualBits, sizeof(__pyx_k_OutputDataActualBits), 0, 0, 1, 1},
   {0, __pyx_k_OutputDataAlignment, sizeof(__pyx_k_OutputDataAlignment), 0, 0, 1, 1},
+  {0, __pyx_k_PixelPeriod_ps, sizeof(__pyx_k_PixelPeriod_ps), 0, 0, 1, 1},
   {0, __pyx_k_QHYCCD_3A_AUTOBALANCE, sizeof(__pyx_k_QHYCCD_3A_AUTOBALANCE), 0, 0, 1, 1},
   {0, __pyx_k_QHYCCD_3A_AUTOEXPOSURE, sizeof(__pyx_k_QHYCCD_3A_AUTOEXPOSURE), 0, 0, 1, 1},
   {0, __pyx_k_QHYCCD_3A_AUTOFOCUS, sizeof(__pyx_k_QHYCCD_3A_AUTOFOCUS), 0, 0, 1, 1},
@@ -10077,15 +11710,20 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, __pyx_k_ScanQHYCCD, sizeof(__pyx_k_ScanQHYCCD), 0, 0, 1, 1},
   {0, __pyx_k_ScreenStretchB, sizeof(__pyx_k_ScreenStretchB), 0, 0, 1, 1},
   {0, __pyx_k_ScreenStretchW, sizeof(__pyx_k_ScreenStretchW), 0, 0, 1, 1},
+  {0, __pyx_k_SetQHYCCDBinMode, sizeof(__pyx_k_SetQHYCCDBinMode), 0, 0, 1, 1},
+  {0, __pyx_k_SetQHYCCDBitsMode, sizeof(__pyx_k_SetQHYCCDBitsMode), 0, 0, 1, 1},
   {0, __pyx_k_SetQHYCCDParam, sizeof(__pyx_k_SetQHYCCDParam), 0, 0, 1, 1},
   {0, __pyx_k_SetQHYCCDReadMode, sizeof(__pyx_k_SetQHYCCDReadMode), 0, 0, 1, 1},
   {0, __pyx_k_SetQHYCCDResolution, sizeof(__pyx_k_SetQHYCCDResolution), 0, 0, 1, 1},
   {0, __pyx_k_SetQHYCCDStreamMode, sizeof(__pyx_k_SetQHYCCDStreamMode), 0, 0, 1, 1},
+  {0, __pyx_k_StopQHYCCDLive, sizeof(__pyx_k_StopQHYCCDLive), 0, 0, 1, 1},
   {0, __pyx_k_ValueError, sizeof(__pyx_k_ValueError), 0, 0, 1, 1},
   {0, __pyx_k__2, sizeof(__pyx_k__2), 0, 1, 0, 0},
-  {0, __pyx_k__66, sizeof(__pyx_k__66), 0, 0, 1, 1},
   {0, __pyx_k__8, sizeof(__pyx_k__8), 0, 0, 1, 1},
+  {0, __pyx_k__82, sizeof(__pyx_k__82), 0, 0, 1, 1},
   {0, __pyx_k_all, sizeof(__pyx_k_all), 0, 0, 1, 1},
+  {0, __pyx_k_binh, sizeof(__pyx_k_binh), 0, 0, 1, 1},
+  {0, __pyx_k_binw, sizeof(__pyx_k_binw), 0, 0, 1, 1},
   {0, __pyx_k_bpp, sizeof(__pyx_k_bpp), 0, 0, 1, 1},
   {0, __pyx_k_cam, sizeof(__pyx_k_cam), 0, 0, 1, 1},
   {0, __pyx_k_camid, sizeof(__pyx_k_camid), 0, 0, 1, 1},
@@ -10103,6 +11741,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, __pyx_k_error, sizeof(__pyx_k_error), 0, 0, 1, 0},
   {0, __pyx_k_h, sizeof(__pyx_k_h), 0, 0, 1, 1},
   {0, __pyx_k_hasHardwareFrameCounter, sizeof(__pyx_k_hasHardwareFrameCounter), 0, 0, 1, 1},
+  {0, __pyx_k_hbin, sizeof(__pyx_k_hbin), 0, 0, 1, 1},
   {0, __pyx_k_height, sizeof(__pyx_k_height), 0, 0, 1, 1},
   {0, __pyx_k_i, sizeof(__pyx_k_i), 0, 0, 1, 1},
   {0, __pyx_k_imageh, sizeof(__pyx_k_imageh), 0, 0, 1, 1},
@@ -10111,11 +11750,13 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
   {0, __pyx_k_init_subclass, sizeof(__pyx_k_init_subclass), 0, 0, 1, 1},
   {0, __pyx_k_initializing, sizeof(__pyx_k_initializing), 0, 0, 1, 1},
+  {0, __pyx_k_isLongExposureMode, sizeof(__pyx_k_isLongExposureMode), 0, 0, 1, 1},
   {0, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {0, __pyx_k_memlength, sizeof(__pyx_k_memlength), 0, 0, 1, 1},
   {0, __pyx_k_metaclass, sizeof(__pyx_k_metaclass), 0, 0, 1, 1},
   {0, __pyx_k_mode, sizeof(__pyx_k_mode), 0, 0, 1, 1},
   {0, __pyx_k_modeNumber, sizeof(__pyx_k_modeNumber), 0, 0, 1, 1},
+  {0, __pyx_k_modes, sizeof(__pyx_k_modes), 0, 0, 1, 1},
   {0, __pyx_k_module, sizeof(__pyx_k_module), 0, 0, 1, 1},
   {0, __pyx_k_month, sizeof(__pyx_k_month), 0, 0, 1, 1},
   {0, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
@@ -10143,6 +11784,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, __pyx_k_startX, sizeof(__pyx_k_startX), 0, 0, 1, 1},
   {0, __pyx_k_startY, sizeof(__pyx_k_startY), 0, 0, 1, 1},
   {0, __pyx_k_stderror, sizeof(__pyx_k_stderror), 0, 0, 1, 1},
+  {0, __pyx_k_strerror, sizeof(__pyx_k_strerror), 0, 0, 1, 1},
   {0, __pyx_k_subday, sizeof(__pyx_k_subday), 0, 0, 1, 1},
   {0, __pyx_k_super, sizeof(__pyx_k_super), 0, 0, 1, 1},
   {0, __pyx_k_sys, sizeof(__pyx_k_sys), 0, 0, 1, 1},
@@ -10151,6 +11793,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, __pyx_k_value, sizeof(__pyx_k_value), 0, 0, 1, 1},
   {0, __pyx_k_w, sizeof(__pyx_k_w), 0, 0, 1, 1},
   {0, __pyx_k_warnings, sizeof(__pyx_k_warnings), 0, 0, 1, 1},
+  {0, __pyx_k_wbin, sizeof(__pyx_k_wbin), 0, 0, 1, 1},
   {0, __pyx_k_width, sizeof(__pyx_k_width), 0, 0, 1, 1},
   {0, __pyx_k_x, sizeof(__pyx_k_x), 0, 0, 1, 1},
   {0, __pyx_k_xsize, sizeof(__pyx_k_xsize), 0, 0, 1, 1},
@@ -10159,6 +11802,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {0, __pyx_k_ysize, sizeof(__pyx_k_ysize), 0, 0, 1, 1},
   #else
   {&__pyx_kp_u_, __pyx_k_, sizeof(__pyx_k_), 0, 1, 0, 0},
+  {&__pyx_n_s_ActualExposureTime, __pyx_k_ActualExposureTime, sizeof(__pyx_k_ActualExposureTime), 0, 0, 1, 1},
+  {&__pyx_n_s_BeginQHYCCDLive, __pyx_k_BeginQHYCCDLive, sizeof(__pyx_k_BeginQHYCCDLive), 0, 0, 1, 1},
   {&__pyx_n_s_CAM_16BITS, __pyx_k_CAM_16BITS, sizeof(__pyx_k_CAM_16BITS), 0, 0, 1, 1},
   {&__pyx_n_s_CAM_8BITS, __pyx_k_CAM_8BITS, sizeof(__pyx_k_CAM_8BITS), 0, 0, 1, 1},
   {&__pyx_n_s_CAM_BIN1X1MODE, __pyx_k_CAM_BIN1X1MODE, sizeof(__pyx_k_CAM_BIN1X1MODE), 0, 0, 1, 1},
@@ -10216,6 +11861,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_CONTROL_WBR, __pyx_k_CONTROL_WBR, sizeof(__pyx_k_CONTROL_WBR), 0, 0, 1, 1},
   {&__pyx_n_s_CancelQHYCCDExposing, __pyx_k_CancelQHYCCDExposing, sizeof(__pyx_k_CancelQHYCCDExposing), 0, 0, 1, 1},
   {&__pyx_n_s_CancelQHYCCDExposingAndReadout, __pyx_k_CancelQHYCCDExposingAndReadout, sizeof(__pyx_k_CancelQHYCCDExposingAndReadout), 0, 0, 1, 1},
+  {&__pyx_n_s_ClocksPerLine, __pyx_k_ClocksPerLine, sizeof(__pyx_k_ClocksPerLine), 0, 0, 1, 1},
   {&__pyx_n_s_CloseQHYCCD, __pyx_k_CloseQHYCCD, sizeof(__pyx_k_CloseQHYCCD), 0, 0, 1, 1},
   {&__pyx_n_s_DDR_BUFFER_CAPACITY, __pyx_k_DDR_BUFFER_CAPACITY, sizeof(__pyx_k_DDR_BUFFER_CAPACITY), 0, 0, 1, 1},
   {&__pyx_n_s_DDR_BUFFER_READ_THRESHOLD, __pyx_k_DDR_BUFFER_READ_THRESHOLD, sizeof(__pyx_k_DDR_BUFFER_READ_THRESHOLD), 0, 0, 1, 1},
@@ -10224,16 +11870,20 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_ExpQHYCCDSingleFrame, __pyx_k_ExpQHYCCDSingleFrame, sizeof(__pyx_k_ExpQHYCCDSingleFrame), 0, 0, 1, 1},
   {&__pyx_kp_u_Format_string_allocated_too_shor, __pyx_k_Format_string_allocated_too_shor, sizeof(__pyx_k_Format_string_allocated_too_shor), 0, 1, 0, 0},
   {&__pyx_kp_u_Format_string_allocated_too_shor_2, __pyx_k_Format_string_allocated_too_shor_2, sizeof(__pyx_k_Format_string_allocated_too_shor_2), 0, 1, 0, 0},
+  {&__pyx_n_s_FramePeriod_us, __pyx_k_FramePeriod_us, sizeof(__pyx_k_FramePeriod_us), 0, 0, 1, 1},
+  {&__pyx_n_s_GetBinModes, __pyx_k_GetBinModes, sizeof(__pyx_k_GetBinModes), 0, 0, 1, 1},
   {&__pyx_n_s_GetQHYCCDChipInfo, __pyx_k_GetQHYCCDChipInfo, sizeof(__pyx_k_GetQHYCCDChipInfo), 0, 0, 1, 1},
   {&__pyx_n_s_GetQHYCCDEffectiveArea, __pyx_k_GetQHYCCDEffectiveArea, sizeof(__pyx_k_GetQHYCCDEffectiveArea), 0, 0, 1, 1},
   {&__pyx_n_s_GetQHYCCDExposureRemaining, __pyx_k_GetQHYCCDExposureRemaining, sizeof(__pyx_k_GetQHYCCDExposureRemaining), 0, 0, 1, 1},
   {&__pyx_n_s_GetQHYCCDId, __pyx_k_GetQHYCCDId, sizeof(__pyx_k_GetQHYCCDId), 0, 0, 1, 1},
+  {&__pyx_n_s_GetQHYCCDLiveFrame, __pyx_k_GetQHYCCDLiveFrame, sizeof(__pyx_k_GetQHYCCDLiveFrame), 0, 0, 1, 1},
   {&__pyx_n_s_GetQHYCCDMemLength, __pyx_k_GetQHYCCDMemLength, sizeof(__pyx_k_GetQHYCCDMemLength), 0, 0, 1, 1},
   {&__pyx_n_s_GetQHYCCDModel, __pyx_k_GetQHYCCDModel, sizeof(__pyx_k_GetQHYCCDModel), 0, 0, 1, 1},
   {&__pyx_n_s_GetQHYCCDNumberOfReadModes, __pyx_k_GetQHYCCDNumberOfReadModes, sizeof(__pyx_k_GetQHYCCDNumberOfReadModes), 0, 0, 1, 1},
   {&__pyx_n_s_GetQHYCCDOverScanArea, __pyx_k_GetQHYCCDOverScanArea, sizeof(__pyx_k_GetQHYCCDOverScanArea), 0, 0, 1, 1},
   {&__pyx_n_s_GetQHYCCDParam, __pyx_k_GetQHYCCDParam, sizeof(__pyx_k_GetQHYCCDParam), 0, 0, 1, 1},
   {&__pyx_n_s_GetQHYCCDParamMinMaxStep, __pyx_k_GetQHYCCDParamMinMaxStep, sizeof(__pyx_k_GetQHYCCDParamMinMaxStep), 0, 0, 1, 1},
+  {&__pyx_n_s_GetQHYCCDPreciseExposureInfo, __pyx_k_GetQHYCCDPreciseExposureInfo, sizeof(__pyx_k_GetQHYCCDPreciseExposureInfo), 0, 0, 1, 1},
   {&__pyx_n_s_GetQHYCCDReadMode, __pyx_k_GetQHYCCDReadMode, sizeof(__pyx_k_GetQHYCCDReadMode), 0, 0, 1, 1},
   {&__pyx_n_s_GetQHYCCDReadModeName, __pyx_k_GetQHYCCDReadModeName, sizeof(__pyx_k_GetQHYCCDReadModeName), 0, 0, 1, 1},
   {&__pyx_n_s_GetQHYCCDReadModeResolution, __pyx_k_GetQHYCCDReadModeResolution, sizeof(__pyx_k_GetQHYCCDReadModeResolution), 0, 0, 1, 1},
@@ -10245,11 +11895,14 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_InitQHYCCD, __pyx_k_InitQHYCCD, sizeof(__pyx_k_InitQHYCCD), 0, 0, 1, 1},
   {&__pyx_n_s_InitQHYCCDResource, __pyx_k_InitQHYCCDResource, sizeof(__pyx_k_InitQHYCCDResource), 0, 0, 1, 1},
   {&__pyx_n_s_IsQHYCCDControlAvailable, __pyx_k_IsQHYCCDControlAvailable, sizeof(__pyx_k_IsQHYCCDControlAvailable), 0, 0, 1, 1},
+  {&__pyx_n_s_LinePeriod_ns, __pyx_k_LinePeriod_ns, sizeof(__pyx_k_LinePeriod_ns), 0, 0, 1, 1},
+  {&__pyx_n_s_LinesPerFrame, __pyx_k_LinesPerFrame, sizeof(__pyx_k_LinesPerFrame), 0, 0, 1, 1},
   {&__pyx_kp_u_Non_native_byte_order_not_suppor, __pyx_k_Non_native_byte_order_not_suppor, sizeof(__pyx_k_Non_native_byte_order_not_suppor), 0, 1, 0, 0},
   {&__pyx_n_s_OSError, __pyx_k_OSError, sizeof(__pyx_k_OSError), 0, 0, 1, 1},
   {&__pyx_n_s_OpenQHYCCD, __pyx_k_OpenQHYCCD, sizeof(__pyx_k_OpenQHYCCD), 0, 0, 1, 1},
   {&__pyx_n_s_OutputDataActualBits, __pyx_k_OutputDataActualBits, sizeof(__pyx_k_OutputDataActualBits), 0, 0, 1, 1},
   {&__pyx_n_s_OutputDataAlignment, __pyx_k_OutputDataAlignment, sizeof(__pyx_k_OutputDataAlignment), 0, 0, 1, 1},
+  {&__pyx_n_s_PixelPeriod_ps, __pyx_k_PixelPeriod_ps, sizeof(__pyx_k_PixelPeriod_ps), 0, 0, 1, 1},
   {&__pyx_n_s_QHYCCD_3A_AUTOBALANCE, __pyx_k_QHYCCD_3A_AUTOBALANCE, sizeof(__pyx_k_QHYCCD_3A_AUTOBALANCE), 0, 0, 1, 1},
   {&__pyx_n_s_QHYCCD_3A_AUTOEXPOSURE, __pyx_k_QHYCCD_3A_AUTOEXPOSURE, sizeof(__pyx_k_QHYCCD_3A_AUTOEXPOSURE), 0, 0, 1, 1},
   {&__pyx_n_s_QHYCCD_3A_AUTOFOCUS, __pyx_k_QHYCCD_3A_AUTOFOCUS, sizeof(__pyx_k_QHYCCD_3A_AUTOFOCUS), 0, 0, 1, 1},
@@ -10261,15 +11914,20 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_ScanQHYCCD, __pyx_k_ScanQHYCCD, sizeof(__pyx_k_ScanQHYCCD), 0, 0, 1, 1},
   {&__pyx_n_s_ScreenStretchB, __pyx_k_ScreenStretchB, sizeof(__pyx_k_ScreenStretchB), 0, 0, 1, 1},
   {&__pyx_n_s_ScreenStretchW, __pyx_k_ScreenStretchW, sizeof(__pyx_k_ScreenStretchW), 0, 0, 1, 1},
+  {&__pyx_n_s_SetQHYCCDBinMode, __pyx_k_SetQHYCCDBinMode, sizeof(__pyx_k_SetQHYCCDBinMode), 0, 0, 1, 1},
+  {&__pyx_n_s_SetQHYCCDBitsMode, __pyx_k_SetQHYCCDBitsMode, sizeof(__pyx_k_SetQHYCCDBitsMode), 0, 0, 1, 1},
   {&__pyx_n_s_SetQHYCCDParam, __pyx_k_SetQHYCCDParam, sizeof(__pyx_k_SetQHYCCDParam), 0, 0, 1, 1},
   {&__pyx_n_s_SetQHYCCDReadMode, __pyx_k_SetQHYCCDReadMode, sizeof(__pyx_k_SetQHYCCDReadMode), 0, 0, 1, 1},
   {&__pyx_n_s_SetQHYCCDResolution, __pyx_k_SetQHYCCDResolution, sizeof(__pyx_k_SetQHYCCDResolution), 0, 0, 1, 1},
   {&__pyx_n_s_SetQHYCCDStreamMode, __pyx_k_SetQHYCCDStreamMode, sizeof(__pyx_k_SetQHYCCDStreamMode), 0, 0, 1, 1},
+  {&__pyx_n_s_StopQHYCCDLive, __pyx_k_StopQHYCCDLive, sizeof(__pyx_k_StopQHYCCDLive), 0, 0, 1, 1},
   {&__pyx_n_s_ValueError, __pyx_k_ValueError, sizeof(__pyx_k_ValueError), 0, 0, 1, 1},
   {&__pyx_kp_u__2, __pyx_k__2, sizeof(__pyx_k__2), 0, 1, 0, 0},
-  {&__pyx_n_s__66, __pyx_k__66, sizeof(__pyx_k__66), 0, 0, 1, 1},
   {&__pyx_n_s__8, __pyx_k__8, sizeof(__pyx_k__8), 0, 0, 1, 1},
+  {&__pyx_n_s__82, __pyx_k__82, sizeof(__pyx_k__82), 0, 0, 1, 1},
   {&__pyx_n_s_all, __pyx_k_all, sizeof(__pyx_k_all), 0, 0, 1, 1},
+  {&__pyx_n_s_binh, __pyx_k_binh, sizeof(__pyx_k_binh), 0, 0, 1, 1},
+  {&__pyx_n_s_binw, __pyx_k_binw, sizeof(__pyx_k_binw), 0, 0, 1, 1},
   {&__pyx_n_s_bpp, __pyx_k_bpp, sizeof(__pyx_k_bpp), 0, 0, 1, 1},
   {&__pyx_n_s_cam, __pyx_k_cam, sizeof(__pyx_k_cam), 0, 0, 1, 1},
   {&__pyx_n_s_camid, __pyx_k_camid, sizeof(__pyx_k_camid), 0, 0, 1, 1},
@@ -10287,6 +11945,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_kp_s_error, __pyx_k_error, sizeof(__pyx_k_error), 0, 0, 1, 0},
   {&__pyx_n_s_h, __pyx_k_h, sizeof(__pyx_k_h), 0, 0, 1, 1},
   {&__pyx_n_s_hasHardwareFrameCounter, __pyx_k_hasHardwareFrameCounter, sizeof(__pyx_k_hasHardwareFrameCounter), 0, 0, 1, 1},
+  {&__pyx_n_s_hbin, __pyx_k_hbin, sizeof(__pyx_k_hbin), 0, 0, 1, 1},
   {&__pyx_n_s_height, __pyx_k_height, sizeof(__pyx_k_height), 0, 0, 1, 1},
   {&__pyx_n_s_i, __pyx_k_i, sizeof(__pyx_k_i), 0, 0, 1, 1},
   {&__pyx_n_s_imageh, __pyx_k_imageh, sizeof(__pyx_k_imageh), 0, 0, 1, 1},
@@ -10295,11 +11954,13 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_import, __pyx_k_import, sizeof(__pyx_k_import), 0, 0, 1, 1},
   {&__pyx_n_s_init_subclass, __pyx_k_init_subclass, sizeof(__pyx_k_init_subclass), 0, 0, 1, 1},
   {&__pyx_n_s_initializing, __pyx_k_initializing, sizeof(__pyx_k_initializing), 0, 0, 1, 1},
+  {&__pyx_n_s_isLongExposureMode, __pyx_k_isLongExposureMode, sizeof(__pyx_k_isLongExposureMode), 0, 0, 1, 1},
   {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
   {&__pyx_n_s_memlength, __pyx_k_memlength, sizeof(__pyx_k_memlength), 0, 0, 1, 1},
   {&__pyx_n_s_metaclass, __pyx_k_metaclass, sizeof(__pyx_k_metaclass), 0, 0, 1, 1},
   {&__pyx_n_s_mode, __pyx_k_mode, sizeof(__pyx_k_mode), 0, 0, 1, 1},
   {&__pyx_n_s_modeNumber, __pyx_k_modeNumber, sizeof(__pyx_k_modeNumber), 0, 0, 1, 1},
+  {&__pyx_n_s_modes, __pyx_k_modes, sizeof(__pyx_k_modes), 0, 0, 1, 1},
   {&__pyx_n_s_module, __pyx_k_module, sizeof(__pyx_k_module), 0, 0, 1, 1},
   {&__pyx_n_s_month, __pyx_k_month, sizeof(__pyx_k_month), 0, 0, 1, 1},
   {&__pyx_n_s_name, __pyx_k_name, sizeof(__pyx_k_name), 0, 0, 1, 1},
@@ -10327,6 +11988,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_startX, __pyx_k_startX, sizeof(__pyx_k_startX), 0, 0, 1, 1},
   {&__pyx_n_s_startY, __pyx_k_startY, sizeof(__pyx_k_startY), 0, 0, 1, 1},
   {&__pyx_n_s_stderror, __pyx_k_stderror, sizeof(__pyx_k_stderror), 0, 0, 1, 1},
+  {&__pyx_n_s_strerror, __pyx_k_strerror, sizeof(__pyx_k_strerror), 0, 0, 1, 1},
   {&__pyx_n_s_subday, __pyx_k_subday, sizeof(__pyx_k_subday), 0, 0, 1, 1},
   {&__pyx_n_s_super, __pyx_k_super, sizeof(__pyx_k_super), 0, 0, 1, 1},
   {&__pyx_n_s_sys, __pyx_k_sys, sizeof(__pyx_k_sys), 0, 0, 1, 1},
@@ -10335,6 +11997,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_value, __pyx_k_value, sizeof(__pyx_k_value), 0, 0, 1, 1},
   {&__pyx_n_s_w, __pyx_k_w, sizeof(__pyx_k_w), 0, 0, 1, 1},
   {&__pyx_n_s_warnings, __pyx_k_warnings, sizeof(__pyx_k_warnings), 0, 0, 1, 1},
+  {&__pyx_n_s_wbin, __pyx_k_wbin, sizeof(__pyx_k_wbin), 0, 0, 1, 1},
   {&__pyx_n_s_width, __pyx_k_width, sizeof(__pyx_k_width), 0, 0, 1, 1},
   {&__pyx_n_s_x, __pyx_k_x, sizeof(__pyx_k_x), 0, 0, 1, 1},
   {&__pyx_n_s_xsize, __pyx_k_xsize, sizeof(__pyx_k_xsize), 0, 0, 1, 1},
@@ -10346,8 +12009,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
 };
 /* #### Code section: cached_builtins ### */
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 124, __pyx_L1_error)
-  __pyx_builtin_OSError = __Pyx_GetBuiltinName(__pyx_n_s_OSError); if (!__pyx_builtin_OSError) __PYX_ERR(0, 224, __pyx_L1_error)
+  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 132, __pyx_L1_error)
+  __pyx_builtin_OSError = __Pyx_GetBuiltinName(__pyx_n_s_OSError); if (!__pyx_builtin_OSError) __PYX_ERR(0, 133, __pyx_L1_error)
   __pyx_builtin_RuntimeError = __Pyx_GetBuiltinName(__pyx_n_s_RuntimeError); if (!__pyx_builtin_RuntimeError) __PYX_ERR(1, 824, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 828, __pyx_L1_error)
   __pyx_builtin_ImportError = __Pyx_GetBuiltinName(__pyx_n_s_ImportError); if (!__pyx_builtin_ImportError) __PYX_ERR(1, 1046, __pyx_L1_error)
@@ -10416,356 +12079,452 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
 
-  /* "QHYCCD/pyqhyccd.pyx":128
+  /* "QHYCCD/pyqhyccd.pyx":136
  * 
  * 
  * def InitQHYCCDResource():             # <<<<<<<<<<<<<<
  *     chkerr(qhy.InitQHYCCDResource())
  * 
  */
-  __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_InitQHYCCDResource, 128, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) __PYX_ERR(0, 128, __pyx_L1_error)
+  __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_InitQHYCCDResource, 136, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) __PYX_ERR(0, 136, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":131
+  /* "QHYCCD/pyqhyccd.pyx":139
  *     chkerr(qhy.InitQHYCCDResource())
  * 
  * def ReleaseQHYCCDResource():             # <<<<<<<<<<<<<<
  *     chkerr(qhy.ReleaseQHYCCDResource())
  * 
  */
-  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_ReleaseQHYCCDResource, 131, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 131, __pyx_L1_error)
+  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_ReleaseQHYCCDResource, 139, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 139, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":134
+  /* "QHYCCD/pyqhyccd.pyx":142
  *     chkerr(qhy.ReleaseQHYCCDResource())
  * 
  * def ScanQHYCCD():             # <<<<<<<<<<<<<<
  *     return(qhy.ScanQHYCCD())
  * 
  */
-  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_ScanQHYCCD, 134, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 134, __pyx_L1_error)
+  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 0, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_ScanQHYCCD, 142, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 142, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":137
+  /* "QHYCCD/pyqhyccd.pyx":145
  *     return(qhy.ScanQHYCCD())
  * 
  * def GetQHYCCDId(i):             # <<<<<<<<<<<<<<
  *     cdef char camid[256]
  *     chkerr(qhy.GetQHYCCDId(i, camid))
  */
-  __pyx_tuple__12 = PyTuple_Pack(2, __pyx_n_s_i, __pyx_n_s_camid); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 137, __pyx_L1_error)
+  __pyx_tuple__12 = PyTuple_Pack(2, __pyx_n_s_i, __pyx_n_s_camid); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 145, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__12);
   __Pyx_GIVEREF(__pyx_tuple__12);
-  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDId, 137, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 137, __pyx_L1_error)
+  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDId, 145, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 145, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":142
+  /* "QHYCCD/pyqhyccd.pyx":150
  *     return camid
  * 
  * def OpenQHYCCD(camid):             # <<<<<<<<<<<<<<
  *     return PyLong_FromVoidPtr(qhy.OpenQHYCCD(<char *>camid))
  * 
  */
-  __pyx_tuple__14 = PyTuple_Pack(1, __pyx_n_s_camid); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 142, __pyx_L1_error)
+  __pyx_tuple__14 = PyTuple_Pack(1, __pyx_n_s_camid); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__14);
   __Pyx_GIVEREF(__pyx_tuple__14);
-  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_OpenQHYCCD, 142, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 142, __pyx_L1_error)
+  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_OpenQHYCCD, 150, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 150, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":145
+  /* "QHYCCD/pyqhyccd.pyx":153
  *     return PyLong_FromVoidPtr(qhy.OpenQHYCCD(<char *>camid))
  * 
  * def SetQHYCCDStreamMode(cam, mode):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.SetQHYCCDStreamMode(PyLong_AsVoidPtr(cam), mode))
  * 
  */
-  __pyx_tuple__16 = PyTuple_Pack(2, __pyx_n_s_cam, __pyx_n_s_mode); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 145, __pyx_L1_error)
+  __pyx_tuple__16 = PyTuple_Pack(2, __pyx_n_s_cam, __pyx_n_s_mode); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__16);
   __Pyx_GIVEREF(__pyx_tuple__16);
-  __pyx_codeobj__17 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_SetQHYCCDStreamMode, 145, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__17)) __PYX_ERR(0, 145, __pyx_L1_error)
+  __pyx_codeobj__17 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_SetQHYCCDStreamMode, 153, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__17)) __PYX_ERR(0, 153, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":148
+  /* "QHYCCD/pyqhyccd.pyx":156
  *     chkerr(qhy.SetQHYCCDStreamMode(PyLong_AsVoidPtr(cam), mode))
  * 
  * def InitQHYCCD(cam):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.InitQHYCCD(PyLong_AsVoidPtr(cam)))
  * 
  */
-  __pyx_tuple__18 = PyTuple_Pack(1, __pyx_n_s_cam); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __pyx_tuple__18 = PyTuple_Pack(1, __pyx_n_s_cam); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(0, 156, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__18);
   __Pyx_GIVEREF(__pyx_tuple__18);
-  __pyx_codeobj__19 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_InitQHYCCD, 148, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__19)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __pyx_codeobj__19 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__18, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_InitQHYCCD, 156, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__19)) __PYX_ERR(0, 156, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":151
+  /* "QHYCCD/pyqhyccd.pyx":159
  *     chkerr(qhy.InitQHYCCD(PyLong_AsVoidPtr(cam)))
  * 
  * def CloseQHYCCD(cam):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.CloseQHYCCD(PyLong_AsVoidPtr(cam)))
  * 
  */
-  __pyx_tuple__20 = PyTuple_Pack(1, __pyx_n_s_cam); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 151, __pyx_L1_error)
+  __pyx_tuple__20 = PyTuple_Pack(1, __pyx_n_s_cam); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(0, 159, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__20);
   __Pyx_GIVEREF(__pyx_tuple__20);
-  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_CloseQHYCCD, 151, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 151, __pyx_L1_error)
+  __pyx_codeobj__21 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__20, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_CloseQHYCCD, 159, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__21)) __PYX_ERR(0, 159, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":154
+  /* "QHYCCD/pyqhyccd.pyx":162
  *     chkerr(qhy.CloseQHYCCD(PyLong_AsVoidPtr(cam)))
  * 
  * def GetQHYCCDChipInfo(cam):             # <<<<<<<<<<<<<<
  *     cdef double chipw, chiph, pixelw, pixelh
  *     cdef uint32_t imagew, imageh, bpp
  */
-  __pyx_tuple__22 = PyTuple_Pack(8, __pyx_n_s_cam, __pyx_n_s_chipw, __pyx_n_s_chiph, __pyx_n_s_pixelw, __pyx_n_s_pixelh, __pyx_n_s_imagew, __pyx_n_s_imageh, __pyx_n_s_bpp); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_tuple__22 = PyTuple_Pack(8, __pyx_n_s_cam, __pyx_n_s_chipw, __pyx_n_s_chiph, __pyx_n_s_pixelw, __pyx_n_s_pixelh, __pyx_n_s_imagew, __pyx_n_s_imageh, __pyx_n_s_bpp); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__22);
   __Pyx_GIVEREF(__pyx_tuple__22);
-  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 8, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDChipInfo, 154, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_codeobj__23 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 8, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__22, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDChipInfo, 162, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__23)) __PYX_ERR(0, 162, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":160
+  /* "QHYCCD/pyqhyccd.pyx":168
  *     return (chipw, chiph, imagew, imageh, pixelw, pixelh, bpp)
  * 
  * def GetQHYCCDModel(camid):             # <<<<<<<<<<<<<<
  *     cdef char cammodel[256]
  *     chkerr(qhy.GetQHYCCDModel(camid, cammodel))
  */
-  __pyx_tuple__24 = PyTuple_Pack(2, __pyx_n_s_camid, __pyx_n_s_cammodel); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(0, 160, __pyx_L1_error)
+  __pyx_tuple__24 = PyTuple_Pack(2, __pyx_n_s_camid, __pyx_n_s_cammodel); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(0, 168, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__24);
   __Pyx_GIVEREF(__pyx_tuple__24);
-  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDModel, 160, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) __PYX_ERR(0, 160, __pyx_L1_error)
+  __pyx_codeobj__25 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__24, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDModel, 168, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__25)) __PYX_ERR(0, 168, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":165
+  /* "QHYCCD/pyqhyccd.pyx":173
  *     return cammodel
  * 
  * def IsQHYCCDControlAvailable(cam, controlId):             # <<<<<<<<<<<<<<
  *     ret = qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), controlId)
  *     if ret == qhy.QHYCCD_SUCCESS:
  */
-  __pyx_tuple__26 = PyTuple_Pack(3, __pyx_n_s_cam, __pyx_n_s_controlId, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 165, __pyx_L1_error)
+  __pyx_tuple__26 = PyTuple_Pack(3, __pyx_n_s_cam, __pyx_n_s_controlId, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(0, 173, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__26);
   __Pyx_GIVEREF(__pyx_tuple__26);
-  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_IsQHYCCDControlAvailable, 165, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(0, 165, __pyx_L1_error)
+  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_IsQHYCCDControlAvailable, 173, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(0, 173, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":172
+  /* "QHYCCD/pyqhyccd.pyx":180
  *         return False
  * 
  * def GetQHYCCDParam(cam, controlId):             # <<<<<<<<<<<<<<
  *     ret = qhy.GetQHYCCDParam(PyLong_AsVoidPtr(cam), controlId)
  *     if ret != qhy.QHYCCD_ERROR:
  */
-  __pyx_tuple__28 = PyTuple_Pack(3, __pyx_n_s_cam, __pyx_n_s_controlId, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(0, 172, __pyx_L1_error)
+  __pyx_tuple__28 = PyTuple_Pack(3, __pyx_n_s_cam, __pyx_n_s_controlId, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(0, 180, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__28);
   __Pyx_GIVEREF(__pyx_tuple__28);
-  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDParam, 172, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) __PYX_ERR(0, 172, __pyx_L1_error)
+  __pyx_codeobj__29 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDParam, 180, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__29)) __PYX_ERR(0, 180, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":179
+  /* "QHYCCD/pyqhyccd.pyx":187
  *         return None
  * 
  * def SetQHYCCDParam(cam, controlId, value):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.SetQHYCCDParam(PyLong_AsVoidPtr(cam), controlId, value))
  * 
  */
-  __pyx_tuple__30 = PyTuple_Pack(3, __pyx_n_s_cam, __pyx_n_s_controlId, __pyx_n_s_value); if (unlikely(!__pyx_tuple__30)) __PYX_ERR(0, 179, __pyx_L1_error)
+  __pyx_tuple__30 = PyTuple_Pack(3, __pyx_n_s_cam, __pyx_n_s_controlId, __pyx_n_s_value); if (unlikely(!__pyx_tuple__30)) __PYX_ERR(0, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__30);
   __Pyx_GIVEREF(__pyx_tuple__30);
-  __pyx_codeobj__31 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__30, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_SetQHYCCDParam, 179, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__31)) __PYX_ERR(0, 179, __pyx_L1_error)
+  __pyx_codeobj__31 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__30, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_SetQHYCCDParam, 187, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__31)) __PYX_ERR(0, 187, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":182
+  /* "QHYCCD/pyqhyccd.pyx":190
  *     chkerr(qhy.SetQHYCCDParam(PyLong_AsVoidPtr(cam), controlId, value))
  * 
  * def GetQHYCCDParamMinMaxStep(cam, controlId):             # <<<<<<<<<<<<<<
  *     cdef double pmin, pmax, pstep
  *     chkerr(qhy.GetQHYCCDParamMinMaxStep(PyLong_AsVoidPtr(cam), controlId, &pmin, &pmax, &pstep))
  */
-  __pyx_tuple__32 = PyTuple_Pack(5, __pyx_n_s_cam, __pyx_n_s_controlId, __pyx_n_s_pmin, __pyx_n_s_pmax, __pyx_n_s_pstep); if (unlikely(!__pyx_tuple__32)) __PYX_ERR(0, 182, __pyx_L1_error)
+  __pyx_tuple__32 = PyTuple_Pack(5, __pyx_n_s_cam, __pyx_n_s_controlId, __pyx_n_s_pmin, __pyx_n_s_pmax, __pyx_n_s_pstep); if (unlikely(!__pyx_tuple__32)) __PYX_ERR(0, 190, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__32);
   __Pyx_GIVEREF(__pyx_tuple__32);
-  __pyx_codeobj__33 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__32, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDParamMinMaxStep, 182, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__33)) __PYX_ERR(0, 182, __pyx_L1_error)
+  __pyx_codeobj__33 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__32, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDParamMinMaxStep, 190, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__33)) __PYX_ERR(0, 190, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":187
+  /* "QHYCCD/pyqhyccd.pyx":195
  *     return (pmin, pmax, pstep)
  * 
  * def ExpQHYCCDSingleFrame(cam):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.ExpQHYCCDSingleFrame(PyLong_AsVoidPtr(cam)))
  * 
  */
-  __pyx_tuple__34 = PyTuple_Pack(1, __pyx_n_s_cam); if (unlikely(!__pyx_tuple__34)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __pyx_tuple__34 = PyTuple_Pack(1, __pyx_n_s_cam); if (unlikely(!__pyx_tuple__34)) __PYX_ERR(0, 195, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__34);
   __Pyx_GIVEREF(__pyx_tuple__34);
-  __pyx_codeobj__35 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__34, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_ExpQHYCCDSingleFrame, 187, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__35)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __pyx_codeobj__35 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__34, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_ExpQHYCCDSingleFrame, 195, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__35)) __PYX_ERR(0, 195, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":190
+  /* "QHYCCD/pyqhyccd.pyx":198
  *     chkerr(qhy.ExpQHYCCDSingleFrame(PyLong_AsVoidPtr(cam)))
  * 
  * def CancelQHYCCDExposing(cam):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.CancelQHYCCDExposing(PyLong_AsVoidPtr(cam)))
  * 
  */
-  __pyx_tuple__36 = PyTuple_Pack(1, __pyx_n_s_cam); if (unlikely(!__pyx_tuple__36)) __PYX_ERR(0, 190, __pyx_L1_error)
+  __pyx_tuple__36 = PyTuple_Pack(1, __pyx_n_s_cam); if (unlikely(!__pyx_tuple__36)) __PYX_ERR(0, 198, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__36);
   __Pyx_GIVEREF(__pyx_tuple__36);
-  __pyx_codeobj__37 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__36, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_CancelQHYCCDExposing, 190, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__37)) __PYX_ERR(0, 190, __pyx_L1_error)
+  __pyx_codeobj__37 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__36, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_CancelQHYCCDExposing, 198, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__37)) __PYX_ERR(0, 198, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":193
+  /* "QHYCCD/pyqhyccd.pyx":201
  *     chkerr(qhy.CancelQHYCCDExposing(PyLong_AsVoidPtr(cam)))
  * 
  * def CancelQHYCCDExposingAndReadout(cam):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.CancelQHYCCDExposingAndReadout(PyLong_AsVoidPtr(cam)))
  * 
  */
-  __pyx_tuple__38 = PyTuple_Pack(1, __pyx_n_s_cam); if (unlikely(!__pyx_tuple__38)) __PYX_ERR(0, 193, __pyx_L1_error)
+  __pyx_tuple__38 = PyTuple_Pack(1, __pyx_n_s_cam); if (unlikely(!__pyx_tuple__38)) __PYX_ERR(0, 201, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__38);
   __Pyx_GIVEREF(__pyx_tuple__38);
-  __pyx_codeobj__39 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__38, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_CancelQHYCCDExposingAndReadout, 193, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__39)) __PYX_ERR(0, 193, __pyx_L1_error)
+  __pyx_codeobj__39 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__38, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_CancelQHYCCDExposingAndReadout, 201, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__39)) __PYX_ERR(0, 201, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":196
+  /* "QHYCCD/pyqhyccd.pyx":204
  *     chkerr(qhy.CancelQHYCCDExposingAndReadout(PyLong_AsVoidPtr(cam)))
  * 
  * def GetQHYCCDSingleFrame(cam):             # <<<<<<<<<<<<<<
  *     cdef uint32_t w, h, bpp, channels
  *     cdef uint8_t *imgdata
  */
-  __pyx_tuple__40 = PyTuple_Pack(9, __pyx_n_s_cam, __pyx_n_s_w, __pyx_n_s_h, __pyx_n_s_bpp, __pyx_n_s_channels, __pyx_n_s_imgdata, __pyx_n_s_memlength, __pyx_n_s_shape, __pyx_n_s_data); if (unlikely(!__pyx_tuple__40)) __PYX_ERR(0, 196, __pyx_L1_error)
+  __pyx_tuple__40 = PyTuple_Pack(9, __pyx_n_s_cam, __pyx_n_s_w, __pyx_n_s_h, __pyx_n_s_bpp, __pyx_n_s_channels, __pyx_n_s_imgdata, __pyx_n_s_memlength, __pyx_n_s_shape, __pyx_n_s_data); if (unlikely(!__pyx_tuple__40)) __PYX_ERR(0, 204, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__40);
   __Pyx_GIVEREF(__pyx_tuple__40);
-  __pyx_codeobj__41 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 9, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__40, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDSingleFrame, 196, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__41)) __PYX_ERR(0, 196, __pyx_L1_error)
+  __pyx_codeobj__41 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 9, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__40, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDSingleFrame, 204, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__41)) __PYX_ERR(0, 204, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":210
+  /* "QHYCCD/pyqhyccd.pyx":218
  *     return data
  * 
  * def GetQHYCCDMemLength(cam):             # <<<<<<<<<<<<<<
  *     return qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))
  * 
  */
-  __pyx_tuple__42 = PyTuple_Pack(1, __pyx_n_s_cam); if (unlikely(!__pyx_tuple__42)) __PYX_ERR(0, 210, __pyx_L1_error)
+  __pyx_tuple__42 = PyTuple_Pack(1, __pyx_n_s_cam); if (unlikely(!__pyx_tuple__42)) __PYX_ERR(0, 218, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__42);
   __Pyx_GIVEREF(__pyx_tuple__42);
-  __pyx_codeobj__43 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__42, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDMemLength, 210, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__43)) __PYX_ERR(0, 210, __pyx_L1_error)
+  __pyx_codeobj__43 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__42, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDMemLength, 218, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__43)) __PYX_ERR(0, 218, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":213
+  /* "QHYCCD/pyqhyccd.pyx":221
  *     return qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))
+ * 
+ * def SetQHYCCDBinMode(cam, wbin, hbin):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), <uint32_t> wbin, <uint32_t> hbin))
+ * 
+ */
+  __pyx_tuple__44 = PyTuple_Pack(3, __pyx_n_s_cam, __pyx_n_s_wbin, __pyx_n_s_hbin); if (unlikely(!__pyx_tuple__44)) __PYX_ERR(0, 221, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__44);
+  __Pyx_GIVEREF(__pyx_tuple__44);
+  __pyx_codeobj__45 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__44, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_SetQHYCCDBinMode, 221, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__45)) __PYX_ERR(0, 221, __pyx_L1_error)
+
+  /* "QHYCCD/pyqhyccd.pyx":224
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), <uint32_t> wbin, <uint32_t> hbin))
  * 
  * def SetQHYCCDResolution(cam, x, y, xsize, ysize):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.SetQHYCCDResolution(PyLong_AsVoidPtr(cam), <uint32_t> x, <uint32_t> y, <uint32_t> xsize, <uint32_t> ysize))
  * 
  */
-  __pyx_tuple__44 = PyTuple_Pack(5, __pyx_n_s_cam, __pyx_n_s_x, __pyx_n_s_y, __pyx_n_s_xsize, __pyx_n_s_ysize); if (unlikely(!__pyx_tuple__44)) __PYX_ERR(0, 213, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__44);
-  __Pyx_GIVEREF(__pyx_tuple__44);
-  __pyx_codeobj__45 = (PyObject*)__Pyx_PyCode_New(5, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__44, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_SetQHYCCDResolution, 213, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__45)) __PYX_ERR(0, 213, __pyx_L1_error)
+  __pyx_tuple__46 = PyTuple_Pack(5, __pyx_n_s_cam, __pyx_n_s_x, __pyx_n_s_y, __pyx_n_s_xsize, __pyx_n_s_ysize); if (unlikely(!__pyx_tuple__46)) __PYX_ERR(0, 224, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__46);
+  __Pyx_GIVEREF(__pyx_tuple__46);
+  __pyx_codeobj__47 = (PyObject*)__Pyx_PyCode_New(5, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__46, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_SetQHYCCDResolution, 224, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__47)) __PYX_ERR(0, 224, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":216
+  /* "QHYCCD/pyqhyccd.pyx":227
  *     chkerr(qhy.SetQHYCCDResolution(PyLong_AsVoidPtr(cam), <uint32_t> x, <uint32_t> y, <uint32_t> xsize, <uint32_t> ysize))
  * 
  * def GetQHYCCDExposureRemaining(cam):             # <<<<<<<<<<<<<<
  *     return(qhy.GetQHYCCDExposureRemaining(PyLong_AsVoidPtr(cam)))
  * 
  */
-  __pyx_tuple__46 = PyTuple_Pack(1, __pyx_n_s_cam); if (unlikely(!__pyx_tuple__46)) __PYX_ERR(0, 216, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__46);
-  __Pyx_GIVEREF(__pyx_tuple__46);
-  __pyx_codeobj__47 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__46, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDExposureRemaining, 216, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__47)) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_tuple__48 = PyTuple_Pack(1, __pyx_n_s_cam); if (unlikely(!__pyx_tuple__48)) __PYX_ERR(0, 227, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__48);
+  __Pyx_GIVEREF(__pyx_tuple__48);
+  __pyx_codeobj__49 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__48, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDExposureRemaining, 227, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__49)) __PYX_ERR(0, 227, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":219
+  /* "QHYCCD/pyqhyccd.pyx":230
  *     return(qhy.GetQHYCCDExposureRemaining(PyLong_AsVoidPtr(cam)))
  * 
  * def GetQHYCCDType(cam):             # <<<<<<<<<<<<<<
  *     ret = qhy.GetQHYCCDType(PyLong_AsVoidPtr(cam))
  *     if ret != qhy.QHYCCD_ERROR:
  */
-  __pyx_tuple__48 = PyTuple_Pack(2, __pyx_n_s_cam, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__48)) __PYX_ERR(0, 219, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__48);
-  __Pyx_GIVEREF(__pyx_tuple__48);
-  __pyx_codeobj__49 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__48, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDType, 219, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__49)) __PYX_ERR(0, 219, __pyx_L1_error)
+  __pyx_tuple__50 = PyTuple_Pack(2, __pyx_n_s_cam, __pyx_n_s_ret); if (unlikely(!__pyx_tuple__50)) __PYX_ERR(0, 230, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__50);
+  __Pyx_GIVEREF(__pyx_tuple__50);
+  __pyx_codeobj__51 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__50, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDType, 230, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__51)) __PYX_ERR(0, 230, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":226
+  /* "QHYCCD/pyqhyccd.pyx":237
  *         raise OSError(-ret, os.stderror(-ret))
  * 
  * def GetQHYCCDSDKVersion():             # <<<<<<<<<<<<<<
  *     cdef uint32_t year, month, day, subday
  *     chkerr(qhy.GetQHYCCDSDKVersion(&year, &month, &day, &subday))
  */
-  __pyx_tuple__50 = PyTuple_Pack(4, __pyx_n_s_year, __pyx_n_s_month, __pyx_n_s_day, __pyx_n_s_subday); if (unlikely(!__pyx_tuple__50)) __PYX_ERR(0, 226, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__50);
-  __Pyx_GIVEREF(__pyx_tuple__50);
-  __pyx_codeobj__51 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__50, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDSDKVersion, 226, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__51)) __PYX_ERR(0, 226, __pyx_L1_error)
+  __pyx_tuple__52 = PyTuple_Pack(4, __pyx_n_s_year, __pyx_n_s_month, __pyx_n_s_day, __pyx_n_s_subday); if (unlikely(!__pyx_tuple__52)) __PYX_ERR(0, 237, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__52);
+  __Pyx_GIVEREF(__pyx_tuple__52);
+  __pyx_codeobj__53 = (PyObject*)__Pyx_PyCode_New(0, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__52, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDSDKVersion, 237, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__53)) __PYX_ERR(0, 237, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":231
+  /* "QHYCCD/pyqhyccd.pyx":242
  *     return f"QHYCCD SDK {year}-{month}-{day},{subday}"
  * 
  * def GetQHYCCDNumberOfReadModes(cam):             # <<<<<<<<<<<<<<
  *     cdef uint32_t numModes
  *     chkerr(qhy.GetQHYCCDNumberOfReadModes(PyLong_AsVoidPtr(cam), &numModes))
  */
-  __pyx_tuple__52 = PyTuple_Pack(2, __pyx_n_s_cam, __pyx_n_s_numModes); if (unlikely(!__pyx_tuple__52)) __PYX_ERR(0, 231, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__52);
-  __Pyx_GIVEREF(__pyx_tuple__52);
-  __pyx_codeobj__53 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__52, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDNumberOfReadModes, 231, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__53)) __PYX_ERR(0, 231, __pyx_L1_error)
+  __pyx_tuple__54 = PyTuple_Pack(2, __pyx_n_s_cam, __pyx_n_s_numModes); if (unlikely(!__pyx_tuple__54)) __PYX_ERR(0, 242, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__54);
+  __Pyx_GIVEREF(__pyx_tuple__54);
+  __pyx_codeobj__55 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__54, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDNumberOfReadModes, 242, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__55)) __PYX_ERR(0, 242, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":236
+  /* "QHYCCD/pyqhyccd.pyx":247
  *     return numModes
  * 
  * def GetQHYCCDReadModeResolution(cam, modeNumber):             # <<<<<<<<<<<<<<
  *     cdef uint32_t width, height
  *     chkerr(qhy.GetQHYCCDReadModeResolution(PyLong_AsVoidPtr(cam), <uint32_t> modeNumber, &width, &height))
  */
-  __pyx_tuple__54 = PyTuple_Pack(4, __pyx_n_s_cam, __pyx_n_s_modeNumber, __pyx_n_s_width, __pyx_n_s_height); if (unlikely(!__pyx_tuple__54)) __PYX_ERR(0, 236, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__54);
-  __Pyx_GIVEREF(__pyx_tuple__54);
-  __pyx_codeobj__55 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__54, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDReadModeResolution, 236, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__55)) __PYX_ERR(0, 236, __pyx_L1_error)
+  __pyx_tuple__56 = PyTuple_Pack(4, __pyx_n_s_cam, __pyx_n_s_modeNumber, __pyx_n_s_width, __pyx_n_s_height); if (unlikely(!__pyx_tuple__56)) __PYX_ERR(0, 247, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__56);
+  __Pyx_GIVEREF(__pyx_tuple__56);
+  __pyx_codeobj__57 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 4, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__56, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDReadModeResolution, 247, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__57)) __PYX_ERR(0, 247, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":241
+  /* "QHYCCD/pyqhyccd.pyx":252
  *     return (width, height)
  * 
  * def GetQHYCCDReadModeName(cam, modeNumber):             # <<<<<<<<<<<<<<
  *     cdef char name[32]
  *     chkerr(qhy.GetQHYCCDReadModeName(PyLong_AsVoidPtr(cam), <uint32_t> modeNumber, name))
  */
-  __pyx_tuple__56 = PyTuple_Pack(3, __pyx_n_s_cam, __pyx_n_s_modeNumber, __pyx_n_s_name_2); if (unlikely(!__pyx_tuple__56)) __PYX_ERR(0, 241, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__56);
-  __Pyx_GIVEREF(__pyx_tuple__56);
-  __pyx_codeobj__57 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__56, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDReadModeName, 241, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__57)) __PYX_ERR(0, 241, __pyx_L1_error)
+  __pyx_tuple__58 = PyTuple_Pack(3, __pyx_n_s_cam, __pyx_n_s_modeNumber, __pyx_n_s_name_2); if (unlikely(!__pyx_tuple__58)) __PYX_ERR(0, 252, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__58);
+  __Pyx_GIVEREF(__pyx_tuple__58);
+  __pyx_codeobj__59 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__58, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDReadModeName, 252, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__59)) __PYX_ERR(0, 252, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":246
+  /* "QHYCCD/pyqhyccd.pyx":257
  *     return name
  * 
  * def GetQHYCCDReadMode(cam):             # <<<<<<<<<<<<<<
  *     cdef uint32_t modeNumber
  *     chkerr(qhy.GetQHYCCDReadMode(PyLong_AsVoidPtr(cam), &modeNumber))
  */
-  __pyx_tuple__58 = PyTuple_Pack(2, __pyx_n_s_cam, __pyx_n_s_modeNumber); if (unlikely(!__pyx_tuple__58)) __PYX_ERR(0, 246, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__58);
-  __Pyx_GIVEREF(__pyx_tuple__58);
-  __pyx_codeobj__59 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__58, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDReadMode, 246, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__59)) __PYX_ERR(0, 246, __pyx_L1_error)
+  __pyx_tuple__60 = PyTuple_Pack(2, __pyx_n_s_cam, __pyx_n_s_modeNumber); if (unlikely(!__pyx_tuple__60)) __PYX_ERR(0, 257, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__60);
+  __Pyx_GIVEREF(__pyx_tuple__60);
+  __pyx_codeobj__61 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__60, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDReadMode, 257, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__61)) __PYX_ERR(0, 257, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":251
+  /* "QHYCCD/pyqhyccd.pyx":262
  *     return modeNumber
  * 
  * def SetQHYCCDReadMode(cam, modeNumber):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.SetQHYCCDReadMode(PyLong_AsVoidPtr(cam), <uint32_t> modeNumber))
  * 
  */
-  __pyx_tuple__60 = PyTuple_Pack(2, __pyx_n_s_cam, __pyx_n_s_modeNumber); if (unlikely(!__pyx_tuple__60)) __PYX_ERR(0, 251, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__60);
-  __Pyx_GIVEREF(__pyx_tuple__60);
-  __pyx_codeobj__61 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__60, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_SetQHYCCDReadMode, 251, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__61)) __PYX_ERR(0, 251, __pyx_L1_error)
+  __pyx_tuple__62 = PyTuple_Pack(2, __pyx_n_s_cam, __pyx_n_s_modeNumber); if (unlikely(!__pyx_tuple__62)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__62);
+  __Pyx_GIVEREF(__pyx_tuple__62);
+  __pyx_codeobj__63 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__62, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_SetQHYCCDReadMode, 262, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__63)) __PYX_ERR(0, 262, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":254
+  /* "QHYCCD/pyqhyccd.pyx":265
  *     chkerr(qhy.SetQHYCCDReadMode(PyLong_AsVoidPtr(cam), <uint32_t> modeNumber))
  * 
  * def GetQHYCCDOverScanArea(cam):             # <<<<<<<<<<<<<<
  *     cdef uint32_t startX, startY, sizeX, sizeY
  *     chkerr(qhy.GetQHYCCDOverScanArea(PyLong_AsVoidPtr(cam), &startX, &startY, &sizeX, &sizeY))
  */
-  __pyx_tuple__62 = PyTuple_Pack(5, __pyx_n_s_cam, __pyx_n_s_startX, __pyx_n_s_startY, __pyx_n_s_sizeX, __pyx_n_s_sizeY); if (unlikely(!__pyx_tuple__62)) __PYX_ERR(0, 254, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__62);
-  __Pyx_GIVEREF(__pyx_tuple__62);
-  __pyx_codeobj__63 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__62, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDOverScanArea, 254, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__63)) __PYX_ERR(0, 254, __pyx_L1_error)
+  __pyx_tuple__64 = PyTuple_Pack(5, __pyx_n_s_cam, __pyx_n_s_startX, __pyx_n_s_startY, __pyx_n_s_sizeX, __pyx_n_s_sizeY); if (unlikely(!__pyx_tuple__64)) __PYX_ERR(0, 265, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__64);
+  __Pyx_GIVEREF(__pyx_tuple__64);
+  __pyx_codeobj__65 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__64, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDOverScanArea, 265, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__65)) __PYX_ERR(0, 265, __pyx_L1_error)
 
-  /* "QHYCCD/pyqhyccd.pyx":259
+  /* "QHYCCD/pyqhyccd.pyx":270
  *     return (startX, startY, sizeX, sizeY)
  * 
  * def GetQHYCCDEffectiveArea(cam):             # <<<<<<<<<<<<<<
  *     cdef uint32_t startX, startY, sizeX, sizeY
  *     chkerr(qhy.GetQHYCCDEffectiveArea(PyLong_AsVoidPtr(cam), &startX, &startY, &sizeX, &sizeY))
  */
-  __pyx_tuple__64 = PyTuple_Pack(5, __pyx_n_s_cam, __pyx_n_s_startX, __pyx_n_s_startY, __pyx_n_s_sizeX, __pyx_n_s_sizeY); if (unlikely(!__pyx_tuple__64)) __PYX_ERR(0, 259, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__64);
-  __Pyx_GIVEREF(__pyx_tuple__64);
-  __pyx_codeobj__65 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__64, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDEffectiveArea, 259, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__65)) __PYX_ERR(0, 259, __pyx_L1_error)
+  __pyx_tuple__66 = PyTuple_Pack(5, __pyx_n_s_cam, __pyx_n_s_startX, __pyx_n_s_startY, __pyx_n_s_sizeX, __pyx_n_s_sizeY); if (unlikely(!__pyx_tuple__66)) __PYX_ERR(0, 270, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__66);
+  __Pyx_GIVEREF(__pyx_tuple__66);
+  __pyx_codeobj__67 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__66, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDEffectiveArea, 270, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__67)) __PYX_ERR(0, 270, __pyx_L1_error)
+
+  /* "QHYCCD/pyqhyccd.pyx":275
+ *     return (startX, startY, sizeX, sizeY)
+ * 
+ * def SetQHYCCDBinMode(cam, binw, binh):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), binw, binh))
+ * 
+ */
+  __pyx_tuple__68 = PyTuple_Pack(3, __pyx_n_s_cam, __pyx_n_s_binw, __pyx_n_s_binh); if (unlikely(!__pyx_tuple__68)) __PYX_ERR(0, 275, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__68);
+  __Pyx_GIVEREF(__pyx_tuple__68);
+  __pyx_codeobj__69 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__68, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_SetQHYCCDBinMode, 275, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__69)) __PYX_ERR(0, 275, __pyx_L1_error)
+
+  /* "QHYCCD/pyqhyccd.pyx":278
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), binw, binh))
+ * 
+ * def BeginQHYCCDLive(cam):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.BeginQHYCCDLive(PyLong_AsVoidPtr(cam)))
+ * 
+ */
+  __pyx_tuple__70 = PyTuple_Pack(1, __pyx_n_s_cam); if (unlikely(!__pyx_tuple__70)) __PYX_ERR(0, 278, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__70);
+  __Pyx_GIVEREF(__pyx_tuple__70);
+  __pyx_codeobj__71 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__70, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_BeginQHYCCDLive, 278, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__71)) __PYX_ERR(0, 278, __pyx_L1_error)
+
+  /* "QHYCCD/pyqhyccd.pyx":281
+ *     chkerr(qhy.BeginQHYCCDLive(PyLong_AsVoidPtr(cam)))
+ * 
+ * def StopQHYCCDLive(cam):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.StopQHYCCDLive(PyLong_AsVoidPtr(cam)))
+ * 
+ */
+  __pyx_tuple__72 = PyTuple_Pack(1, __pyx_n_s_cam); if (unlikely(!__pyx_tuple__72)) __PYX_ERR(0, 281, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__72);
+  __Pyx_GIVEREF(__pyx_tuple__72);
+  __pyx_codeobj__73 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__72, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_StopQHYCCDLive, 281, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__73)) __PYX_ERR(0, 281, __pyx_L1_error)
+
+  /* "QHYCCD/pyqhyccd.pyx":284
+ *     chkerr(qhy.StopQHYCCDLive(PyLong_AsVoidPtr(cam)))
+ * 
+ * def GetQHYCCDLiveFrame(cam):             # <<<<<<<<<<<<<<
+ *     cdef uint32_t w, h, bpp, channels
+ *     cdef uint8_t *imgdata
+ */
+  __pyx_tuple__74 = PyTuple_Pack(10, __pyx_n_s_cam, __pyx_n_s_w, __pyx_n_s_h, __pyx_n_s_bpp, __pyx_n_s_channels, __pyx_n_s_imgdata, __pyx_n_s_memlength, __pyx_n_s_ret, __pyx_n_s_shape, __pyx_n_s_data); if (unlikely(!__pyx_tuple__74)) __PYX_ERR(0, 284, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__74);
+  __Pyx_GIVEREF(__pyx_tuple__74);
+  __pyx_codeobj__75 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 10, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__74, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDLiveFrame, 284, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__75)) __PYX_ERR(0, 284, __pyx_L1_error)
+
+  /* "QHYCCD/pyqhyccd.pyx":300
+ *     return data
+ * 
+ * def GetQHYCCDPreciseExposureInfo(cam):             # <<<<<<<<<<<<<<
+ *     cdef uint32_t PixelPeriod_ps, LinePeriod_ns, FramePeriod_us, ClocksPerLine, LinesPerFrame, ActualExposureTime
+ *     cdef uint8_t isLongExposureMode
+ */
+  __pyx_tuple__76 = PyTuple_Pack(8, __pyx_n_s_cam, __pyx_n_s_PixelPeriod_ps, __pyx_n_s_LinePeriod_ns, __pyx_n_s_FramePeriod_us, __pyx_n_s_ClocksPerLine, __pyx_n_s_LinesPerFrame, __pyx_n_s_ActualExposureTime, __pyx_n_s_isLongExposureMode); if (unlikely(!__pyx_tuple__76)) __PYX_ERR(0, 300, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__76);
+  __Pyx_GIVEREF(__pyx_tuple__76);
+  __pyx_codeobj__77 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 8, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__76, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetQHYCCDPreciseExposureInfo, 300, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__77)) __PYX_ERR(0, 300, __pyx_L1_error)
+
+  /* "QHYCCD/pyqhyccd.pyx":313
+ *     return (PixelPeriod_ps, LinePeriod_ns, FramePeriod_us, ClocksPerLine, LinesPerFrame, ActualExposureTime, isLongExposureMode)
+ * 
+ * def SetQHYCCDBitsMode(cam, value):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.SetQHYCCDBitsMode(PyLong_AsVoidPtr(cam), <uint32_t> value))
+ * 
+ */
+  __pyx_tuple__78 = PyTuple_Pack(2, __pyx_n_s_cam, __pyx_n_s_value); if (unlikely(!__pyx_tuple__78)) __PYX_ERR(0, 313, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__78);
+  __Pyx_GIVEREF(__pyx_tuple__78);
+  __pyx_codeobj__79 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__78, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_SetQHYCCDBitsMode, 313, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__79)) __PYX_ERR(0, 313, __pyx_L1_error)
+
+  /* "QHYCCD/pyqhyccd.pyx":316
+ *     chkerr(qhy.SetQHYCCDBitsMode(PyLong_AsVoidPtr(cam), <uint32_t> value))
+ * 
+ * def GetBinModes(cam):             # <<<<<<<<<<<<<<
+ *     modes = [1]
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN2X2MODE) == qhy.QHYCCD_SUCCESS:
+ */
+  __pyx_tuple__80 = PyTuple_Pack(2, __pyx_n_s_cam, __pyx_n_s_modes); if (unlikely(!__pyx_tuple__80)) __PYX_ERR(0, 316, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__80);
+  __Pyx_GIVEREF(__pyx_tuple__80);
+  __pyx_codeobj__81 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__80, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_QHYCCD_pyqhyccd_pyx, __pyx_n_s_GetBinModes, 316, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__81)) __PYX_ERR(0, 316, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -10777,192 +12536,216 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
 static CYTHON_SMALL_CODE int __Pyx_InitGlobals(void) {
   #if CYTHON_COMPILING_IN_LIMITED_API
   if (__Pyx_InitString(__pyx_string_tab[0], &__pyx_kp_u_) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[1], &__pyx_n_s_CAM_16BITS) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[2], &__pyx_n_s_CAM_8BITS) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[3], &__pyx_n_s_CAM_BIN1X1MODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[4], &__pyx_n_s_CAM_BIN2X2MODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[5], &__pyx_n_s_CAM_BIN3X3MODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[6], &__pyx_n_s_CAM_BIN4X4MODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[7], &__pyx_n_s_CAM_CALIBRATEFPN_INTERFACE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[8], &__pyx_n_s_CAM_CHIPTEMPERATURESENSOR_INTERF) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[9], &__pyx_n_s_CAM_COLOR) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[10], &__pyx_n_s_CAM_FINETONE_INTERFACE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[11], &__pyx_n_s_CAM_GPS) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[12], &__pyx_n_s_CAM_HUMIDITY) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[13], &__pyx_n_s_CAM_IGNOREOVERSCAN_INTERFACE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[14], &__pyx_n_s_CAM_IS_COLOR) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[15], &__pyx_n_s_CAM_LIGHT_PERFORMANCE_MODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[16], &__pyx_n_s_CAM_LIVEVIDEOMODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[17], &__pyx_n_s_CAM_MECHANICALSHUTTER) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[18], &__pyx_n_s_CAM_PRESSURE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[19], &__pyx_n_s_CAM_QHY5II_GUIDE_MODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[20], &__pyx_n_s_CAM_SHUTTERMOTORHEATING_INTERFAC) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[21], &__pyx_n_s_CAM_SINGLEFRAMEMODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[22], &__pyx_n_s_CAM_SINGNALCLAMP_INTERFACE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[23], &__pyx_n_s_CAM_TECOVERPROTECT_INTERFACE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[24], &__pyx_n_s_CAM_TRIGER_INTERFACE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[25], &__pyx_n_s_CAM_USBREADOUTSLOWEST_INTERFACE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[26], &__pyx_n_s_CAM_VIEW_MODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[27], &__pyx_n_s_CONTROL_AMPV) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[28], &__pyx_n_s_CONTROL_BRIGHTNESS) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[29], &__pyx_n_s_CONTROL_CFWPORT) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[30], &__pyx_n_s_CONTROL_CFWSLOTSNUM) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[31], &__pyx_n_s_CONTROL_CHANNELS) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[32], &__pyx_n_s_CONTROL_CONTRAST) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[33], &__pyx_n_s_CONTROL_COOLER) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[34], &__pyx_n_s_CONTROL_CURPWM) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[35], &__pyx_n_s_CONTROL_CURTEMP) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[36], &__pyx_n_s_CONTROL_DDR) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[37], &__pyx_n_s_CONTROL_EXPOSURE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[38], &__pyx_n_s_CONTROL_GAIN) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[39], &__pyx_n_s_CONTROL_GAMMA) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[40], &__pyx_n_s_CONTROL_ID) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[41], &__pyx_n_s_CONTROL_MANULPWM) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[42], &__pyx_n_s_CONTROL_MAX_ID) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[43], &__pyx_n_s_CONTROL_MAX_ID_Error) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[44], &__pyx_n_s_CONTROL_OFFSET) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[45], &__pyx_n_s_CONTROL_ROWNOISERE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[46], &__pyx_n_s_CONTROL_SPEED) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[47], &__pyx_n_s_CONTROL_ST4PORT) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[48], &__pyx_n_s_CONTROL_SensorChamberCycle_PUMP) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[49], &__pyx_n_s_CONTROL_TRANSFERBIT) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[50], &__pyx_n_s_CONTROL_USBTRAFFIC) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[51], &__pyx_n_s_CONTROL_VACUUM_PUMP) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[52], &__pyx_n_s_CONTROL_VCAM) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[53], &__pyx_n_s_CONTROL_WBB) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[54], &__pyx_n_s_CONTROL_WBG) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[55], &__pyx_n_s_CONTROL_WBR) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[56], &__pyx_n_s_CancelQHYCCDExposing) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[57], &__pyx_n_s_CancelQHYCCDExposingAndReadout) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[58], &__pyx_n_s_CloseQHYCCD) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[59], &__pyx_n_s_DDR_BUFFER_CAPACITY) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[60], &__pyx_n_s_DDR_BUFFER_READ_THRESHOLD) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[61], &__pyx_n_s_DefaultGain) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[62], &__pyx_n_s_DefaultOffset) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[63], &__pyx_n_s_ExpQHYCCDSingleFrame) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[64], &__pyx_kp_u_Format_string_allocated_too_shor) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[65], &__pyx_kp_u_Format_string_allocated_too_shor_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[66], &__pyx_n_s_GetQHYCCDChipInfo) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[67], &__pyx_n_s_GetQHYCCDEffectiveArea) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[68], &__pyx_n_s_GetQHYCCDExposureRemaining) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[69], &__pyx_n_s_GetQHYCCDId) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[70], &__pyx_n_s_GetQHYCCDMemLength) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[71], &__pyx_n_s_GetQHYCCDModel) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[72], &__pyx_n_s_GetQHYCCDNumberOfReadModes) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[73], &__pyx_n_s_GetQHYCCDOverScanArea) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[74], &__pyx_n_s_GetQHYCCDParam) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[75], &__pyx_n_s_GetQHYCCDParamMinMaxStep) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[76], &__pyx_n_s_GetQHYCCDReadMode) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[77], &__pyx_n_s_GetQHYCCDReadModeName) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[78], &__pyx_n_s_GetQHYCCDReadModeResolution) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[79], &__pyx_n_s_GetQHYCCDSDKVersion) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[80], &__pyx_n_s_GetQHYCCDSingleFrame) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[81], &__pyx_n_s_GetQHYCCDType) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[82], &__pyx_n_s_IS_EXPOSING_DONE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[83], &__pyx_n_s_ImportError) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[84], &__pyx_n_s_InitQHYCCD) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[85], &__pyx_n_s_InitQHYCCDResource) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[86], &__pyx_n_s_IsQHYCCDControlAvailable) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[87], &__pyx_kp_u_Non_native_byte_order_not_suppor) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[88], &__pyx_n_s_OSError) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[89], &__pyx_n_s_OpenQHYCCD) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[90], &__pyx_n_s_OutputDataActualBits) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[91], &__pyx_n_s_OutputDataAlignment) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[92], &__pyx_n_s_QHYCCD_3A_AUTOBALANCE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[93], &__pyx_n_s_QHYCCD_3A_AUTOEXPOSURE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[94], &__pyx_n_s_QHYCCD_3A_AUTOFOCUS) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[95], &__pyx_kp_u_QHYCCD_SDK) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[96], &__pyx_n_s_QHYCCD_pyqhyccd) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[97], &__pyx_kp_s_QHYCCD_pyqhyccd_pyx) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[98], &__pyx_n_s_ReleaseQHYCCDResource) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[99], &__pyx_n_s_RuntimeError) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[100], &__pyx_n_s_ScanQHYCCD) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[101], &__pyx_n_s_ScreenStretchB) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[102], &__pyx_n_s_ScreenStretchW) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[103], &__pyx_n_s_SetQHYCCDParam) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[104], &__pyx_n_s_SetQHYCCDReadMode) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[105], &__pyx_n_s_SetQHYCCDResolution) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[106], &__pyx_n_s_SetQHYCCDStreamMode) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[107], &__pyx_n_s_ValueError) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[108], &__pyx_kp_u__2) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[109], &__pyx_n_s__66) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[110], &__pyx_n_s__8) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[111], &__pyx_n_s_all) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[112], &__pyx_n_s_bpp) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[113], &__pyx_n_s_cam) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[114], &__pyx_n_s_camid) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[115], &__pyx_n_s_cammodel) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[116], &__pyx_n_s_channels) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[117], &__pyx_n_s_chiph) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[118], &__pyx_n_s_chipw) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[119], &__pyx_n_s_class_getitem) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[120], &__pyx_n_s_cline_in_traceback) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[121], &__pyx_n_s_controlId) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[122], &__pyx_n_s_data) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[123], &__pyx_n_s_day) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[124], &__pyx_n_s_dict) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[125], &__pyx_n_s_doc) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[126], &__pyx_kp_s_error) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[127], &__pyx_n_s_h) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[128], &__pyx_n_s_hasHardwareFrameCounter) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[129], &__pyx_n_s_height) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[130], &__pyx_n_s_i) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[131], &__pyx_n_s_imageh) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[132], &__pyx_n_s_imagew) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[133], &__pyx_n_s_imgdata) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[134], &__pyx_n_s_import) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[135], &__pyx_n_s_init_subclass) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[136], &__pyx_n_s_initializing) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[137], &__pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[138], &__pyx_n_s_memlength) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[139], &__pyx_n_s_metaclass) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[140], &__pyx_n_s_mode) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[141], &__pyx_n_s_modeNumber) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[142], &__pyx_n_s_module) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[143], &__pyx_n_s_month) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[144], &__pyx_n_s_name) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[145], &__pyx_n_s_name_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[146], &__pyx_n_s_np) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[147], &__pyx_n_s_numModes) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[148], &__pyx_n_s_numpy) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[149], &__pyx_kp_s_numpy_core_multiarray_failed_to) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[150], &__pyx_kp_s_numpy_core_umath_failed_to_impor) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[151], &__pyx_n_s_os) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[152], &__pyx_n_s_pixelh) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[153], &__pyx_n_s_pixelw) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[154], &__pyx_n_s_pmax) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[155], &__pyx_n_s_pmin) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[156], &__pyx_n_s_prepare) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[157], &__pyx_n_s_print) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[158], &__pyx_n_s_pstep) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[159], &__pyx_n_s_qualname) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[160], &__pyx_n_s_ret) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[161], &__pyx_n_s_set_name) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[162], &__pyx_n_s_shape) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[163], &__pyx_n_s_sizeX) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[164], &__pyx_n_s_sizeY) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[165], &__pyx_n_s_spec) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[166], &__pyx_n_s_startX) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[167], &__pyx_n_s_startY) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[168], &__pyx_n_s_stderror) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[169], &__pyx_n_s_subday) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[170], &__pyx_n_s_super) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[171], &__pyx_n_s_sys) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[172], &__pyx_n_s_test) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[173], &__pyx_kp_u_unknown_dtype_code_in_numpy_pxd) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[174], &__pyx_n_s_value) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[175], &__pyx_n_s_w) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[176], &__pyx_n_s_warnings) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[177], &__pyx_n_s_width) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[178], &__pyx_n_s_x) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[179], &__pyx_n_s_xsize) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[180], &__pyx_n_s_y) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[181], &__pyx_n_s_year) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
-  if (__Pyx_InitString(__pyx_string_tab[182], &__pyx_n_s_ysize) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[1], &__pyx_n_s_ActualExposureTime) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[2], &__pyx_n_s_BeginQHYCCDLive) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[3], &__pyx_n_s_CAM_16BITS) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[4], &__pyx_n_s_CAM_8BITS) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[5], &__pyx_n_s_CAM_BIN1X1MODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[6], &__pyx_n_s_CAM_BIN2X2MODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[7], &__pyx_n_s_CAM_BIN3X3MODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[8], &__pyx_n_s_CAM_BIN4X4MODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[9], &__pyx_n_s_CAM_CALIBRATEFPN_INTERFACE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[10], &__pyx_n_s_CAM_CHIPTEMPERATURESENSOR_INTERF) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[11], &__pyx_n_s_CAM_COLOR) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[12], &__pyx_n_s_CAM_FINETONE_INTERFACE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[13], &__pyx_n_s_CAM_GPS) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[14], &__pyx_n_s_CAM_HUMIDITY) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[15], &__pyx_n_s_CAM_IGNOREOVERSCAN_INTERFACE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[16], &__pyx_n_s_CAM_IS_COLOR) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[17], &__pyx_n_s_CAM_LIGHT_PERFORMANCE_MODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[18], &__pyx_n_s_CAM_LIVEVIDEOMODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[19], &__pyx_n_s_CAM_MECHANICALSHUTTER) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[20], &__pyx_n_s_CAM_PRESSURE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[21], &__pyx_n_s_CAM_QHY5II_GUIDE_MODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[22], &__pyx_n_s_CAM_SHUTTERMOTORHEATING_INTERFAC) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[23], &__pyx_n_s_CAM_SINGLEFRAMEMODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[24], &__pyx_n_s_CAM_SINGNALCLAMP_INTERFACE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[25], &__pyx_n_s_CAM_TECOVERPROTECT_INTERFACE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[26], &__pyx_n_s_CAM_TRIGER_INTERFACE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[27], &__pyx_n_s_CAM_USBREADOUTSLOWEST_INTERFACE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[28], &__pyx_n_s_CAM_VIEW_MODE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[29], &__pyx_n_s_CONTROL_AMPV) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[30], &__pyx_n_s_CONTROL_BRIGHTNESS) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[31], &__pyx_n_s_CONTROL_CFWPORT) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[32], &__pyx_n_s_CONTROL_CFWSLOTSNUM) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[33], &__pyx_n_s_CONTROL_CHANNELS) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[34], &__pyx_n_s_CONTROL_CONTRAST) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[35], &__pyx_n_s_CONTROL_COOLER) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[36], &__pyx_n_s_CONTROL_CURPWM) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[37], &__pyx_n_s_CONTROL_CURTEMP) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[38], &__pyx_n_s_CONTROL_DDR) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[39], &__pyx_n_s_CONTROL_EXPOSURE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[40], &__pyx_n_s_CONTROL_GAIN) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[41], &__pyx_n_s_CONTROL_GAMMA) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[42], &__pyx_n_s_CONTROL_ID) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[43], &__pyx_n_s_CONTROL_MANULPWM) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[44], &__pyx_n_s_CONTROL_MAX_ID) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[45], &__pyx_n_s_CONTROL_MAX_ID_Error) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[46], &__pyx_n_s_CONTROL_OFFSET) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[47], &__pyx_n_s_CONTROL_ROWNOISERE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[48], &__pyx_n_s_CONTROL_SPEED) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[49], &__pyx_n_s_CONTROL_ST4PORT) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[50], &__pyx_n_s_CONTROL_SensorChamberCycle_PUMP) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[51], &__pyx_n_s_CONTROL_TRANSFERBIT) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[52], &__pyx_n_s_CONTROL_USBTRAFFIC) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[53], &__pyx_n_s_CONTROL_VACUUM_PUMP) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[54], &__pyx_n_s_CONTROL_VCAM) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[55], &__pyx_n_s_CONTROL_WBB) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[56], &__pyx_n_s_CONTROL_WBG) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[57], &__pyx_n_s_CONTROL_WBR) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[58], &__pyx_n_s_CancelQHYCCDExposing) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[59], &__pyx_n_s_CancelQHYCCDExposingAndReadout) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[60], &__pyx_n_s_ClocksPerLine) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[61], &__pyx_n_s_CloseQHYCCD) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[62], &__pyx_n_s_DDR_BUFFER_CAPACITY) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[63], &__pyx_n_s_DDR_BUFFER_READ_THRESHOLD) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[64], &__pyx_n_s_DefaultGain) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[65], &__pyx_n_s_DefaultOffset) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[66], &__pyx_n_s_ExpQHYCCDSingleFrame) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[67], &__pyx_kp_u_Format_string_allocated_too_shor) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[68], &__pyx_kp_u_Format_string_allocated_too_shor_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[69], &__pyx_n_s_FramePeriod_us) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[70], &__pyx_n_s_GetBinModes) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[71], &__pyx_n_s_GetQHYCCDChipInfo) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[72], &__pyx_n_s_GetQHYCCDEffectiveArea) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[73], &__pyx_n_s_GetQHYCCDExposureRemaining) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[74], &__pyx_n_s_GetQHYCCDId) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[75], &__pyx_n_s_GetQHYCCDLiveFrame) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[76], &__pyx_n_s_GetQHYCCDMemLength) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[77], &__pyx_n_s_GetQHYCCDModel) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[78], &__pyx_n_s_GetQHYCCDNumberOfReadModes) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[79], &__pyx_n_s_GetQHYCCDOverScanArea) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[80], &__pyx_n_s_GetQHYCCDParam) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[81], &__pyx_n_s_GetQHYCCDParamMinMaxStep) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[82], &__pyx_n_s_GetQHYCCDPreciseExposureInfo) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[83], &__pyx_n_s_GetQHYCCDReadMode) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[84], &__pyx_n_s_GetQHYCCDReadModeName) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[85], &__pyx_n_s_GetQHYCCDReadModeResolution) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[86], &__pyx_n_s_GetQHYCCDSDKVersion) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[87], &__pyx_n_s_GetQHYCCDSingleFrame) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[88], &__pyx_n_s_GetQHYCCDType) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[89], &__pyx_n_s_IS_EXPOSING_DONE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[90], &__pyx_n_s_ImportError) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[91], &__pyx_n_s_InitQHYCCD) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[92], &__pyx_n_s_InitQHYCCDResource) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[93], &__pyx_n_s_IsQHYCCDControlAvailable) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[94], &__pyx_n_s_LinePeriod_ns) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[95], &__pyx_n_s_LinesPerFrame) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[96], &__pyx_kp_u_Non_native_byte_order_not_suppor) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[97], &__pyx_n_s_OSError) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[98], &__pyx_n_s_OpenQHYCCD) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[99], &__pyx_n_s_OutputDataActualBits) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[100], &__pyx_n_s_OutputDataAlignment) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[101], &__pyx_n_s_PixelPeriod_ps) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[102], &__pyx_n_s_QHYCCD_3A_AUTOBALANCE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[103], &__pyx_n_s_QHYCCD_3A_AUTOEXPOSURE) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[104], &__pyx_n_s_QHYCCD_3A_AUTOFOCUS) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[105], &__pyx_kp_u_QHYCCD_SDK) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[106], &__pyx_n_s_QHYCCD_pyqhyccd) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[107], &__pyx_kp_s_QHYCCD_pyqhyccd_pyx) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[108], &__pyx_n_s_ReleaseQHYCCDResource) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[109], &__pyx_n_s_RuntimeError) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[110], &__pyx_n_s_ScanQHYCCD) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[111], &__pyx_n_s_ScreenStretchB) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[112], &__pyx_n_s_ScreenStretchW) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[113], &__pyx_n_s_SetQHYCCDBinMode) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[114], &__pyx_n_s_SetQHYCCDBitsMode) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[115], &__pyx_n_s_SetQHYCCDParam) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[116], &__pyx_n_s_SetQHYCCDReadMode) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[117], &__pyx_n_s_SetQHYCCDResolution) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[118], &__pyx_n_s_SetQHYCCDStreamMode) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[119], &__pyx_n_s_StopQHYCCDLive) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[120], &__pyx_n_s_ValueError) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[121], &__pyx_kp_u__2) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[122], &__pyx_n_s__8) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[123], &__pyx_n_s__82) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[124], &__pyx_n_s_all) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[125], &__pyx_n_s_binh) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[126], &__pyx_n_s_binw) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[127], &__pyx_n_s_bpp) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[128], &__pyx_n_s_cam) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[129], &__pyx_n_s_camid) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[130], &__pyx_n_s_cammodel) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[131], &__pyx_n_s_channels) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[132], &__pyx_n_s_chiph) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[133], &__pyx_n_s_chipw) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[134], &__pyx_n_s_class_getitem) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[135], &__pyx_n_s_cline_in_traceback) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[136], &__pyx_n_s_controlId) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[137], &__pyx_n_s_data) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[138], &__pyx_n_s_day) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[139], &__pyx_n_s_dict) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[140], &__pyx_n_s_doc) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[141], &__pyx_kp_s_error) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[142], &__pyx_n_s_h) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[143], &__pyx_n_s_hasHardwareFrameCounter) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[144], &__pyx_n_s_hbin) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[145], &__pyx_n_s_height) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[146], &__pyx_n_s_i) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[147], &__pyx_n_s_imageh) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[148], &__pyx_n_s_imagew) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[149], &__pyx_n_s_imgdata) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[150], &__pyx_n_s_import) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[151], &__pyx_n_s_init_subclass) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[152], &__pyx_n_s_initializing) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[153], &__pyx_n_s_isLongExposureMode) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[154], &__pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[155], &__pyx_n_s_memlength) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[156], &__pyx_n_s_metaclass) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[157], &__pyx_n_s_mode) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[158], &__pyx_n_s_modeNumber) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[159], &__pyx_n_s_modes) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[160], &__pyx_n_s_module) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[161], &__pyx_n_s_month) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[162], &__pyx_n_s_name) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[163], &__pyx_n_s_name_2) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[164], &__pyx_n_s_np) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[165], &__pyx_n_s_numModes) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[166], &__pyx_n_s_numpy) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[167], &__pyx_kp_s_numpy_core_multiarray_failed_to) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[168], &__pyx_kp_s_numpy_core_umath_failed_to_impor) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[169], &__pyx_n_s_os) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[170], &__pyx_n_s_pixelh) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[171], &__pyx_n_s_pixelw) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[172], &__pyx_n_s_pmax) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[173], &__pyx_n_s_pmin) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[174], &__pyx_n_s_prepare) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[175], &__pyx_n_s_print) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[176], &__pyx_n_s_pstep) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[177], &__pyx_n_s_qualname) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[178], &__pyx_n_s_ret) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[179], &__pyx_n_s_set_name) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[180], &__pyx_n_s_shape) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[181], &__pyx_n_s_sizeX) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[182], &__pyx_n_s_sizeY) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[183], &__pyx_n_s_spec) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[184], &__pyx_n_s_startX) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[185], &__pyx_n_s_startY) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[186], &__pyx_n_s_stderror) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[187], &__pyx_n_s_strerror) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[188], &__pyx_n_s_subday) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[189], &__pyx_n_s_super) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[190], &__pyx_n_s_sys) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[191], &__pyx_n_s_test) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[192], &__pyx_kp_u_unknown_dtype_code_in_numpy_pxd) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[193], &__pyx_n_s_value) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[194], &__pyx_n_s_w) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[195], &__pyx_n_s_warnings) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[196], &__pyx_n_s_wbin) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[197], &__pyx_n_s_width) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[198], &__pyx_n_s_x) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[199], &__pyx_n_s_xsize) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[200], &__pyx_n_s_y) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[201], &__pyx_n_s_year) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
+  if (__Pyx_InitString(__pyx_string_tab[202], &__pyx_n_s_ysize) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
   #endif
   #if !CYTHON_COMPILING_IN_LIMITED_API
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
   #endif
+  __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_2 = PyInt_FromLong(2); if (unlikely(!__pyx_int_2)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_3 = PyInt_FromLong(3); if (unlikely(!__pyx_int_3)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_4 = PyInt_FromLong(4); if (unlikely(!__pyx_int_4)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -11398,7 +13181,7 @@ if (!__Pyx_RefNanny) {
  * 'ReleaseQHYCCDResource',
  * 'ScanQHYCCD',
  */
-  __pyx_t_1 = PyList_New(31); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(39); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_n_s_InitQHYCCDResource);
   __Pyx_GIVEREF(__pyx_n_s_InitQHYCCDResource);
@@ -11457,1230 +13240,1350 @@ if (!__Pyx_RefNanny) {
   __Pyx_INCREF(__pyx_n_s_GetQHYCCDMemLength);
   __Pyx_GIVEREF(__pyx_n_s_GetQHYCCDMemLength);
   PyList_SET_ITEM(__pyx_t_1, 18, __pyx_n_s_GetQHYCCDMemLength);
+  __Pyx_INCREF(__pyx_n_s_SetQHYCCDBinMode);
+  __Pyx_GIVEREF(__pyx_n_s_SetQHYCCDBinMode);
+  PyList_SET_ITEM(__pyx_t_1, 19, __pyx_n_s_SetQHYCCDBinMode);
   __Pyx_INCREF(__pyx_n_s_SetQHYCCDResolution);
   __Pyx_GIVEREF(__pyx_n_s_SetQHYCCDResolution);
-  PyList_SET_ITEM(__pyx_t_1, 19, __pyx_n_s_SetQHYCCDResolution);
+  PyList_SET_ITEM(__pyx_t_1, 20, __pyx_n_s_SetQHYCCDResolution);
   __Pyx_INCREF(__pyx_n_s_GetQHYCCDExposureRemaining);
   __Pyx_GIVEREF(__pyx_n_s_GetQHYCCDExposureRemaining);
-  PyList_SET_ITEM(__pyx_t_1, 20, __pyx_n_s_GetQHYCCDExposureRemaining);
+  PyList_SET_ITEM(__pyx_t_1, 21, __pyx_n_s_GetQHYCCDExposureRemaining);
   __Pyx_INCREF(__pyx_n_s_GetQHYCCDType);
   __Pyx_GIVEREF(__pyx_n_s_GetQHYCCDType);
-  PyList_SET_ITEM(__pyx_t_1, 21, __pyx_n_s_GetQHYCCDType);
+  PyList_SET_ITEM(__pyx_t_1, 22, __pyx_n_s_GetQHYCCDType);
   __Pyx_INCREF(__pyx_n_s_GetQHYCCDSDKVersion);
   __Pyx_GIVEREF(__pyx_n_s_GetQHYCCDSDKVersion);
-  PyList_SET_ITEM(__pyx_t_1, 22, __pyx_n_s_GetQHYCCDSDKVersion);
+  PyList_SET_ITEM(__pyx_t_1, 23, __pyx_n_s_GetQHYCCDSDKVersion);
   __Pyx_INCREF(__pyx_n_s_CancelQHYCCDExposingAndReadout);
   __Pyx_GIVEREF(__pyx_n_s_CancelQHYCCDExposingAndReadout);
-  PyList_SET_ITEM(__pyx_t_1, 23, __pyx_n_s_CancelQHYCCDExposingAndReadout);
+  PyList_SET_ITEM(__pyx_t_1, 24, __pyx_n_s_CancelQHYCCDExposingAndReadout);
   __Pyx_INCREF(__pyx_n_s_GetQHYCCDNumberOfReadModes);
   __Pyx_GIVEREF(__pyx_n_s_GetQHYCCDNumberOfReadModes);
-  PyList_SET_ITEM(__pyx_t_1, 24, __pyx_n_s_GetQHYCCDNumberOfReadModes);
+  PyList_SET_ITEM(__pyx_t_1, 25, __pyx_n_s_GetQHYCCDNumberOfReadModes);
   __Pyx_INCREF(__pyx_n_s_GetQHYCCDReadModeResolution);
   __Pyx_GIVEREF(__pyx_n_s_GetQHYCCDReadModeResolution);
-  PyList_SET_ITEM(__pyx_t_1, 25, __pyx_n_s_GetQHYCCDReadModeResolution);
+  PyList_SET_ITEM(__pyx_t_1, 26, __pyx_n_s_GetQHYCCDReadModeResolution);
   __Pyx_INCREF(__pyx_n_s_GetQHYCCDReadModeName);
   __Pyx_GIVEREF(__pyx_n_s_GetQHYCCDReadModeName);
-  PyList_SET_ITEM(__pyx_t_1, 26, __pyx_n_s_GetQHYCCDReadModeName);
+  PyList_SET_ITEM(__pyx_t_1, 27, __pyx_n_s_GetQHYCCDReadModeName);
   __Pyx_INCREF(__pyx_n_s_SetQHYCCDReadMode);
   __Pyx_GIVEREF(__pyx_n_s_SetQHYCCDReadMode);
-  PyList_SET_ITEM(__pyx_t_1, 27, __pyx_n_s_SetQHYCCDReadMode);
+  PyList_SET_ITEM(__pyx_t_1, 28, __pyx_n_s_SetQHYCCDReadMode);
   __Pyx_INCREF(__pyx_n_s_GetQHYCCDReadMode);
   __Pyx_GIVEREF(__pyx_n_s_GetQHYCCDReadMode);
-  PyList_SET_ITEM(__pyx_t_1, 28, __pyx_n_s_GetQHYCCDReadMode);
+  PyList_SET_ITEM(__pyx_t_1, 29, __pyx_n_s_GetQHYCCDReadMode);
   __Pyx_INCREF(__pyx_n_s_GetQHYCCDEffectiveArea);
   __Pyx_GIVEREF(__pyx_n_s_GetQHYCCDEffectiveArea);
-  PyList_SET_ITEM(__pyx_t_1, 29, __pyx_n_s_GetQHYCCDEffectiveArea);
+  PyList_SET_ITEM(__pyx_t_1, 30, __pyx_n_s_GetQHYCCDEffectiveArea);
   __Pyx_INCREF(__pyx_n_s_GetQHYCCDOverScanArea);
   __Pyx_GIVEREF(__pyx_n_s_GetQHYCCDOverScanArea);
-  PyList_SET_ITEM(__pyx_t_1, 30, __pyx_n_s_GetQHYCCDOverScanArea);
+  PyList_SET_ITEM(__pyx_t_1, 31, __pyx_n_s_GetQHYCCDOverScanArea);
+  __Pyx_INCREF(__pyx_n_s_SetQHYCCDBinMode);
+  __Pyx_GIVEREF(__pyx_n_s_SetQHYCCDBinMode);
+  PyList_SET_ITEM(__pyx_t_1, 32, __pyx_n_s_SetQHYCCDBinMode);
+  __Pyx_INCREF(__pyx_n_s_BeginQHYCCDLive);
+  __Pyx_GIVEREF(__pyx_n_s_BeginQHYCCDLive);
+  PyList_SET_ITEM(__pyx_t_1, 33, __pyx_n_s_BeginQHYCCDLive);
+  __Pyx_INCREF(__pyx_n_s_StopQHYCCDLive);
+  __Pyx_GIVEREF(__pyx_n_s_StopQHYCCDLive);
+  PyList_SET_ITEM(__pyx_t_1, 34, __pyx_n_s_StopQHYCCDLive);
+  __Pyx_INCREF(__pyx_n_s_GetQHYCCDLiveFrame);
+  __Pyx_GIVEREF(__pyx_n_s_GetQHYCCDLiveFrame);
+  PyList_SET_ITEM(__pyx_t_1, 35, __pyx_n_s_GetQHYCCDLiveFrame);
+  __Pyx_INCREF(__pyx_n_s_GetQHYCCDPreciseExposureInfo);
+  __Pyx_GIVEREF(__pyx_n_s_GetQHYCCDPreciseExposureInfo);
+  PyList_SET_ITEM(__pyx_t_1, 36, __pyx_n_s_GetQHYCCDPreciseExposureInfo);
+  __Pyx_INCREF(__pyx_n_s_SetQHYCCDBitsMode);
+  __Pyx_GIVEREF(__pyx_n_s_SetQHYCCDBitsMode);
+  PyList_SET_ITEM(__pyx_t_1, 37, __pyx_n_s_SetQHYCCDBitsMode);
+  __Pyx_INCREF(__pyx_n_s_GetBinModes);
+  __Pyx_GIVEREF(__pyx_n_s_GetBinModes);
+  PyList_SET_ITEM(__pyx_t_1, 38, __pyx_n_s_GetBinModes);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_all, __pyx_t_1) < 0) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":53
+  /* "QHYCCD/pyqhyccd.pyx":61
  *     object PyLong_FromVoidPtr(void *)
  * 
  * class CONTROL_ID:             # <<<<<<<<<<<<<<
  *     CONTROL_BRIGHTNESS=qhy.CONTROL_BRIGHTNESS
  *     CONTROL_CONTRAST=qhy.CONTROL_CONTRAST
  */
-  __pyx_t_1 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_CONTROL_ID, __pyx_n_s_CONTROL_ID, (PyObject *) NULL, __pyx_n_s_QHYCCD_pyqhyccd, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Py3MetaclassPrepare((PyObject *) NULL, __pyx_empty_tuple, __pyx_n_s_CONTROL_ID, __pyx_n_s_CONTROL_ID, (PyObject *) NULL, __pyx_n_s_QHYCCD_pyqhyccd, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 61, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "QHYCCD/pyqhyccd.pyx":54
+  /* "QHYCCD/pyqhyccd.pyx":62
  * 
  * class CONTROL_ID:
  *     CONTROL_BRIGHTNESS=qhy.CONTROL_BRIGHTNESS             # <<<<<<<<<<<<<<
  *     CONTROL_CONTRAST=qhy.CONTROL_CONTRAST
  *     CONTROL_WBR=qhy.CONTROL_WBR
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_BRIGHTNESS); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 54, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_BRIGHTNESS); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_BRIGHTNESS, __pyx_t_3) < 0) __PYX_ERR(0, 54, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_BRIGHTNESS, __pyx_t_3) < 0) __PYX_ERR(0, 62, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":55
+  /* "QHYCCD/pyqhyccd.pyx":63
  * class CONTROL_ID:
  *     CONTROL_BRIGHTNESS=qhy.CONTROL_BRIGHTNESS
  *     CONTROL_CONTRAST=qhy.CONTROL_CONTRAST             # <<<<<<<<<<<<<<
  *     CONTROL_WBR=qhy.CONTROL_WBR
  *     CONTROL_WBB=qhy.CONTROL_WBB
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_CONTRAST); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 55, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_CONTRAST); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_CONTRAST, __pyx_t_3) < 0) __PYX_ERR(0, 55, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_CONTRAST, __pyx_t_3) < 0) __PYX_ERR(0, 63, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":56
+  /* "QHYCCD/pyqhyccd.pyx":64
  *     CONTROL_BRIGHTNESS=qhy.CONTROL_BRIGHTNESS
  *     CONTROL_CONTRAST=qhy.CONTROL_CONTRAST
  *     CONTROL_WBR=qhy.CONTROL_WBR             # <<<<<<<<<<<<<<
  *     CONTROL_WBB=qhy.CONTROL_WBB
  *     CONTROL_WBG=qhy.CONTROL_WBG
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_WBR); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 56, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_WBR); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_WBR, __pyx_t_3) < 0) __PYX_ERR(0, 56, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_WBR, __pyx_t_3) < 0) __PYX_ERR(0, 64, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":57
+  /* "QHYCCD/pyqhyccd.pyx":65
  *     CONTROL_CONTRAST=qhy.CONTROL_CONTRAST
  *     CONTROL_WBR=qhy.CONTROL_WBR
  *     CONTROL_WBB=qhy.CONTROL_WBB             # <<<<<<<<<<<<<<
  *     CONTROL_WBG=qhy.CONTROL_WBG
  *     CONTROL_GAMMA=qhy.CONTROL_GAMMA
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_WBB); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_WBB); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 65, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_WBB, __pyx_t_3) < 0) __PYX_ERR(0, 57, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_WBB, __pyx_t_3) < 0) __PYX_ERR(0, 65, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":58
+  /* "QHYCCD/pyqhyccd.pyx":66
  *     CONTROL_WBR=qhy.CONTROL_WBR
  *     CONTROL_WBB=qhy.CONTROL_WBB
  *     CONTROL_WBG=qhy.CONTROL_WBG             # <<<<<<<<<<<<<<
  *     CONTROL_GAMMA=qhy.CONTROL_GAMMA
  *     CONTROL_GAIN=qhy.CONTROL_GAIN
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_WBG); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 58, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_WBG); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 66, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_WBG, __pyx_t_3) < 0) __PYX_ERR(0, 58, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_WBG, __pyx_t_3) < 0) __PYX_ERR(0, 66, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":59
+  /* "QHYCCD/pyqhyccd.pyx":67
  *     CONTROL_WBB=qhy.CONTROL_WBB
  *     CONTROL_WBG=qhy.CONTROL_WBG
  *     CONTROL_GAMMA=qhy.CONTROL_GAMMA             # <<<<<<<<<<<<<<
  *     CONTROL_GAIN=qhy.CONTROL_GAIN
  *     CONTROL_OFFSET=qhy.CONTROL_OFFSET
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_GAMMA); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 59, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_GAMMA); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_GAMMA, __pyx_t_3) < 0) __PYX_ERR(0, 59, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_GAMMA, __pyx_t_3) < 0) __PYX_ERR(0, 67, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":60
+  /* "QHYCCD/pyqhyccd.pyx":68
  *     CONTROL_WBG=qhy.CONTROL_WBG
  *     CONTROL_GAMMA=qhy.CONTROL_GAMMA
  *     CONTROL_GAIN=qhy.CONTROL_GAIN             # <<<<<<<<<<<<<<
  *     CONTROL_OFFSET=qhy.CONTROL_OFFSET
  *     CONTROL_EXPOSURE=qhy.CONTROL_EXPOSURE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_GAIN); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 60, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_GAIN); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_GAIN, __pyx_t_3) < 0) __PYX_ERR(0, 60, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_GAIN, __pyx_t_3) < 0) __PYX_ERR(0, 68, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":61
+  /* "QHYCCD/pyqhyccd.pyx":69
  *     CONTROL_GAMMA=qhy.CONTROL_GAMMA
  *     CONTROL_GAIN=qhy.CONTROL_GAIN
  *     CONTROL_OFFSET=qhy.CONTROL_OFFSET             # <<<<<<<<<<<<<<
  *     CONTROL_EXPOSURE=qhy.CONTROL_EXPOSURE
  *     CONTROL_SPEED=qhy.CONTROL_SPEED
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_OFFSET); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_OFFSET); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_OFFSET, __pyx_t_3) < 0) __PYX_ERR(0, 61, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_OFFSET, __pyx_t_3) < 0) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":62
+  /* "QHYCCD/pyqhyccd.pyx":70
  *     CONTROL_GAIN=qhy.CONTROL_GAIN
  *     CONTROL_OFFSET=qhy.CONTROL_OFFSET
  *     CONTROL_EXPOSURE=qhy.CONTROL_EXPOSURE             # <<<<<<<<<<<<<<
  *     CONTROL_SPEED=qhy.CONTROL_SPEED
  *     CONTROL_TRANSFERBIT=qhy.CONTROL_TRANSFERBIT
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_EXPOSURE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 62, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_EXPOSURE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_EXPOSURE, __pyx_t_3) < 0) __PYX_ERR(0, 62, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_EXPOSURE, __pyx_t_3) < 0) __PYX_ERR(0, 70, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":63
+  /* "QHYCCD/pyqhyccd.pyx":71
  *     CONTROL_OFFSET=qhy.CONTROL_OFFSET
  *     CONTROL_EXPOSURE=qhy.CONTROL_EXPOSURE
  *     CONTROL_SPEED=qhy.CONTROL_SPEED             # <<<<<<<<<<<<<<
  *     CONTROL_TRANSFERBIT=qhy.CONTROL_TRANSFERBIT
  *     CONTROL_CHANNELS=qhy.CONTROL_CHANNELS
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_SPEED); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 63, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_SPEED); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_SPEED, __pyx_t_3) < 0) __PYX_ERR(0, 63, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_SPEED, __pyx_t_3) < 0) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":64
+  /* "QHYCCD/pyqhyccd.pyx":72
  *     CONTROL_EXPOSURE=qhy.CONTROL_EXPOSURE
  *     CONTROL_SPEED=qhy.CONTROL_SPEED
  *     CONTROL_TRANSFERBIT=qhy.CONTROL_TRANSFERBIT             # <<<<<<<<<<<<<<
  *     CONTROL_CHANNELS=qhy.CONTROL_CHANNELS
  *     CONTROL_USBTRAFFIC=qhy.CONTROL_USBTRAFFIC
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_TRANSFERBIT); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 64, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_TRANSFERBIT); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_TRANSFERBIT, __pyx_t_3) < 0) __PYX_ERR(0, 64, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_TRANSFERBIT, __pyx_t_3) < 0) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":65
+  /* "QHYCCD/pyqhyccd.pyx":73
  *     CONTROL_SPEED=qhy.CONTROL_SPEED
  *     CONTROL_TRANSFERBIT=qhy.CONTROL_TRANSFERBIT
  *     CONTROL_CHANNELS=qhy.CONTROL_CHANNELS             # <<<<<<<<<<<<<<
  *     CONTROL_USBTRAFFIC=qhy.CONTROL_USBTRAFFIC
  *     CONTROL_ROWNOISERE=qhy.CONTROL_ROWNOISERE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_CHANNELS); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 65, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_CHANNELS); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 73, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_CHANNELS, __pyx_t_3) < 0) __PYX_ERR(0, 65, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_CHANNELS, __pyx_t_3) < 0) __PYX_ERR(0, 73, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":66
+  /* "QHYCCD/pyqhyccd.pyx":74
  *     CONTROL_TRANSFERBIT=qhy.CONTROL_TRANSFERBIT
  *     CONTROL_CHANNELS=qhy.CONTROL_CHANNELS
  *     CONTROL_USBTRAFFIC=qhy.CONTROL_USBTRAFFIC             # <<<<<<<<<<<<<<
  *     CONTROL_ROWNOISERE=qhy.CONTROL_ROWNOISERE
  *     CONTROL_CURTEMP=qhy.CONTROL_CURTEMP
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_USBTRAFFIC); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 66, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_USBTRAFFIC); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_USBTRAFFIC, __pyx_t_3) < 0) __PYX_ERR(0, 66, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_USBTRAFFIC, __pyx_t_3) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":67
+  /* "QHYCCD/pyqhyccd.pyx":75
  *     CONTROL_CHANNELS=qhy.CONTROL_CHANNELS
  *     CONTROL_USBTRAFFIC=qhy.CONTROL_USBTRAFFIC
  *     CONTROL_ROWNOISERE=qhy.CONTROL_ROWNOISERE             # <<<<<<<<<<<<<<
  *     CONTROL_CURTEMP=qhy.CONTROL_CURTEMP
  *     CONTROL_CURPWM=qhy.CONTROL_CURPWM
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_ROWNOISERE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_ROWNOISERE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 75, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_ROWNOISERE, __pyx_t_3) < 0) __PYX_ERR(0, 67, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_ROWNOISERE, __pyx_t_3) < 0) __PYX_ERR(0, 75, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":68
+  /* "QHYCCD/pyqhyccd.pyx":76
  *     CONTROL_USBTRAFFIC=qhy.CONTROL_USBTRAFFIC
  *     CONTROL_ROWNOISERE=qhy.CONTROL_ROWNOISERE
  *     CONTROL_CURTEMP=qhy.CONTROL_CURTEMP             # <<<<<<<<<<<<<<
  *     CONTROL_CURPWM=qhy.CONTROL_CURPWM
  *     CONTROL_MANULPWM=qhy.CONTROL_MANULPWM
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_CURTEMP); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 68, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_CURTEMP); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_CURTEMP, __pyx_t_3) < 0) __PYX_ERR(0, 68, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_CURTEMP, __pyx_t_3) < 0) __PYX_ERR(0, 76, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":69
+  /* "QHYCCD/pyqhyccd.pyx":77
  *     CONTROL_ROWNOISERE=qhy.CONTROL_ROWNOISERE
  *     CONTROL_CURTEMP=qhy.CONTROL_CURTEMP
  *     CONTROL_CURPWM=qhy.CONTROL_CURPWM             # <<<<<<<<<<<<<<
  *     CONTROL_MANULPWM=qhy.CONTROL_MANULPWM
  *     CONTROL_CFWPORT=qhy.CONTROL_CFWPORT
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_CURPWM); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 69, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_CURPWM); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 77, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_CURPWM, __pyx_t_3) < 0) __PYX_ERR(0, 69, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_CURPWM, __pyx_t_3) < 0) __PYX_ERR(0, 77, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":70
+  /* "QHYCCD/pyqhyccd.pyx":78
  *     CONTROL_CURTEMP=qhy.CONTROL_CURTEMP
  *     CONTROL_CURPWM=qhy.CONTROL_CURPWM
  *     CONTROL_MANULPWM=qhy.CONTROL_MANULPWM             # <<<<<<<<<<<<<<
  *     CONTROL_CFWPORT=qhy.CONTROL_CFWPORT
  *     CONTROL_COOLER=qhy.CONTROL_COOLER
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_MANULPWM); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 70, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_MANULPWM); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 78, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_MANULPWM, __pyx_t_3) < 0) __PYX_ERR(0, 70, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_MANULPWM, __pyx_t_3) < 0) __PYX_ERR(0, 78, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":71
+  /* "QHYCCD/pyqhyccd.pyx":79
  *     CONTROL_CURPWM=qhy.CONTROL_CURPWM
  *     CONTROL_MANULPWM=qhy.CONTROL_MANULPWM
  *     CONTROL_CFWPORT=qhy.CONTROL_CFWPORT             # <<<<<<<<<<<<<<
  *     CONTROL_COOLER=qhy.CONTROL_COOLER
  *     CONTROL_ST4PORT=qhy.CONTROL_ST4PORT
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_CFWPORT); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 71, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_CFWPORT); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_CFWPORT, __pyx_t_3) < 0) __PYX_ERR(0, 71, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_CFWPORT, __pyx_t_3) < 0) __PYX_ERR(0, 79, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":72
+  /* "QHYCCD/pyqhyccd.pyx":80
  *     CONTROL_MANULPWM=qhy.CONTROL_MANULPWM
  *     CONTROL_CFWPORT=qhy.CONTROL_CFWPORT
  *     CONTROL_COOLER=qhy.CONTROL_COOLER             # <<<<<<<<<<<<<<
  *     CONTROL_ST4PORT=qhy.CONTROL_ST4PORT
  *     CAM_COLOR=qhy.CAM_COLOR
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_COOLER); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 72, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_COOLER); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_COOLER, __pyx_t_3) < 0) __PYX_ERR(0, 72, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_COOLER, __pyx_t_3) < 0) __PYX_ERR(0, 80, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":73
+  /* "QHYCCD/pyqhyccd.pyx":81
  *     CONTROL_CFWPORT=qhy.CONTROL_CFWPORT
  *     CONTROL_COOLER=qhy.CONTROL_COOLER
  *     CONTROL_ST4PORT=qhy.CONTROL_ST4PORT             # <<<<<<<<<<<<<<
  *     CAM_COLOR=qhy.CAM_COLOR
  *     CAM_BIN1X1MODE=qhy.CAM_BIN1X1MODE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_ST4PORT); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 73, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_ST4PORT); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_ST4PORT, __pyx_t_3) < 0) __PYX_ERR(0, 73, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_ST4PORT, __pyx_t_3) < 0) __PYX_ERR(0, 81, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":74
+  /* "QHYCCD/pyqhyccd.pyx":82
  *     CONTROL_COOLER=qhy.CONTROL_COOLER
  *     CONTROL_ST4PORT=qhy.CONTROL_ST4PORT
  *     CAM_COLOR=qhy.CAM_COLOR             # <<<<<<<<<<<<<<
  *     CAM_BIN1X1MODE=qhy.CAM_BIN1X1MODE
  *     CAM_BIN2X2MODE=qhy.CAM_BIN2X2MODE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_COLOR); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 74, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_COLOR); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_COLOR, __pyx_t_3) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_COLOR, __pyx_t_3) < 0) __PYX_ERR(0, 82, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":75
+  /* "QHYCCD/pyqhyccd.pyx":83
  *     CONTROL_ST4PORT=qhy.CONTROL_ST4PORT
  *     CAM_COLOR=qhy.CAM_COLOR
  *     CAM_BIN1X1MODE=qhy.CAM_BIN1X1MODE             # <<<<<<<<<<<<<<
  *     CAM_BIN2X2MODE=qhy.CAM_BIN2X2MODE
  *     CAM_BIN3X3MODE=qhy.CAM_BIN3X3MODE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_BIN1X1MODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 75, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_BIN1X1MODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_BIN1X1MODE, __pyx_t_3) < 0) __PYX_ERR(0, 75, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_BIN1X1MODE, __pyx_t_3) < 0) __PYX_ERR(0, 83, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":76
+  /* "QHYCCD/pyqhyccd.pyx":84
  *     CAM_COLOR=qhy.CAM_COLOR
  *     CAM_BIN1X1MODE=qhy.CAM_BIN1X1MODE
  *     CAM_BIN2X2MODE=qhy.CAM_BIN2X2MODE             # <<<<<<<<<<<<<<
  *     CAM_BIN3X3MODE=qhy.CAM_BIN3X3MODE
  *     CAM_BIN4X4MODE=qhy.CAM_BIN4X4MODE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_BIN2X2MODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 76, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_BIN2X2MODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 84, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_BIN2X2MODE, __pyx_t_3) < 0) __PYX_ERR(0, 76, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_BIN2X2MODE, __pyx_t_3) < 0) __PYX_ERR(0, 84, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":77
+  /* "QHYCCD/pyqhyccd.pyx":85
  *     CAM_BIN1X1MODE=qhy.CAM_BIN1X1MODE
  *     CAM_BIN2X2MODE=qhy.CAM_BIN2X2MODE
  *     CAM_BIN3X3MODE=qhy.CAM_BIN3X3MODE             # <<<<<<<<<<<<<<
  *     CAM_BIN4X4MODE=qhy.CAM_BIN4X4MODE
  *     CAM_MECHANICALSHUTTER=qhy.CAM_MECHANICALSHUTTER
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_BIN3X3MODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 77, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_BIN3X3MODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_BIN3X3MODE, __pyx_t_3) < 0) __PYX_ERR(0, 77, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_BIN3X3MODE, __pyx_t_3) < 0) __PYX_ERR(0, 85, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":78
+  /* "QHYCCD/pyqhyccd.pyx":86
  *     CAM_BIN2X2MODE=qhy.CAM_BIN2X2MODE
  *     CAM_BIN3X3MODE=qhy.CAM_BIN3X3MODE
  *     CAM_BIN4X4MODE=qhy.CAM_BIN4X4MODE             # <<<<<<<<<<<<<<
  *     CAM_MECHANICALSHUTTER=qhy.CAM_MECHANICALSHUTTER
  *     CAM_TRIGER_INTERFACE=qhy.CAM_TRIGER_INTERFACE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_BIN4X4MODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 78, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_BIN4X4MODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 86, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_BIN4X4MODE, __pyx_t_3) < 0) __PYX_ERR(0, 78, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_BIN4X4MODE, __pyx_t_3) < 0) __PYX_ERR(0, 86, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":79
+  /* "QHYCCD/pyqhyccd.pyx":87
  *     CAM_BIN3X3MODE=qhy.CAM_BIN3X3MODE
  *     CAM_BIN4X4MODE=qhy.CAM_BIN4X4MODE
  *     CAM_MECHANICALSHUTTER=qhy.CAM_MECHANICALSHUTTER             # <<<<<<<<<<<<<<
  *     CAM_TRIGER_INTERFACE=qhy.CAM_TRIGER_INTERFACE
  *     CAM_TECOVERPROTECT_INTERFACE=qhy.CAM_TECOVERPROTECT_INTERFACE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_MECHANICALSHUTTER); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 79, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_MECHANICALSHUTTER); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_MECHANICALSHUTTER, __pyx_t_3) < 0) __PYX_ERR(0, 79, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_MECHANICALSHUTTER, __pyx_t_3) < 0) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":80
+  /* "QHYCCD/pyqhyccd.pyx":88
  *     CAM_BIN4X4MODE=qhy.CAM_BIN4X4MODE
  *     CAM_MECHANICALSHUTTER=qhy.CAM_MECHANICALSHUTTER
  *     CAM_TRIGER_INTERFACE=qhy.CAM_TRIGER_INTERFACE             # <<<<<<<<<<<<<<
  *     CAM_TECOVERPROTECT_INTERFACE=qhy.CAM_TECOVERPROTECT_INTERFACE
  *     CAM_SINGNALCLAMP_INTERFACE=qhy.CAM_SINGNALCLAMP_INTERFACE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_TRIGER_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 80, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_TRIGER_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_TRIGER_INTERFACE, __pyx_t_3) < 0) __PYX_ERR(0, 80, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_TRIGER_INTERFACE, __pyx_t_3) < 0) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":81
+  /* "QHYCCD/pyqhyccd.pyx":89
  *     CAM_MECHANICALSHUTTER=qhy.CAM_MECHANICALSHUTTER
  *     CAM_TRIGER_INTERFACE=qhy.CAM_TRIGER_INTERFACE
  *     CAM_TECOVERPROTECT_INTERFACE=qhy.CAM_TECOVERPROTECT_INTERFACE             # <<<<<<<<<<<<<<
  *     CAM_SINGNALCLAMP_INTERFACE=qhy.CAM_SINGNALCLAMP_INTERFACE
  *     CAM_FINETONE_INTERFACE=qhy.CAM_FINETONE_INTERFACE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_TECOVERPROTECT_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 81, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_TECOVERPROTECT_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 89, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_TECOVERPROTECT_INTERFACE, __pyx_t_3) < 0) __PYX_ERR(0, 81, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_TECOVERPROTECT_INTERFACE, __pyx_t_3) < 0) __PYX_ERR(0, 89, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":82
+  /* "QHYCCD/pyqhyccd.pyx":90
  *     CAM_TRIGER_INTERFACE=qhy.CAM_TRIGER_INTERFACE
  *     CAM_TECOVERPROTECT_INTERFACE=qhy.CAM_TECOVERPROTECT_INTERFACE
  *     CAM_SINGNALCLAMP_INTERFACE=qhy.CAM_SINGNALCLAMP_INTERFACE             # <<<<<<<<<<<<<<
  *     CAM_FINETONE_INTERFACE=qhy.CAM_FINETONE_INTERFACE
  *     CAM_SHUTTERMOTORHEATING_INTERFACE=qhy.CAM_SHUTTERMOTORHEATING_INTERFACE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_SINGNALCLAMP_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 82, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_SINGNALCLAMP_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_SINGNALCLAMP_INTERFACE, __pyx_t_3) < 0) __PYX_ERR(0, 82, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_SINGNALCLAMP_INTERFACE, __pyx_t_3) < 0) __PYX_ERR(0, 90, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":83
+  /* "QHYCCD/pyqhyccd.pyx":91
  *     CAM_TECOVERPROTECT_INTERFACE=qhy.CAM_TECOVERPROTECT_INTERFACE
  *     CAM_SINGNALCLAMP_INTERFACE=qhy.CAM_SINGNALCLAMP_INTERFACE
  *     CAM_FINETONE_INTERFACE=qhy.CAM_FINETONE_INTERFACE             # <<<<<<<<<<<<<<
  *     CAM_SHUTTERMOTORHEATING_INTERFACE=qhy.CAM_SHUTTERMOTORHEATING_INTERFACE
  *     CAM_CALIBRATEFPN_INTERFACE=qhy.CAM_CALIBRATEFPN_INTERFACE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_FINETONE_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 83, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_FINETONE_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_FINETONE_INTERFACE, __pyx_t_3) < 0) __PYX_ERR(0, 83, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_FINETONE_INTERFACE, __pyx_t_3) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":84
+  /* "QHYCCD/pyqhyccd.pyx":92
  *     CAM_SINGNALCLAMP_INTERFACE=qhy.CAM_SINGNALCLAMP_INTERFACE
  *     CAM_FINETONE_INTERFACE=qhy.CAM_FINETONE_INTERFACE
  *     CAM_SHUTTERMOTORHEATING_INTERFACE=qhy.CAM_SHUTTERMOTORHEATING_INTERFACE             # <<<<<<<<<<<<<<
  *     CAM_CALIBRATEFPN_INTERFACE=qhy.CAM_CALIBRATEFPN_INTERFACE
  *     CAM_CHIPTEMPERATURESENSOR_INTERFACE=qhy.CAM_CHIPTEMPERATURESENSOR_INTERFACE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_SHUTTERMOTORHEATING_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 84, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_SHUTTERMOTORHEATING_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_SHUTTERMOTORHEATING_INTERFAC, __pyx_t_3) < 0) __PYX_ERR(0, 84, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_SHUTTERMOTORHEATING_INTERFAC, __pyx_t_3) < 0) __PYX_ERR(0, 92, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":85
+  /* "QHYCCD/pyqhyccd.pyx":93
  *     CAM_FINETONE_INTERFACE=qhy.CAM_FINETONE_INTERFACE
  *     CAM_SHUTTERMOTORHEATING_INTERFACE=qhy.CAM_SHUTTERMOTORHEATING_INTERFACE
  *     CAM_CALIBRATEFPN_INTERFACE=qhy.CAM_CALIBRATEFPN_INTERFACE             # <<<<<<<<<<<<<<
  *     CAM_CHIPTEMPERATURESENSOR_INTERFACE=qhy.CAM_CHIPTEMPERATURESENSOR_INTERFACE
  *     CAM_USBREADOUTSLOWEST_INTERFACE=qhy.CAM_USBREADOUTSLOWEST_INTERFACE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_CALIBRATEFPN_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 85, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_CALIBRATEFPN_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_CALIBRATEFPN_INTERFACE, __pyx_t_3) < 0) __PYX_ERR(0, 85, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_CALIBRATEFPN_INTERFACE, __pyx_t_3) < 0) __PYX_ERR(0, 93, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":86
+  /* "QHYCCD/pyqhyccd.pyx":94
  *     CAM_SHUTTERMOTORHEATING_INTERFACE=qhy.CAM_SHUTTERMOTORHEATING_INTERFACE
  *     CAM_CALIBRATEFPN_INTERFACE=qhy.CAM_CALIBRATEFPN_INTERFACE
  *     CAM_CHIPTEMPERATURESENSOR_INTERFACE=qhy.CAM_CHIPTEMPERATURESENSOR_INTERFACE             # <<<<<<<<<<<<<<
  *     CAM_USBREADOUTSLOWEST_INTERFACE=qhy.CAM_USBREADOUTSLOWEST_INTERFACE
  *     CAM_8BITS=qhy.CAM_8BITS
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_CHIPTEMPERATURESENSOR_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 86, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_CHIPTEMPERATURESENSOR_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_CHIPTEMPERATURESENSOR_INTERF, __pyx_t_3) < 0) __PYX_ERR(0, 86, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_CHIPTEMPERATURESENSOR_INTERF, __pyx_t_3) < 0) __PYX_ERR(0, 94, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":87
+  /* "QHYCCD/pyqhyccd.pyx":95
  *     CAM_CALIBRATEFPN_INTERFACE=qhy.CAM_CALIBRATEFPN_INTERFACE
  *     CAM_CHIPTEMPERATURESENSOR_INTERFACE=qhy.CAM_CHIPTEMPERATURESENSOR_INTERFACE
  *     CAM_USBREADOUTSLOWEST_INTERFACE=qhy.CAM_USBREADOUTSLOWEST_INTERFACE             # <<<<<<<<<<<<<<
  *     CAM_8BITS=qhy.CAM_8BITS
  *     CAM_16BITS=qhy.CAM_16BITS
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_USBREADOUTSLOWEST_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 87, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_USBREADOUTSLOWEST_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 95, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_USBREADOUTSLOWEST_INTERFACE, __pyx_t_3) < 0) __PYX_ERR(0, 87, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_USBREADOUTSLOWEST_INTERFACE, __pyx_t_3) < 0) __PYX_ERR(0, 95, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":88
+  /* "QHYCCD/pyqhyccd.pyx":96
  *     CAM_CHIPTEMPERATURESENSOR_INTERFACE=qhy.CAM_CHIPTEMPERATURESENSOR_INTERFACE
  *     CAM_USBREADOUTSLOWEST_INTERFACE=qhy.CAM_USBREADOUTSLOWEST_INTERFACE
  *     CAM_8BITS=qhy.CAM_8BITS             # <<<<<<<<<<<<<<
  *     CAM_16BITS=qhy.CAM_16BITS
  *     CAM_GPS=qhy.CAM_GPS
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_8BITS); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 88, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_8BITS); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 96, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_8BITS, __pyx_t_3) < 0) __PYX_ERR(0, 88, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_8BITS, __pyx_t_3) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":89
+  /* "QHYCCD/pyqhyccd.pyx":97
  *     CAM_USBREADOUTSLOWEST_INTERFACE=qhy.CAM_USBREADOUTSLOWEST_INTERFACE
  *     CAM_8BITS=qhy.CAM_8BITS
  *     CAM_16BITS=qhy.CAM_16BITS             # <<<<<<<<<<<<<<
  *     CAM_GPS=qhy.CAM_GPS
  *     CAM_IGNOREOVERSCAN_INTERFACE=qhy.CAM_IGNOREOVERSCAN_INTERFACE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_16BITS); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 89, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_16BITS); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_16BITS, __pyx_t_3) < 0) __PYX_ERR(0, 89, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_16BITS, __pyx_t_3) < 0) __PYX_ERR(0, 97, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":90
+  /* "QHYCCD/pyqhyccd.pyx":98
  *     CAM_8BITS=qhy.CAM_8BITS
  *     CAM_16BITS=qhy.CAM_16BITS
  *     CAM_GPS=qhy.CAM_GPS             # <<<<<<<<<<<<<<
  *     CAM_IGNOREOVERSCAN_INTERFACE=qhy.CAM_IGNOREOVERSCAN_INTERFACE
  *     QHYCCD_3A_AUTOBALANCE=qhy.QHYCCD_3A_AUTOBALANCE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_GPS); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 90, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_GPS); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_GPS, __pyx_t_3) < 0) __PYX_ERR(0, 90, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_GPS, __pyx_t_3) < 0) __PYX_ERR(0, 98, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":91
+  /* "QHYCCD/pyqhyccd.pyx":99
  *     CAM_16BITS=qhy.CAM_16BITS
  *     CAM_GPS=qhy.CAM_GPS
  *     CAM_IGNOREOVERSCAN_INTERFACE=qhy.CAM_IGNOREOVERSCAN_INTERFACE             # <<<<<<<<<<<<<<
  *     QHYCCD_3A_AUTOBALANCE=qhy.QHYCCD_3A_AUTOBALANCE
  *     QHYCCD_3A_AUTOEXPOSURE=qhy.QHYCCD_3A_AUTOEXPOSURE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_IGNOREOVERSCAN_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 91, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_IGNOREOVERSCAN_INTERFACE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_IGNOREOVERSCAN_INTERFACE, __pyx_t_3) < 0) __PYX_ERR(0, 91, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_IGNOREOVERSCAN_INTERFACE, __pyx_t_3) < 0) __PYX_ERR(0, 99, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":92
+  /* "QHYCCD/pyqhyccd.pyx":100
  *     CAM_GPS=qhy.CAM_GPS
  *     CAM_IGNOREOVERSCAN_INTERFACE=qhy.CAM_IGNOREOVERSCAN_INTERFACE
  *     QHYCCD_3A_AUTOBALANCE=qhy.QHYCCD_3A_AUTOBALANCE             # <<<<<<<<<<<<<<
  *     QHYCCD_3A_AUTOEXPOSURE=qhy.QHYCCD_3A_AUTOEXPOSURE
  *     QHYCCD_3A_AUTOFOCUS=qhy.QHYCCD_3A_AUTOFOCUS
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(QHYCCD_3A_AUTOBALANCE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 92, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(QHYCCD_3A_AUTOBALANCE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_QHYCCD_3A_AUTOBALANCE, __pyx_t_3) < 0) __PYX_ERR(0, 92, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_QHYCCD_3A_AUTOBALANCE, __pyx_t_3) < 0) __PYX_ERR(0, 100, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":93
+  /* "QHYCCD/pyqhyccd.pyx":101
  *     CAM_IGNOREOVERSCAN_INTERFACE=qhy.CAM_IGNOREOVERSCAN_INTERFACE
  *     QHYCCD_3A_AUTOBALANCE=qhy.QHYCCD_3A_AUTOBALANCE
  *     QHYCCD_3A_AUTOEXPOSURE=qhy.QHYCCD_3A_AUTOEXPOSURE             # <<<<<<<<<<<<<<
  *     QHYCCD_3A_AUTOFOCUS=qhy.QHYCCD_3A_AUTOFOCUS
  *     CONTROL_AMPV=qhy.CONTROL_AMPV
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(QHYCCD_3A_AUTOEXPOSURE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(QHYCCD_3A_AUTOEXPOSURE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 101, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_QHYCCD_3A_AUTOEXPOSURE, __pyx_t_3) < 0) __PYX_ERR(0, 93, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_QHYCCD_3A_AUTOEXPOSURE, __pyx_t_3) < 0) __PYX_ERR(0, 101, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":94
+  /* "QHYCCD/pyqhyccd.pyx":102
  *     QHYCCD_3A_AUTOBALANCE=qhy.QHYCCD_3A_AUTOBALANCE
  *     QHYCCD_3A_AUTOEXPOSURE=qhy.QHYCCD_3A_AUTOEXPOSURE
  *     QHYCCD_3A_AUTOFOCUS=qhy.QHYCCD_3A_AUTOFOCUS             # <<<<<<<<<<<<<<
  *     CONTROL_AMPV=qhy.CONTROL_AMPV
  *     CONTROL_VCAM=qhy.CONTROL_VCAM
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(QHYCCD_3A_AUTOFOCUS); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 94, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(QHYCCD_3A_AUTOFOCUS); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 102, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_QHYCCD_3A_AUTOFOCUS, __pyx_t_3) < 0) __PYX_ERR(0, 94, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_QHYCCD_3A_AUTOFOCUS, __pyx_t_3) < 0) __PYX_ERR(0, 102, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":95
+  /* "QHYCCD/pyqhyccd.pyx":103
  *     QHYCCD_3A_AUTOEXPOSURE=qhy.QHYCCD_3A_AUTOEXPOSURE
  *     QHYCCD_3A_AUTOFOCUS=qhy.QHYCCD_3A_AUTOFOCUS
  *     CONTROL_AMPV=qhy.CONTROL_AMPV             # <<<<<<<<<<<<<<
  *     CONTROL_VCAM=qhy.CONTROL_VCAM
  *     CAM_VIEW_MODE=qhy.CAM_VIEW_MODE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_AMPV); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 95, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_AMPV); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 103, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_AMPV, __pyx_t_3) < 0) __PYX_ERR(0, 95, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_AMPV, __pyx_t_3) < 0) __PYX_ERR(0, 103, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":96
+  /* "QHYCCD/pyqhyccd.pyx":104
  *     QHYCCD_3A_AUTOFOCUS=qhy.QHYCCD_3A_AUTOFOCUS
  *     CONTROL_AMPV=qhy.CONTROL_AMPV
  *     CONTROL_VCAM=qhy.CONTROL_VCAM             # <<<<<<<<<<<<<<
  *     CAM_VIEW_MODE=qhy.CAM_VIEW_MODE
  *     CONTROL_CFWSLOTSNUM=qhy.CONTROL_CFWSLOTSNUM
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_VCAM); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 96, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_VCAM); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_VCAM, __pyx_t_3) < 0) __PYX_ERR(0, 96, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_VCAM, __pyx_t_3) < 0) __PYX_ERR(0, 104, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":97
+  /* "QHYCCD/pyqhyccd.pyx":105
  *     CONTROL_AMPV=qhy.CONTROL_AMPV
  *     CONTROL_VCAM=qhy.CONTROL_VCAM
  *     CAM_VIEW_MODE=qhy.CAM_VIEW_MODE             # <<<<<<<<<<<<<<
  *     CONTROL_CFWSLOTSNUM=qhy.CONTROL_CFWSLOTSNUM
  *     IS_EXPOSING_DONE=qhy.IS_EXPOSING_DONE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_VIEW_MODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 97, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_VIEW_MODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 105, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_VIEW_MODE, __pyx_t_3) < 0) __PYX_ERR(0, 97, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_VIEW_MODE, __pyx_t_3) < 0) __PYX_ERR(0, 105, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":98
+  /* "QHYCCD/pyqhyccd.pyx":106
  *     CONTROL_VCAM=qhy.CONTROL_VCAM
  *     CAM_VIEW_MODE=qhy.CAM_VIEW_MODE
  *     CONTROL_CFWSLOTSNUM=qhy.CONTROL_CFWSLOTSNUM             # <<<<<<<<<<<<<<
  *     IS_EXPOSING_DONE=qhy.IS_EXPOSING_DONE
  *     ScreenStretchB=qhy.ScreenStretchB
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_CFWSLOTSNUM); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 98, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_CFWSLOTSNUM); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_CFWSLOTSNUM, __pyx_t_3) < 0) __PYX_ERR(0, 98, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_CFWSLOTSNUM, __pyx_t_3) < 0) __PYX_ERR(0, 106, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":99
+  /* "QHYCCD/pyqhyccd.pyx":107
  *     CAM_VIEW_MODE=qhy.CAM_VIEW_MODE
  *     CONTROL_CFWSLOTSNUM=qhy.CONTROL_CFWSLOTSNUM
  *     IS_EXPOSING_DONE=qhy.IS_EXPOSING_DONE             # <<<<<<<<<<<<<<
  *     ScreenStretchB=qhy.ScreenStretchB
  *     ScreenStretchW=qhy.ScreenStretchW
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(IS_EXPOSING_DONE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 99, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(IS_EXPOSING_DONE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 107, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_IS_EXPOSING_DONE, __pyx_t_3) < 0) __PYX_ERR(0, 99, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_IS_EXPOSING_DONE, __pyx_t_3) < 0) __PYX_ERR(0, 107, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":100
+  /* "QHYCCD/pyqhyccd.pyx":108
  *     CONTROL_CFWSLOTSNUM=qhy.CONTROL_CFWSLOTSNUM
  *     IS_EXPOSING_DONE=qhy.IS_EXPOSING_DONE
  *     ScreenStretchB=qhy.ScreenStretchB             # <<<<<<<<<<<<<<
  *     ScreenStretchW=qhy.ScreenStretchW
  *     CONTROL_DDR=qhy.CONTROL_DDR
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(ScreenStretchB); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 100, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(ScreenStretchB); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 108, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_ScreenStretchB, __pyx_t_3) < 0) __PYX_ERR(0, 100, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_ScreenStretchB, __pyx_t_3) < 0) __PYX_ERR(0, 108, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":101
+  /* "QHYCCD/pyqhyccd.pyx":109
  *     IS_EXPOSING_DONE=qhy.IS_EXPOSING_DONE
  *     ScreenStretchB=qhy.ScreenStretchB
  *     ScreenStretchW=qhy.ScreenStretchW             # <<<<<<<<<<<<<<
  *     CONTROL_DDR=qhy.CONTROL_DDR
  *     CAM_LIGHT_PERFORMANCE_MODE=qhy.CAM_LIGHT_PERFORMANCE_MODE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(ScreenStretchW); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 101, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(ScreenStretchW); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 109, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_ScreenStretchW, __pyx_t_3) < 0) __PYX_ERR(0, 101, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_ScreenStretchW, __pyx_t_3) < 0) __PYX_ERR(0, 109, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":102
+  /* "QHYCCD/pyqhyccd.pyx":110
  *     ScreenStretchB=qhy.ScreenStretchB
  *     ScreenStretchW=qhy.ScreenStretchW
  *     CONTROL_DDR=qhy.CONTROL_DDR             # <<<<<<<<<<<<<<
  *     CAM_LIGHT_PERFORMANCE_MODE=qhy.CAM_LIGHT_PERFORMANCE_MODE
  *     CAM_QHY5II_GUIDE_MODE=qhy.CAM_QHY5II_GUIDE_MODE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_DDR); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 102, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_DDR); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 110, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_DDR, __pyx_t_3) < 0) __PYX_ERR(0, 102, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_DDR, __pyx_t_3) < 0) __PYX_ERR(0, 110, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":103
+  /* "QHYCCD/pyqhyccd.pyx":111
  *     ScreenStretchW=qhy.ScreenStretchW
  *     CONTROL_DDR=qhy.CONTROL_DDR
  *     CAM_LIGHT_PERFORMANCE_MODE=qhy.CAM_LIGHT_PERFORMANCE_MODE             # <<<<<<<<<<<<<<
  *     CAM_QHY5II_GUIDE_MODE=qhy.CAM_QHY5II_GUIDE_MODE
  *     DDR_BUFFER_CAPACITY=qhy.DDR_BUFFER_CAPACITY
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_LIGHT_PERFORMANCE_MODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 103, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_LIGHT_PERFORMANCE_MODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 111, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_LIGHT_PERFORMANCE_MODE, __pyx_t_3) < 0) __PYX_ERR(0, 103, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_LIGHT_PERFORMANCE_MODE, __pyx_t_3) < 0) __PYX_ERR(0, 111, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":104
+  /* "QHYCCD/pyqhyccd.pyx":112
  *     CONTROL_DDR=qhy.CONTROL_DDR
  *     CAM_LIGHT_PERFORMANCE_MODE=qhy.CAM_LIGHT_PERFORMANCE_MODE
  *     CAM_QHY5II_GUIDE_MODE=qhy.CAM_QHY5II_GUIDE_MODE             # <<<<<<<<<<<<<<
  *     DDR_BUFFER_CAPACITY=qhy.DDR_BUFFER_CAPACITY
  *     DDR_BUFFER_READ_THRESHOLD=qhy.DDR_BUFFER_READ_THRESHOLD
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_QHY5II_GUIDE_MODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_QHY5II_GUIDE_MODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 112, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_QHY5II_GUIDE_MODE, __pyx_t_3) < 0) __PYX_ERR(0, 104, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_QHY5II_GUIDE_MODE, __pyx_t_3) < 0) __PYX_ERR(0, 112, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":105
+  /* "QHYCCD/pyqhyccd.pyx":113
  *     CAM_LIGHT_PERFORMANCE_MODE=qhy.CAM_LIGHT_PERFORMANCE_MODE
  *     CAM_QHY5II_GUIDE_MODE=qhy.CAM_QHY5II_GUIDE_MODE
  *     DDR_BUFFER_CAPACITY=qhy.DDR_BUFFER_CAPACITY             # <<<<<<<<<<<<<<
  *     DDR_BUFFER_READ_THRESHOLD=qhy.DDR_BUFFER_READ_THRESHOLD
  *     DefaultGain=qhy.DefaultGain
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(DDR_BUFFER_CAPACITY); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 105, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(DDR_BUFFER_CAPACITY); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_DDR_BUFFER_CAPACITY, __pyx_t_3) < 0) __PYX_ERR(0, 105, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_DDR_BUFFER_CAPACITY, __pyx_t_3) < 0) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":106
+  /* "QHYCCD/pyqhyccd.pyx":114
  *     CAM_QHY5II_GUIDE_MODE=qhy.CAM_QHY5II_GUIDE_MODE
  *     DDR_BUFFER_CAPACITY=qhy.DDR_BUFFER_CAPACITY
  *     DDR_BUFFER_READ_THRESHOLD=qhy.DDR_BUFFER_READ_THRESHOLD             # <<<<<<<<<<<<<<
  *     DefaultGain=qhy.DefaultGain
  *     DefaultOffset=qhy.DefaultOffset
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(DDR_BUFFER_READ_THRESHOLD); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 106, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(DDR_BUFFER_READ_THRESHOLD); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_DDR_BUFFER_READ_THRESHOLD, __pyx_t_3) < 0) __PYX_ERR(0, 106, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_DDR_BUFFER_READ_THRESHOLD, __pyx_t_3) < 0) __PYX_ERR(0, 114, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":107
+  /* "QHYCCD/pyqhyccd.pyx":115
  *     DDR_BUFFER_CAPACITY=qhy.DDR_BUFFER_CAPACITY
  *     DDR_BUFFER_READ_THRESHOLD=qhy.DDR_BUFFER_READ_THRESHOLD
  *     DefaultGain=qhy.DefaultGain             # <<<<<<<<<<<<<<
  *     DefaultOffset=qhy.DefaultOffset
  *     OutputDataActualBits=qhy.OutputDataActualBits
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(DefaultGain); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 107, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(DefaultGain); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 115, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_DefaultGain, __pyx_t_3) < 0) __PYX_ERR(0, 107, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_DefaultGain, __pyx_t_3) < 0) __PYX_ERR(0, 115, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":108
+  /* "QHYCCD/pyqhyccd.pyx":116
  *     DDR_BUFFER_READ_THRESHOLD=qhy.DDR_BUFFER_READ_THRESHOLD
  *     DefaultGain=qhy.DefaultGain
  *     DefaultOffset=qhy.DefaultOffset             # <<<<<<<<<<<<<<
  *     OutputDataActualBits=qhy.OutputDataActualBits
  *     OutputDataAlignment=qhy.OutputDataAlignment
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(DefaultOffset); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 108, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(DefaultOffset); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 116, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_DefaultOffset, __pyx_t_3) < 0) __PYX_ERR(0, 108, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_DefaultOffset, __pyx_t_3) < 0) __PYX_ERR(0, 116, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":109
+  /* "QHYCCD/pyqhyccd.pyx":117
  *     DefaultGain=qhy.DefaultGain
  *     DefaultOffset=qhy.DefaultOffset
  *     OutputDataActualBits=qhy.OutputDataActualBits             # <<<<<<<<<<<<<<
  *     OutputDataAlignment=qhy.OutputDataAlignment
  *     CAM_SINGLEFRAMEMODE=qhy.CAM_SINGLEFRAMEMODE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(OutputDataActualBits); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 109, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(OutputDataActualBits); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 117, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_OutputDataActualBits, __pyx_t_3) < 0) __PYX_ERR(0, 109, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_OutputDataActualBits, __pyx_t_3) < 0) __PYX_ERR(0, 117, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":110
+  /* "QHYCCD/pyqhyccd.pyx":118
  *     DefaultOffset=qhy.DefaultOffset
  *     OutputDataActualBits=qhy.OutputDataActualBits
  *     OutputDataAlignment=qhy.OutputDataAlignment             # <<<<<<<<<<<<<<
  *     CAM_SINGLEFRAMEMODE=qhy.CAM_SINGLEFRAMEMODE
  *     CAM_LIVEVIDEOMODE=qhy.CAM_LIVEVIDEOMODE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(OutputDataAlignment); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 110, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(OutputDataAlignment); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 118, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_OutputDataAlignment, __pyx_t_3) < 0) __PYX_ERR(0, 110, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_OutputDataAlignment, __pyx_t_3) < 0) __PYX_ERR(0, 118, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":111
+  /* "QHYCCD/pyqhyccd.pyx":119
  *     OutputDataActualBits=qhy.OutputDataActualBits
  *     OutputDataAlignment=qhy.OutputDataAlignment
  *     CAM_SINGLEFRAMEMODE=qhy.CAM_SINGLEFRAMEMODE             # <<<<<<<<<<<<<<
  *     CAM_LIVEVIDEOMODE=qhy.CAM_LIVEVIDEOMODE
  *     CAM_IS_COLOR=qhy.CAM_IS_COLOR
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_SINGLEFRAMEMODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 111, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_SINGLEFRAMEMODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_SINGLEFRAMEMODE, __pyx_t_3) < 0) __PYX_ERR(0, 111, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_SINGLEFRAMEMODE, __pyx_t_3) < 0) __PYX_ERR(0, 119, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":112
+  /* "QHYCCD/pyqhyccd.pyx":120
  *     OutputDataAlignment=qhy.OutputDataAlignment
  *     CAM_SINGLEFRAMEMODE=qhy.CAM_SINGLEFRAMEMODE
  *     CAM_LIVEVIDEOMODE=qhy.CAM_LIVEVIDEOMODE             # <<<<<<<<<<<<<<
  *     CAM_IS_COLOR=qhy.CAM_IS_COLOR
  *     hasHardwareFrameCounter=qhy.hasHardwareFrameCounter
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_LIVEVIDEOMODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 112, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_LIVEVIDEOMODE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 120, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_LIVEVIDEOMODE, __pyx_t_3) < 0) __PYX_ERR(0, 112, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_LIVEVIDEOMODE, __pyx_t_3) < 0) __PYX_ERR(0, 120, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":113
+  /* "QHYCCD/pyqhyccd.pyx":121
  *     CAM_SINGLEFRAMEMODE=qhy.CAM_SINGLEFRAMEMODE
  *     CAM_LIVEVIDEOMODE=qhy.CAM_LIVEVIDEOMODE
  *     CAM_IS_COLOR=qhy.CAM_IS_COLOR             # <<<<<<<<<<<<<<
  *     hasHardwareFrameCounter=qhy.hasHardwareFrameCounter
  *     CONTROL_MAX_ID_Error=qhy.CONTROL_MAX_ID_Error
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_IS_COLOR); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_IS_COLOR); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 121, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_IS_COLOR, __pyx_t_3) < 0) __PYX_ERR(0, 113, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_IS_COLOR, __pyx_t_3) < 0) __PYX_ERR(0, 121, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":114
+  /* "QHYCCD/pyqhyccd.pyx":122
  *     CAM_LIVEVIDEOMODE=qhy.CAM_LIVEVIDEOMODE
  *     CAM_IS_COLOR=qhy.CAM_IS_COLOR
  *     hasHardwareFrameCounter=qhy.hasHardwareFrameCounter             # <<<<<<<<<<<<<<
  *     CONTROL_MAX_ID_Error=qhy.CONTROL_MAX_ID_Error
  *     CAM_HUMIDITY=qhy.CAM_HUMIDITY
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(hasHardwareFrameCounter); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 114, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(hasHardwareFrameCounter); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_hasHardwareFrameCounter, __pyx_t_3) < 0) __PYX_ERR(0, 114, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_hasHardwareFrameCounter, __pyx_t_3) < 0) __PYX_ERR(0, 122, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":115
+  /* "QHYCCD/pyqhyccd.pyx":123
  *     CAM_IS_COLOR=qhy.CAM_IS_COLOR
  *     hasHardwareFrameCounter=qhy.hasHardwareFrameCounter
  *     CONTROL_MAX_ID_Error=qhy.CONTROL_MAX_ID_Error             # <<<<<<<<<<<<<<
  *     CAM_HUMIDITY=qhy.CAM_HUMIDITY
  *     CAM_PRESSURE=qhy.CAM_PRESSURE
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_MAX_ID_Error); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 115, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_MAX_ID_Error); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 123, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_MAX_ID_Error, __pyx_t_3) < 0) __PYX_ERR(0, 115, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_MAX_ID_Error, __pyx_t_3) < 0) __PYX_ERR(0, 123, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":116
+  /* "QHYCCD/pyqhyccd.pyx":124
  *     hasHardwareFrameCounter=qhy.hasHardwareFrameCounter
  *     CONTROL_MAX_ID_Error=qhy.CONTROL_MAX_ID_Error
  *     CAM_HUMIDITY=qhy.CAM_HUMIDITY             # <<<<<<<<<<<<<<
  *     CAM_PRESSURE=qhy.CAM_PRESSURE
  *     CONTROL_VACUUM_PUMP=qhy.CONTROL_VACUUM_PUMP
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_HUMIDITY); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 116, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_HUMIDITY); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 124, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_HUMIDITY, __pyx_t_3) < 0) __PYX_ERR(0, 116, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_HUMIDITY, __pyx_t_3) < 0) __PYX_ERR(0, 124, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":117
+  /* "QHYCCD/pyqhyccd.pyx":125
  *     CONTROL_MAX_ID_Error=qhy.CONTROL_MAX_ID_Error
  *     CAM_HUMIDITY=qhy.CAM_HUMIDITY
  *     CAM_PRESSURE=qhy.CAM_PRESSURE             # <<<<<<<<<<<<<<
  *     CONTROL_VACUUM_PUMP=qhy.CONTROL_VACUUM_PUMP
  *     CONTROL_SensorChamberCycle_PUMP=qhy.CONTROL_SensorChamberCycle_PUMP
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_PRESSURE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 117, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CAM_PRESSURE); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 125, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_PRESSURE, __pyx_t_3) < 0) __PYX_ERR(0, 117, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CAM_PRESSURE, __pyx_t_3) < 0) __PYX_ERR(0, 125, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":118
+  /* "QHYCCD/pyqhyccd.pyx":126
  *     CAM_HUMIDITY=qhy.CAM_HUMIDITY
  *     CAM_PRESSURE=qhy.CAM_PRESSURE
  *     CONTROL_VACUUM_PUMP=qhy.CONTROL_VACUUM_PUMP             # <<<<<<<<<<<<<<
  *     CONTROL_SensorChamberCycle_PUMP=qhy.CONTROL_SensorChamberCycle_PUMP
  *     CONTROL_MAX_ID=qhy.CONTROL_MAX_ID
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_VACUUM_PUMP); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 118, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_VACUUM_PUMP); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 126, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_VACUUM_PUMP, __pyx_t_3) < 0) __PYX_ERR(0, 118, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_VACUUM_PUMP, __pyx_t_3) < 0) __PYX_ERR(0, 126, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":119
+  /* "QHYCCD/pyqhyccd.pyx":127
  *     CAM_PRESSURE=qhy.CAM_PRESSURE
  *     CONTROL_VACUUM_PUMP=qhy.CONTROL_VACUUM_PUMP
  *     CONTROL_SensorChamberCycle_PUMP=qhy.CONTROL_SensorChamberCycle_PUMP             # <<<<<<<<<<<<<<
  *     CONTROL_MAX_ID=qhy.CONTROL_MAX_ID
  * 
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_SensorChamberCycle_PUMP); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 119, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_SensorChamberCycle_PUMP); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_SensorChamberCycle_PUMP, __pyx_t_3) < 0) __PYX_ERR(0, 119, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_SensorChamberCycle_PUMP, __pyx_t_3) < 0) __PYX_ERR(0, 127, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":120
+  /* "QHYCCD/pyqhyccd.pyx":128
  *     CONTROL_VACUUM_PUMP=qhy.CONTROL_VACUUM_PUMP
  *     CONTROL_SensorChamberCycle_PUMP=qhy.CONTROL_SensorChamberCycle_PUMP
  *     CONTROL_MAX_ID=qhy.CONTROL_MAX_ID             # <<<<<<<<<<<<<<
  * 
  * cdef int chkerr(long err):
  */
-  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_MAX_ID); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 120, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_From_CONTROL_ID(CONTROL_MAX_ID); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_MAX_ID, __pyx_t_3) < 0) __PYX_ERR(0, 120, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_CONTROL_MAX_ID, __pyx_t_3) < 0) __PYX_ERR(0, 128, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":53
+  /* "QHYCCD/pyqhyccd.pyx":61
  *     object PyLong_FromVoidPtr(void *)
  * 
  * class CONTROL_ID:             # <<<<<<<<<<<<<<
  *     CONTROL_BRIGHTNESS=qhy.CONTROL_BRIGHTNESS
  *     CONTROL_CONTRAST=qhy.CONTROL_CONTRAST
  */
-  __pyx_t_3 = __Pyx_Py3ClassCreate(((PyObject*)&PyType_Type), __pyx_n_s_CONTROL_ID, __pyx_empty_tuple, __pyx_t_1, NULL, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 53, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_Py3ClassCreate(((PyObject*)&PyType_Type), __pyx_n_s_CONTROL_ID, __pyx_empty_tuple, __pyx_t_1, NULL, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 61, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_CONTROL_ID, __pyx_t_3) < 0) __PYX_ERR(0, 53, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_CONTROL_ID, __pyx_t_3) < 0) __PYX_ERR(0, 61, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":128
+  /* "QHYCCD/pyqhyccd.pyx":136
  * 
  * 
  * def InitQHYCCDResource():             # <<<<<<<<<<<<<<
  *     chkerr(qhy.InitQHYCCDResource())
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_1InitQHYCCDResource, 0, __pyx_n_s_InitQHYCCDResource, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__9)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 128, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_1InitQHYCCDResource, 0, __pyx_n_s_InitQHYCCDResource, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__9)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 136, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_InitQHYCCDResource, __pyx_t_1) < 0) __PYX_ERR(0, 128, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_InitQHYCCDResource, __pyx_t_1) < 0) __PYX_ERR(0, 136, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":131
+  /* "QHYCCD/pyqhyccd.pyx":139
  *     chkerr(qhy.InitQHYCCDResource())
  * 
  * def ReleaseQHYCCDResource():             # <<<<<<<<<<<<<<
  *     chkerr(qhy.ReleaseQHYCCDResource())
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_3ReleaseQHYCCDResource, 0, __pyx_n_s_ReleaseQHYCCDResource, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__10)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 131, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_3ReleaseQHYCCDResource, 0, __pyx_n_s_ReleaseQHYCCDResource, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__10)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 139, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ReleaseQHYCCDResource, __pyx_t_1) < 0) __PYX_ERR(0, 131, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ReleaseQHYCCDResource, __pyx_t_1) < 0) __PYX_ERR(0, 139, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":134
+  /* "QHYCCD/pyqhyccd.pyx":142
  *     chkerr(qhy.ReleaseQHYCCDResource())
  * 
  * def ScanQHYCCD():             # <<<<<<<<<<<<<<
  *     return(qhy.ScanQHYCCD())
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_5ScanQHYCCD, 0, __pyx_n_s_ScanQHYCCD, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__11)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 134, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_5ScanQHYCCD, 0, __pyx_n_s_ScanQHYCCD, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__11)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 142, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ScanQHYCCD, __pyx_t_1) < 0) __PYX_ERR(0, 134, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ScanQHYCCD, __pyx_t_1) < 0) __PYX_ERR(0, 142, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":137
+  /* "QHYCCD/pyqhyccd.pyx":145
  *     return(qhy.ScanQHYCCD())
  * 
  * def GetQHYCCDId(i):             # <<<<<<<<<<<<<<
  *     cdef char camid[256]
  *     chkerr(qhy.GetQHYCCDId(i, camid))
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_7GetQHYCCDId, 0, __pyx_n_s_GetQHYCCDId, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__13)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 137, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_7GetQHYCCDId, 0, __pyx_n_s_GetQHYCCDId, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__13)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 145, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDId, __pyx_t_1) < 0) __PYX_ERR(0, 137, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDId, __pyx_t_1) < 0) __PYX_ERR(0, 145, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":142
+  /* "QHYCCD/pyqhyccd.pyx":150
  *     return camid
  * 
  * def OpenQHYCCD(camid):             # <<<<<<<<<<<<<<
  *     return PyLong_FromVoidPtr(qhy.OpenQHYCCD(<char *>camid))
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_9OpenQHYCCD, 0, __pyx_n_s_OpenQHYCCD, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__15)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 142, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_9OpenQHYCCD, 0, __pyx_n_s_OpenQHYCCD, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__15)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_OpenQHYCCD, __pyx_t_1) < 0) __PYX_ERR(0, 142, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_OpenQHYCCD, __pyx_t_1) < 0) __PYX_ERR(0, 150, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":145
+  /* "QHYCCD/pyqhyccd.pyx":153
  *     return PyLong_FromVoidPtr(qhy.OpenQHYCCD(<char *>camid))
  * 
  * def SetQHYCCDStreamMode(cam, mode):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.SetQHYCCDStreamMode(PyLong_AsVoidPtr(cam), mode))
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_11SetQHYCCDStreamMode, 0, __pyx_n_s_SetQHYCCDStreamMode, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__17)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 145, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_11SetQHYCCDStreamMode, 0, __pyx_n_s_SetQHYCCDStreamMode, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__17)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_SetQHYCCDStreamMode, __pyx_t_1) < 0) __PYX_ERR(0, 145, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_SetQHYCCDStreamMode, __pyx_t_1) < 0) __PYX_ERR(0, 153, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":148
+  /* "QHYCCD/pyqhyccd.pyx":156
  *     chkerr(qhy.SetQHYCCDStreamMode(PyLong_AsVoidPtr(cam), mode))
  * 
  * def InitQHYCCD(cam):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.InitQHYCCD(PyLong_AsVoidPtr(cam)))
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_13InitQHYCCD, 0, __pyx_n_s_InitQHYCCD, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__19)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 148, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_13InitQHYCCD, 0, __pyx_n_s_InitQHYCCD, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__19)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 156, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_InitQHYCCD, __pyx_t_1) < 0) __PYX_ERR(0, 148, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_InitQHYCCD, __pyx_t_1) < 0) __PYX_ERR(0, 156, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":151
+  /* "QHYCCD/pyqhyccd.pyx":159
  *     chkerr(qhy.InitQHYCCD(PyLong_AsVoidPtr(cam)))
  * 
  * def CloseQHYCCD(cam):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.CloseQHYCCD(PyLong_AsVoidPtr(cam)))
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_15CloseQHYCCD, 0, __pyx_n_s_CloseQHYCCD, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__21)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 151, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_15CloseQHYCCD, 0, __pyx_n_s_CloseQHYCCD, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__21)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 159, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_CloseQHYCCD, __pyx_t_1) < 0) __PYX_ERR(0, 151, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_CloseQHYCCD, __pyx_t_1) < 0) __PYX_ERR(0, 159, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":154
+  /* "QHYCCD/pyqhyccd.pyx":162
  *     chkerr(qhy.CloseQHYCCD(PyLong_AsVoidPtr(cam)))
  * 
  * def GetQHYCCDChipInfo(cam):             # <<<<<<<<<<<<<<
  *     cdef double chipw, chiph, pixelw, pixelh
  *     cdef uint32_t imagew, imageh, bpp
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_17GetQHYCCDChipInfo, 0, __pyx_n_s_GetQHYCCDChipInfo, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__23)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_17GetQHYCCDChipInfo, 0, __pyx_n_s_GetQHYCCDChipInfo, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__23)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDChipInfo, __pyx_t_1) < 0) __PYX_ERR(0, 154, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDChipInfo, __pyx_t_1) < 0) __PYX_ERR(0, 162, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":160
+  /* "QHYCCD/pyqhyccd.pyx":168
  *     return (chipw, chiph, imagew, imageh, pixelw, pixelh, bpp)
  * 
  * def GetQHYCCDModel(camid):             # <<<<<<<<<<<<<<
  *     cdef char cammodel[256]
  *     chkerr(qhy.GetQHYCCDModel(camid, cammodel))
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_19GetQHYCCDModel, 0, __pyx_n_s_GetQHYCCDModel, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__25)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 160, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_19GetQHYCCDModel, 0, __pyx_n_s_GetQHYCCDModel, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__25)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 168, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDModel, __pyx_t_1) < 0) __PYX_ERR(0, 160, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDModel, __pyx_t_1) < 0) __PYX_ERR(0, 168, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":165
+  /* "QHYCCD/pyqhyccd.pyx":173
  *     return cammodel
  * 
  * def IsQHYCCDControlAvailable(cam, controlId):             # <<<<<<<<<<<<<<
  *     ret = qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), controlId)
  *     if ret == qhy.QHYCCD_SUCCESS:
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_21IsQHYCCDControlAvailable, 0, __pyx_n_s_IsQHYCCDControlAvailable, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__27)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 165, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_21IsQHYCCDControlAvailable, 0, __pyx_n_s_IsQHYCCDControlAvailable, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__27)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 173, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_IsQHYCCDControlAvailable, __pyx_t_1) < 0) __PYX_ERR(0, 165, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_IsQHYCCDControlAvailable, __pyx_t_1) < 0) __PYX_ERR(0, 173, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":172
+  /* "QHYCCD/pyqhyccd.pyx":180
  *         return False
  * 
  * def GetQHYCCDParam(cam, controlId):             # <<<<<<<<<<<<<<
  *     ret = qhy.GetQHYCCDParam(PyLong_AsVoidPtr(cam), controlId)
  *     if ret != qhy.QHYCCD_ERROR:
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_23GetQHYCCDParam, 0, __pyx_n_s_GetQHYCCDParam, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__29)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 172, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_23GetQHYCCDParam, 0, __pyx_n_s_GetQHYCCDParam, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__29)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 180, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDParam, __pyx_t_1) < 0) __PYX_ERR(0, 172, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDParam, __pyx_t_1) < 0) __PYX_ERR(0, 180, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":179
+  /* "QHYCCD/pyqhyccd.pyx":187
  *         return None
  * 
  * def SetQHYCCDParam(cam, controlId, value):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.SetQHYCCDParam(PyLong_AsVoidPtr(cam), controlId, value))
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_25SetQHYCCDParam, 0, __pyx_n_s_SetQHYCCDParam, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__31)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 179, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_25SetQHYCCDParam, 0, __pyx_n_s_SetQHYCCDParam, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__31)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 187, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_SetQHYCCDParam, __pyx_t_1) < 0) __PYX_ERR(0, 179, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_SetQHYCCDParam, __pyx_t_1) < 0) __PYX_ERR(0, 187, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":182
+  /* "QHYCCD/pyqhyccd.pyx":190
  *     chkerr(qhy.SetQHYCCDParam(PyLong_AsVoidPtr(cam), controlId, value))
  * 
  * def GetQHYCCDParamMinMaxStep(cam, controlId):             # <<<<<<<<<<<<<<
  *     cdef double pmin, pmax, pstep
  *     chkerr(qhy.GetQHYCCDParamMinMaxStep(PyLong_AsVoidPtr(cam), controlId, &pmin, &pmax, &pstep))
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_27GetQHYCCDParamMinMaxStep, 0, __pyx_n_s_GetQHYCCDParamMinMaxStep, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__33)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 182, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_27GetQHYCCDParamMinMaxStep, 0, __pyx_n_s_GetQHYCCDParamMinMaxStep, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__33)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 190, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDParamMinMaxStep, __pyx_t_1) < 0) __PYX_ERR(0, 182, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDParamMinMaxStep, __pyx_t_1) < 0) __PYX_ERR(0, 190, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":187
+  /* "QHYCCD/pyqhyccd.pyx":195
  *     return (pmin, pmax, pstep)
  * 
  * def ExpQHYCCDSingleFrame(cam):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.ExpQHYCCDSingleFrame(PyLong_AsVoidPtr(cam)))
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_29ExpQHYCCDSingleFrame, 0, __pyx_n_s_ExpQHYCCDSingleFrame, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__35)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_29ExpQHYCCDSingleFrame, 0, __pyx_n_s_ExpQHYCCDSingleFrame, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__35)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 195, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ExpQHYCCDSingleFrame, __pyx_t_1) < 0) __PYX_ERR(0, 187, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_ExpQHYCCDSingleFrame, __pyx_t_1) < 0) __PYX_ERR(0, 195, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":190
+  /* "QHYCCD/pyqhyccd.pyx":198
  *     chkerr(qhy.ExpQHYCCDSingleFrame(PyLong_AsVoidPtr(cam)))
  * 
  * def CancelQHYCCDExposing(cam):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.CancelQHYCCDExposing(PyLong_AsVoidPtr(cam)))
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_31CancelQHYCCDExposing, 0, __pyx_n_s_CancelQHYCCDExposing, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__37)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 190, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_31CancelQHYCCDExposing, 0, __pyx_n_s_CancelQHYCCDExposing, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__37)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 198, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_CancelQHYCCDExposing, __pyx_t_1) < 0) __PYX_ERR(0, 190, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_CancelQHYCCDExposing, __pyx_t_1) < 0) __PYX_ERR(0, 198, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":193
+  /* "QHYCCD/pyqhyccd.pyx":201
  *     chkerr(qhy.CancelQHYCCDExposing(PyLong_AsVoidPtr(cam)))
  * 
  * def CancelQHYCCDExposingAndReadout(cam):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.CancelQHYCCDExposingAndReadout(PyLong_AsVoidPtr(cam)))
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_33CancelQHYCCDExposingAndReadout, 0, __pyx_n_s_CancelQHYCCDExposingAndReadout, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__39)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 193, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_33CancelQHYCCDExposingAndReadout, 0, __pyx_n_s_CancelQHYCCDExposingAndReadout, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__39)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 201, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_CancelQHYCCDExposingAndReadout, __pyx_t_1) < 0) __PYX_ERR(0, 193, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_CancelQHYCCDExposingAndReadout, __pyx_t_1) < 0) __PYX_ERR(0, 201, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":196
+  /* "QHYCCD/pyqhyccd.pyx":204
  *     chkerr(qhy.CancelQHYCCDExposingAndReadout(PyLong_AsVoidPtr(cam)))
  * 
  * def GetQHYCCDSingleFrame(cam):             # <<<<<<<<<<<<<<
  *     cdef uint32_t w, h, bpp, channels
  *     cdef uint8_t *imgdata
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_35GetQHYCCDSingleFrame, 0, __pyx_n_s_GetQHYCCDSingleFrame, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__41)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 196, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_35GetQHYCCDSingleFrame, 0, __pyx_n_s_GetQHYCCDSingleFrame, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__41)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 204, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDSingleFrame, __pyx_t_1) < 0) __PYX_ERR(0, 196, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDSingleFrame, __pyx_t_1) < 0) __PYX_ERR(0, 204, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":210
+  /* "QHYCCD/pyqhyccd.pyx":218
  *     return data
  * 
  * def GetQHYCCDMemLength(cam):             # <<<<<<<<<<<<<<
  *     return qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_37GetQHYCCDMemLength, 0, __pyx_n_s_GetQHYCCDMemLength, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__43)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 210, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_37GetQHYCCDMemLength, 0, __pyx_n_s_GetQHYCCDMemLength, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__43)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 218, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDMemLength, __pyx_t_1) < 0) __PYX_ERR(0, 210, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDMemLength, __pyx_t_1) < 0) __PYX_ERR(0, 218, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":213
+  /* "QHYCCD/pyqhyccd.pyx":221
  *     return qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))
+ * 
+ * def SetQHYCCDBinMode(cam, wbin, hbin):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), <uint32_t> wbin, <uint32_t> hbin))
+ * 
+ */
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_39SetQHYCCDBinMode, 0, __pyx_n_s_SetQHYCCDBinMode, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__45)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 221, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_SetQHYCCDBinMode, __pyx_t_1) < 0) __PYX_ERR(0, 221, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "QHYCCD/pyqhyccd.pyx":224
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), <uint32_t> wbin, <uint32_t> hbin))
  * 
  * def SetQHYCCDResolution(cam, x, y, xsize, ysize):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.SetQHYCCDResolution(PyLong_AsVoidPtr(cam), <uint32_t> x, <uint32_t> y, <uint32_t> xsize, <uint32_t> ysize))
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_39SetQHYCCDResolution, 0, __pyx_n_s_SetQHYCCDResolution, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__45)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 213, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_41SetQHYCCDResolution, 0, __pyx_n_s_SetQHYCCDResolution, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__47)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 224, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_SetQHYCCDResolution, __pyx_t_1) < 0) __PYX_ERR(0, 213, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_SetQHYCCDResolution, __pyx_t_1) < 0) __PYX_ERR(0, 224, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":216
+  /* "QHYCCD/pyqhyccd.pyx":227
  *     chkerr(qhy.SetQHYCCDResolution(PyLong_AsVoidPtr(cam), <uint32_t> x, <uint32_t> y, <uint32_t> xsize, <uint32_t> ysize))
  * 
  * def GetQHYCCDExposureRemaining(cam):             # <<<<<<<<<<<<<<
  *     return(qhy.GetQHYCCDExposureRemaining(PyLong_AsVoidPtr(cam)))
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_41GetQHYCCDExposureRemaining, 0, __pyx_n_s_GetQHYCCDExposureRemaining, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__47)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_43GetQHYCCDExposureRemaining, 0, __pyx_n_s_GetQHYCCDExposureRemaining, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__49)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 227, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDExposureRemaining, __pyx_t_1) < 0) __PYX_ERR(0, 216, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDExposureRemaining, __pyx_t_1) < 0) __PYX_ERR(0, 227, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":219
+  /* "QHYCCD/pyqhyccd.pyx":230
  *     return(qhy.GetQHYCCDExposureRemaining(PyLong_AsVoidPtr(cam)))
  * 
  * def GetQHYCCDType(cam):             # <<<<<<<<<<<<<<
  *     ret = qhy.GetQHYCCDType(PyLong_AsVoidPtr(cam))
  *     if ret != qhy.QHYCCD_ERROR:
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_43GetQHYCCDType, 0, __pyx_n_s_GetQHYCCDType, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__49)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 219, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_45GetQHYCCDType, 0, __pyx_n_s_GetQHYCCDType, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__51)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 230, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDType, __pyx_t_1) < 0) __PYX_ERR(0, 219, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDType, __pyx_t_1) < 0) __PYX_ERR(0, 230, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":226
+  /* "QHYCCD/pyqhyccd.pyx":237
  *         raise OSError(-ret, os.stderror(-ret))
  * 
  * def GetQHYCCDSDKVersion():             # <<<<<<<<<<<<<<
  *     cdef uint32_t year, month, day, subday
  *     chkerr(qhy.GetQHYCCDSDKVersion(&year, &month, &day, &subday))
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_45GetQHYCCDSDKVersion, 0, __pyx_n_s_GetQHYCCDSDKVersion, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__51)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 226, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_47GetQHYCCDSDKVersion, 0, __pyx_n_s_GetQHYCCDSDKVersion, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__53)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 237, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDSDKVersion, __pyx_t_1) < 0) __PYX_ERR(0, 226, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDSDKVersion, __pyx_t_1) < 0) __PYX_ERR(0, 237, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":231
+  /* "QHYCCD/pyqhyccd.pyx":242
  *     return f"QHYCCD SDK {year}-{month}-{day},{subday}"
  * 
  * def GetQHYCCDNumberOfReadModes(cam):             # <<<<<<<<<<<<<<
  *     cdef uint32_t numModes
  *     chkerr(qhy.GetQHYCCDNumberOfReadModes(PyLong_AsVoidPtr(cam), &numModes))
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_47GetQHYCCDNumberOfReadModes, 0, __pyx_n_s_GetQHYCCDNumberOfReadModes, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__53)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 231, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_49GetQHYCCDNumberOfReadModes, 0, __pyx_n_s_GetQHYCCDNumberOfReadModes, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__55)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 242, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDNumberOfReadModes, __pyx_t_1) < 0) __PYX_ERR(0, 231, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDNumberOfReadModes, __pyx_t_1) < 0) __PYX_ERR(0, 242, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":236
+  /* "QHYCCD/pyqhyccd.pyx":247
  *     return numModes
  * 
  * def GetQHYCCDReadModeResolution(cam, modeNumber):             # <<<<<<<<<<<<<<
  *     cdef uint32_t width, height
  *     chkerr(qhy.GetQHYCCDReadModeResolution(PyLong_AsVoidPtr(cam), <uint32_t> modeNumber, &width, &height))
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_49GetQHYCCDReadModeResolution, 0, __pyx_n_s_GetQHYCCDReadModeResolution, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__55)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 236, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_51GetQHYCCDReadModeResolution, 0, __pyx_n_s_GetQHYCCDReadModeResolution, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__57)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 247, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDReadModeResolution, __pyx_t_1) < 0) __PYX_ERR(0, 236, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDReadModeResolution, __pyx_t_1) < 0) __PYX_ERR(0, 247, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":241
+  /* "QHYCCD/pyqhyccd.pyx":252
  *     return (width, height)
  * 
  * def GetQHYCCDReadModeName(cam, modeNumber):             # <<<<<<<<<<<<<<
  *     cdef char name[32]
  *     chkerr(qhy.GetQHYCCDReadModeName(PyLong_AsVoidPtr(cam), <uint32_t> modeNumber, name))
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_51GetQHYCCDReadModeName, 0, __pyx_n_s_GetQHYCCDReadModeName, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__57)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 241, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_53GetQHYCCDReadModeName, 0, __pyx_n_s_GetQHYCCDReadModeName, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__59)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 252, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDReadModeName, __pyx_t_1) < 0) __PYX_ERR(0, 241, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDReadModeName, __pyx_t_1) < 0) __PYX_ERR(0, 252, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":246
+  /* "QHYCCD/pyqhyccd.pyx":257
  *     return name
  * 
  * def GetQHYCCDReadMode(cam):             # <<<<<<<<<<<<<<
  *     cdef uint32_t modeNumber
  *     chkerr(qhy.GetQHYCCDReadMode(PyLong_AsVoidPtr(cam), &modeNumber))
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_53GetQHYCCDReadMode, 0, __pyx_n_s_GetQHYCCDReadMode, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__59)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 246, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_55GetQHYCCDReadMode, 0, __pyx_n_s_GetQHYCCDReadMode, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__61)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 257, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDReadMode, __pyx_t_1) < 0) __PYX_ERR(0, 246, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDReadMode, __pyx_t_1) < 0) __PYX_ERR(0, 257, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":251
+  /* "QHYCCD/pyqhyccd.pyx":262
  *     return modeNumber
  * 
  * def SetQHYCCDReadMode(cam, modeNumber):             # <<<<<<<<<<<<<<
  *     chkerr(qhy.SetQHYCCDReadMode(PyLong_AsVoidPtr(cam), <uint32_t> modeNumber))
  * 
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_55SetQHYCCDReadMode, 0, __pyx_n_s_SetQHYCCDReadMode, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__61)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 251, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_57SetQHYCCDReadMode, 0, __pyx_n_s_SetQHYCCDReadMode, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__63)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 262, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_SetQHYCCDReadMode, __pyx_t_1) < 0) __PYX_ERR(0, 251, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_SetQHYCCDReadMode, __pyx_t_1) < 0) __PYX_ERR(0, 262, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":254
+  /* "QHYCCD/pyqhyccd.pyx":265
  *     chkerr(qhy.SetQHYCCDReadMode(PyLong_AsVoidPtr(cam), <uint32_t> modeNumber))
  * 
  * def GetQHYCCDOverScanArea(cam):             # <<<<<<<<<<<<<<
  *     cdef uint32_t startX, startY, sizeX, sizeY
  *     chkerr(qhy.GetQHYCCDOverScanArea(PyLong_AsVoidPtr(cam), &startX, &startY, &sizeX, &sizeY))
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_57GetQHYCCDOverScanArea, 0, __pyx_n_s_GetQHYCCDOverScanArea, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__63)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 254, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_59GetQHYCCDOverScanArea, 0, __pyx_n_s_GetQHYCCDOverScanArea, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__65)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDOverScanArea, __pyx_t_1) < 0) __PYX_ERR(0, 254, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDOverScanArea, __pyx_t_1) < 0) __PYX_ERR(0, 265, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "QHYCCD/pyqhyccd.pyx":259
+  /* "QHYCCD/pyqhyccd.pyx":270
  *     return (startX, startY, sizeX, sizeY)
  * 
  * def GetQHYCCDEffectiveArea(cam):             # <<<<<<<<<<<<<<
  *     cdef uint32_t startX, startY, sizeX, sizeY
  *     chkerr(qhy.GetQHYCCDEffectiveArea(PyLong_AsVoidPtr(cam), &startX, &startY, &sizeX, &sizeY))
  */
-  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_59GetQHYCCDEffectiveArea, 0, __pyx_n_s_GetQHYCCDEffectiveArea, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__65)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 259, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_61GetQHYCCDEffectiveArea, 0, __pyx_n_s_GetQHYCCDEffectiveArea, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__67)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 270, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDEffectiveArea, __pyx_t_1) < 0) __PYX_ERR(0, 259, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDEffectiveArea, __pyx_t_1) < 0) __PYX_ERR(0, 270, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "QHYCCD/pyqhyccd.pyx":275
+ *     return (startX, startY, sizeX, sizeY)
+ * 
+ * def SetQHYCCDBinMode(cam, binw, binh):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), binw, binh))
+ * 
+ */
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_63SetQHYCCDBinMode, 0, __pyx_n_s_SetQHYCCDBinMode, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__69)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 275, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_SetQHYCCDBinMode, __pyx_t_1) < 0) __PYX_ERR(0, 275, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "QHYCCD/pyqhyccd.pyx":278
+ *     chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), binw, binh))
+ * 
+ * def BeginQHYCCDLive(cam):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.BeginQHYCCDLive(PyLong_AsVoidPtr(cam)))
+ * 
+ */
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_65BeginQHYCCDLive, 0, __pyx_n_s_BeginQHYCCDLive, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__71)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 278, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_BeginQHYCCDLive, __pyx_t_1) < 0) __PYX_ERR(0, 278, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "QHYCCD/pyqhyccd.pyx":281
+ *     chkerr(qhy.BeginQHYCCDLive(PyLong_AsVoidPtr(cam)))
+ * 
+ * def StopQHYCCDLive(cam):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.StopQHYCCDLive(PyLong_AsVoidPtr(cam)))
+ * 
+ */
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_67StopQHYCCDLive, 0, __pyx_n_s_StopQHYCCDLive, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__73)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 281, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_StopQHYCCDLive, __pyx_t_1) < 0) __PYX_ERR(0, 281, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "QHYCCD/pyqhyccd.pyx":284
+ *     chkerr(qhy.StopQHYCCDLive(PyLong_AsVoidPtr(cam)))
+ * 
+ * def GetQHYCCDLiveFrame(cam):             # <<<<<<<<<<<<<<
+ *     cdef uint32_t w, h, bpp, channels
+ *     cdef uint8_t *imgdata
+ */
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_69GetQHYCCDLiveFrame, 0, __pyx_n_s_GetQHYCCDLiveFrame, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__75)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 284, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDLiveFrame, __pyx_t_1) < 0) __PYX_ERR(0, 284, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "QHYCCD/pyqhyccd.pyx":300
+ *     return data
+ * 
+ * def GetQHYCCDPreciseExposureInfo(cam):             # <<<<<<<<<<<<<<
+ *     cdef uint32_t PixelPeriod_ps, LinePeriod_ns, FramePeriod_us, ClocksPerLine, LinesPerFrame, ActualExposureTime
+ *     cdef uint8_t isLongExposureMode
+ */
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_71GetQHYCCDPreciseExposureInfo, 0, __pyx_n_s_GetQHYCCDPreciseExposureInfo, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__77)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 300, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetQHYCCDPreciseExposureInfo, __pyx_t_1) < 0) __PYX_ERR(0, 300, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "QHYCCD/pyqhyccd.pyx":313
+ *     return (PixelPeriod_ps, LinePeriod_ns, FramePeriod_us, ClocksPerLine, LinesPerFrame, ActualExposureTime, isLongExposureMode)
+ * 
+ * def SetQHYCCDBitsMode(cam, value):             # <<<<<<<<<<<<<<
+ *     chkerr(qhy.SetQHYCCDBitsMode(PyLong_AsVoidPtr(cam), <uint32_t> value))
+ * 
+ */
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_73SetQHYCCDBitsMode, 0, __pyx_n_s_SetQHYCCDBitsMode, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__79)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 313, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_SetQHYCCDBitsMode, __pyx_t_1) < 0) __PYX_ERR(0, 313, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
+
+  /* "QHYCCD/pyqhyccd.pyx":316
+ *     chkerr(qhy.SetQHYCCDBitsMode(PyLong_AsVoidPtr(cam), <uint32_t> value))
+ * 
+ * def GetBinModes(cam):             # <<<<<<<<<<<<<<
+ *     modes = [1]
+ *     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN2X2MODE) == qhy.QHYCCD_SUCCESS:
+ */
+  __pyx_t_1 = __Pyx_CyFunction_New(&__pyx_mdef_6QHYCCD_8pyqhyccd_75GetBinModes, 0, __pyx_n_s_GetBinModes, NULL, __pyx_n_s_QHYCCD_pyqhyccd, __pyx_d, ((PyObject *)__pyx_codeobj__81)); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 316, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_1);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_GetBinModes, __pyx_t_1) < 0) __PYX_ERR(0, 316, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "QHYCCD/pyqhyccd.pyx":1
@@ -12868,431 +14771,6 @@ static CYTHON_INLINE PyObject* __Pyx_PyObject_Call(PyObject *func, PyObject *arg
     return result;
 }
 #endif
-
-/* WriteUnraisableException */
-static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
-                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
-                                  int full_traceback, CYTHON_UNUSED int nogil) {
-    PyObject *old_exc, *old_val, *old_tb;
-    PyObject *ctx;
-    __Pyx_PyThreadState_declare
-#ifdef WITH_THREAD
-    PyGILState_STATE state;
-    if (nogil)
-        state = PyGILState_Ensure();
-#ifdef _MSC_VER
-    else state = (PyGILState_STATE)-1;
-#endif
-#endif
-    __Pyx_PyThreadState_assign
-    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
-    if (full_traceback) {
-        Py_XINCREF(old_exc);
-        Py_XINCREF(old_val);
-        Py_XINCREF(old_tb);
-        __Pyx_ErrRestore(old_exc, old_val, old_tb);
-        PyErr_PrintEx(1);
-    }
-    #if PY_MAJOR_VERSION < 3
-    ctx = PyString_FromString(name);
-    #else
-    ctx = PyUnicode_FromString(name);
-    #endif
-    __Pyx_ErrRestore(old_exc, old_val, old_tb);
-    if (!ctx) {
-        PyErr_WriteUnraisable(Py_None);
-    } else {
-        PyErr_WriteUnraisable(ctx);
-        Py_DECREF(ctx);
-    }
-#ifdef WITH_THREAD
-    if (nogil)
-        PyGILState_Release(state);
-#endif
-}
-
-/* TupleAndListFromArray */
-#if CYTHON_COMPILING_IN_CPYTHON
-static CYTHON_INLINE void __Pyx_copy_object_array(PyObject *const *CYTHON_RESTRICT src, PyObject** CYTHON_RESTRICT dest, Py_ssize_t length) {
-    PyObject *v;
-    Py_ssize_t i;
-    for (i = 0; i < length; i++) {
-        v = dest[i] = src[i];
-        Py_INCREF(v);
-    }
-}
-static CYTHON_INLINE PyObject *
-__Pyx_PyTuple_FromArray(PyObject *const *src, Py_ssize_t n)
-{
-    PyObject *res;
-    if (n <= 0) {
-        Py_INCREF(__pyx_empty_tuple);
-        return __pyx_empty_tuple;
-    }
-    res = PyTuple_New(n);
-    if (unlikely(res == NULL)) return NULL;
-    __Pyx_copy_object_array(src, ((PyTupleObject*)res)->ob_item, n);
-    return res;
-}
-static CYTHON_INLINE PyObject *
-__Pyx_PyList_FromArray(PyObject *const *src, Py_ssize_t n)
-{
-    PyObject *res;
-    if (n <= 0) {
-        return PyList_New(0);
-    }
-    res = PyList_New(n);
-    if (unlikely(res == NULL)) return NULL;
-    __Pyx_copy_object_array(src, ((PyListObject*)res)->ob_item, n);
-    return res;
-}
-#endif
-
-/* BytesEquals */
-static CYTHON_INLINE int __Pyx_PyBytes_Equals(PyObject* s1, PyObject* s2, int equals) {
-#if CYTHON_COMPILING_IN_PYPY || CYTHON_COMPILING_IN_LIMITED_API
-    return PyObject_RichCompareBool(s1, s2, equals);
-#else
-    if (s1 == s2) {
-        return (equals == Py_EQ);
-    } else if (PyBytes_CheckExact(s1) & PyBytes_CheckExact(s2)) {
-        const char *ps1, *ps2;
-        Py_ssize_t length = PyBytes_GET_SIZE(s1);
-        if (length != PyBytes_GET_SIZE(s2))
-            return (equals == Py_NE);
-        ps1 = PyBytes_AS_STRING(s1);
-        ps2 = PyBytes_AS_STRING(s2);
-        if (ps1[0] != ps2[0]) {
-            return (equals == Py_NE);
-        } else if (length == 1) {
-            return (equals == Py_EQ);
-        } else {
-            int result;
-#if CYTHON_USE_UNICODE_INTERNALS
-            Py_hash_t hash1, hash2;
-            hash1 = ((PyBytesObject*)s1)->ob_shash;
-            hash2 = ((PyBytesObject*)s2)->ob_shash;
-            if (hash1 != hash2 && hash1 != -1 && hash2 != -1) {
-                return (equals == Py_NE);
-            }
-#endif
-            result = memcmp(ps1, ps2, (size_t)length);
-            return (equals == Py_EQ) ? (result == 0) : (result != 0);
-        }
-    } else if ((s1 == Py_None) & PyBytes_CheckExact(s2)) {
-        return (equals == Py_NE);
-    } else if ((s2 == Py_None) & PyBytes_CheckExact(s1)) {
-        return (equals == Py_NE);
-    } else {
-        int result;
-        PyObject* py_result = PyObject_RichCompare(s1, s2, equals);
-        if (!py_result)
-            return -1;
-        result = __Pyx_PyObject_IsTrue(py_result);
-        Py_DECREF(py_result);
-        return result;
-    }
-#endif
-}
-
-/* UnicodeEquals */
-static CYTHON_INLINE int __Pyx_PyUnicode_Equals(PyObject* s1, PyObject* s2, int equals) {
-#if CYTHON_COMPILING_IN_PYPY || CYTHON_COMPILING_IN_LIMITED_API
-    return PyObject_RichCompareBool(s1, s2, equals);
-#else
-#if PY_MAJOR_VERSION < 3
-    PyObject* owned_ref = NULL;
-#endif
-    int s1_is_unicode, s2_is_unicode;
-    if (s1 == s2) {
-        goto return_eq;
-    }
-    s1_is_unicode = PyUnicode_CheckExact(s1);
-    s2_is_unicode = PyUnicode_CheckExact(s2);
-#if PY_MAJOR_VERSION < 3
-    if ((s1_is_unicode & (!s2_is_unicode)) && PyString_CheckExact(s2)) {
-        owned_ref = PyUnicode_FromObject(s2);
-        if (unlikely(!owned_ref))
-            return -1;
-        s2 = owned_ref;
-        s2_is_unicode = 1;
-    } else if ((s2_is_unicode & (!s1_is_unicode)) && PyString_CheckExact(s1)) {
-        owned_ref = PyUnicode_FromObject(s1);
-        if (unlikely(!owned_ref))
-            return -1;
-        s1 = owned_ref;
-        s1_is_unicode = 1;
-    } else if (((!s2_is_unicode) & (!s1_is_unicode))) {
-        return __Pyx_PyBytes_Equals(s1, s2, equals);
-    }
-#endif
-    if (s1_is_unicode & s2_is_unicode) {
-        Py_ssize_t length;
-        int kind;
-        void *data1, *data2;
-        if (unlikely(__Pyx_PyUnicode_READY(s1) < 0) || unlikely(__Pyx_PyUnicode_READY(s2) < 0))
-            return -1;
-        length = __Pyx_PyUnicode_GET_LENGTH(s1);
-        if (length != __Pyx_PyUnicode_GET_LENGTH(s2)) {
-            goto return_ne;
-        }
-#if CYTHON_USE_UNICODE_INTERNALS
-        {
-            Py_hash_t hash1, hash2;
-        #if CYTHON_PEP393_ENABLED
-            hash1 = ((PyASCIIObject*)s1)->hash;
-            hash2 = ((PyASCIIObject*)s2)->hash;
-        #else
-            hash1 = ((PyUnicodeObject*)s1)->hash;
-            hash2 = ((PyUnicodeObject*)s2)->hash;
-        #endif
-            if (hash1 != hash2 && hash1 != -1 && hash2 != -1) {
-                goto return_ne;
-            }
-        }
-#endif
-        kind = __Pyx_PyUnicode_KIND(s1);
-        if (kind != __Pyx_PyUnicode_KIND(s2)) {
-            goto return_ne;
-        }
-        data1 = __Pyx_PyUnicode_DATA(s1);
-        data2 = __Pyx_PyUnicode_DATA(s2);
-        if (__Pyx_PyUnicode_READ(kind, data1, 0) != __Pyx_PyUnicode_READ(kind, data2, 0)) {
-            goto return_ne;
-        } else if (length == 1) {
-            goto return_eq;
-        } else {
-            int result = memcmp(data1, data2, (size_t)(length * kind));
-            #if PY_MAJOR_VERSION < 3
-            Py_XDECREF(owned_ref);
-            #endif
-            return (equals == Py_EQ) ? (result == 0) : (result != 0);
-        }
-    } else if ((s1 == Py_None) & s2_is_unicode) {
-        goto return_ne;
-    } else if ((s2 == Py_None) & s1_is_unicode) {
-        goto return_ne;
-    } else {
-        int result;
-        PyObject* py_result = PyObject_RichCompare(s1, s2, equals);
-        #if PY_MAJOR_VERSION < 3
-        Py_XDECREF(owned_ref);
-        #endif
-        if (!py_result)
-            return -1;
-        result = __Pyx_PyObject_IsTrue(py_result);
-        Py_DECREF(py_result);
-        return result;
-    }
-return_eq:
-    #if PY_MAJOR_VERSION < 3
-    Py_XDECREF(owned_ref);
-    #endif
-    return (equals == Py_EQ);
-return_ne:
-    #if PY_MAJOR_VERSION < 3
-    Py_XDECREF(owned_ref);
-    #endif
-    return (equals == Py_NE);
-#endif
-}
-
-/* fastcall */
-#if CYTHON_METH_FASTCALL
-static CYTHON_INLINE PyObject * __Pyx_GetKwValue_FASTCALL(PyObject *kwnames, PyObject *const *kwvalues, PyObject *s)
-{
-    Py_ssize_t i, n = PyTuple_GET_SIZE(kwnames);
-    for (i = 0; i < n; i++)
-    {
-        if (s == PyTuple_GET_ITEM(kwnames, i)) return kwvalues[i];
-    }
-    for (i = 0; i < n; i++)
-    {
-        int eq = __Pyx_PyUnicode_Equals(s, PyTuple_GET_ITEM(kwnames, i), Py_EQ);
-        if (unlikely(eq != 0)) {
-            if (unlikely(eq < 0)) return NULL;  // error
-            return kwvalues[i];
-        }
-    }
-    return NULL;  // not found (no exception set)
-}
-#endif
-
-/* RaiseDoubleKeywords */
-static void __Pyx_RaiseDoubleKeywordsError(
-    const char* func_name,
-    PyObject* kw_name)
-{
-    PyErr_Format(PyExc_TypeError,
-        #if PY_MAJOR_VERSION >= 3
-        "%s() got multiple values for keyword argument '%U'", func_name, kw_name);
-        #else
-        "%s() got multiple values for keyword argument '%s'", func_name,
-        PyString_AsString(kw_name));
-        #endif
-}
-
-/* ParseKeywords */
-static int __Pyx_ParseOptionalKeywords(
-    PyObject *kwds,
-    PyObject *const *kwvalues,
-    PyObject **argnames[],
-    PyObject *kwds2,
-    PyObject *values[],
-    Py_ssize_t num_pos_args,
-    const char* function_name)
-{
-    PyObject *key = 0, *value = 0;
-    Py_ssize_t pos = 0;
-    PyObject*** name;
-    PyObject*** first_kw_arg = argnames + num_pos_args;
-    int kwds_is_tuple = CYTHON_METH_FASTCALL && likely(PyTuple_Check(kwds));
-    while (1) {
-        if (kwds_is_tuple) {
-            if (pos >= PyTuple_GET_SIZE(kwds)) break;
-            key = PyTuple_GET_ITEM(kwds, pos);
-            value = kwvalues[pos];
-            pos++;
-        }
-        else
-        {
-            if (!PyDict_Next(kwds, &pos, &key, &value)) break;
-        }
-        name = first_kw_arg;
-        while (*name && (**name != key)) name++;
-        if (*name) {
-            values[name-argnames] = value;
-            continue;
-        }
-        name = first_kw_arg;
-        #if PY_MAJOR_VERSION < 3
-        if (likely(PyString_Check(key))) {
-            while (*name) {
-                if ((CYTHON_COMPILING_IN_PYPY || PyString_GET_SIZE(**name) == PyString_GET_SIZE(key))
-                        && _PyString_Eq(**name, key)) {
-                    values[name-argnames] = value;
-                    break;
-                }
-                name++;
-            }
-            if (*name) continue;
-            else {
-                PyObject*** argname = argnames;
-                while (argname != first_kw_arg) {
-                    if ((**argname == key) || (
-                            (CYTHON_COMPILING_IN_PYPY || PyString_GET_SIZE(**argname) == PyString_GET_SIZE(key))
-                             && _PyString_Eq(**argname, key))) {
-                        goto arg_passed_twice;
-                    }
-                    argname++;
-                }
-            }
-        } else
-        #endif
-        if (likely(PyUnicode_Check(key))) {
-            while (*name) {
-                int cmp = (
-                #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION >= 3
-                    (__Pyx_PyUnicode_GET_LENGTH(**name) != __Pyx_PyUnicode_GET_LENGTH(key)) ? 1 :
-                #endif
-                    PyUnicode_Compare(**name, key)
-                );
-                if (cmp < 0 && unlikely(PyErr_Occurred())) goto bad;
-                if (cmp == 0) {
-                    values[name-argnames] = value;
-                    break;
-                }
-                name++;
-            }
-            if (*name) continue;
-            else {
-                PyObject*** argname = argnames;
-                while (argname != first_kw_arg) {
-                    int cmp = (**argname == key) ? 0 :
-                    #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION >= 3
-                        (__Pyx_PyUnicode_GET_LENGTH(**argname) != __Pyx_PyUnicode_GET_LENGTH(key)) ? 1 :
-                    #endif
-                        PyUnicode_Compare(**argname, key);
-                    if (cmp < 0 && unlikely(PyErr_Occurred())) goto bad;
-                    if (cmp == 0) goto arg_passed_twice;
-                    argname++;
-                }
-            }
-        } else
-            goto invalid_keyword_type;
-        if (kwds2) {
-            if (unlikely(PyDict_SetItem(kwds2, key, value))) goto bad;
-        } else {
-            goto invalid_keyword;
-        }
-    }
-    return 0;
-arg_passed_twice:
-    __Pyx_RaiseDoubleKeywordsError(function_name, key);
-    goto bad;
-invalid_keyword_type:
-    PyErr_Format(PyExc_TypeError,
-        "%.200s() keywords must be strings", function_name);
-    goto bad;
-invalid_keyword:
-    #if PY_MAJOR_VERSION < 3
-    PyErr_Format(PyExc_TypeError,
-        "%.200s() got an unexpected keyword argument '%.200s'",
-        function_name, PyString_AsString(key));
-    #else
-    PyErr_Format(PyExc_TypeError,
-        "%s() got an unexpected keyword argument '%U'",
-        function_name, key);
-    #endif
-bad:
-    return -1;
-}
-
-/* RaiseArgTupleInvalid */
-static void __Pyx_RaiseArgtupleInvalid(
-    const char* func_name,
-    int exact,
-    Py_ssize_t num_min,
-    Py_ssize_t num_max,
-    Py_ssize_t num_found)
-{
-    Py_ssize_t num_expected;
-    const char *more_or_less;
-    if (num_found < num_min) {
-        num_expected = num_min;
-        more_or_less = "at least";
-    } else {
-        num_expected = num_max;
-        more_or_less = "at most";
-    }
-    if (exact) {
-        more_or_less = "exactly";
-    }
-    PyErr_Format(PyExc_TypeError,
-                 "%.200s() takes %.8s %" CYTHON_FORMAT_SSIZE_T "d positional argument%.1s (%" CYTHON_FORMAT_SSIZE_T "d given)",
-                 func_name, more_or_less, num_expected,
-                 (num_expected == 1) ? "" : "s", num_found);
-}
-
-/* ExtTypeTest */
-static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type) {
-    __Pyx_TypeName obj_type_name;
-    __Pyx_TypeName type_name;
-    if (unlikely(!type)) {
-        PyErr_SetString(PyExc_SystemError, "Missing type object");
-        return 0;
-    }
-    if (likely(__Pyx_TypeCheck(obj, type)))
-        return 1;
-    obj_type_name = __Pyx_PyType_GetName(Py_TYPE(obj));
-    type_name = __Pyx_PyType_GetName(type);
-    PyErr_Format(PyExc_TypeError,
-                 "Cannot convert " __Pyx_FMT_TYPENAME " to " __Pyx_FMT_TYPENAME,
-                 obj_type_name, type_name);
-    __Pyx_DECREF_TypeName(obj_type_name);
-    __Pyx_DECREF_TypeName(type_name);
-    return 0;
-}
 
 /* PyDictVersioning */
 #if CYTHON_USE_DICT_VERSIONS && CYTHON_USE_TYPE_SLOTS
@@ -13735,6 +15213,431 @@ bad:
     return;
 }
 #endif
+
+/* WriteUnraisableException */
+static void __Pyx_WriteUnraisable(const char *name, CYTHON_UNUSED int clineno,
+                                  CYTHON_UNUSED int lineno, CYTHON_UNUSED const char *filename,
+                                  int full_traceback, CYTHON_UNUSED int nogil) {
+    PyObject *old_exc, *old_val, *old_tb;
+    PyObject *ctx;
+    __Pyx_PyThreadState_declare
+#ifdef WITH_THREAD
+    PyGILState_STATE state;
+    if (nogil)
+        state = PyGILState_Ensure();
+#ifdef _MSC_VER
+    else state = (PyGILState_STATE)-1;
+#endif
+#endif
+    __Pyx_PyThreadState_assign
+    __Pyx_ErrFetch(&old_exc, &old_val, &old_tb);
+    if (full_traceback) {
+        Py_XINCREF(old_exc);
+        Py_XINCREF(old_val);
+        Py_XINCREF(old_tb);
+        __Pyx_ErrRestore(old_exc, old_val, old_tb);
+        PyErr_PrintEx(1);
+    }
+    #if PY_MAJOR_VERSION < 3
+    ctx = PyString_FromString(name);
+    #else
+    ctx = PyUnicode_FromString(name);
+    #endif
+    __Pyx_ErrRestore(old_exc, old_val, old_tb);
+    if (!ctx) {
+        PyErr_WriteUnraisable(Py_None);
+    } else {
+        PyErr_WriteUnraisable(ctx);
+        Py_DECREF(ctx);
+    }
+#ifdef WITH_THREAD
+    if (nogil)
+        PyGILState_Release(state);
+#endif
+}
+
+/* TupleAndListFromArray */
+#if CYTHON_COMPILING_IN_CPYTHON
+static CYTHON_INLINE void __Pyx_copy_object_array(PyObject *const *CYTHON_RESTRICT src, PyObject** CYTHON_RESTRICT dest, Py_ssize_t length) {
+    PyObject *v;
+    Py_ssize_t i;
+    for (i = 0; i < length; i++) {
+        v = dest[i] = src[i];
+        Py_INCREF(v);
+    }
+}
+static CYTHON_INLINE PyObject *
+__Pyx_PyTuple_FromArray(PyObject *const *src, Py_ssize_t n)
+{
+    PyObject *res;
+    if (n <= 0) {
+        Py_INCREF(__pyx_empty_tuple);
+        return __pyx_empty_tuple;
+    }
+    res = PyTuple_New(n);
+    if (unlikely(res == NULL)) return NULL;
+    __Pyx_copy_object_array(src, ((PyTupleObject*)res)->ob_item, n);
+    return res;
+}
+static CYTHON_INLINE PyObject *
+__Pyx_PyList_FromArray(PyObject *const *src, Py_ssize_t n)
+{
+    PyObject *res;
+    if (n <= 0) {
+        return PyList_New(0);
+    }
+    res = PyList_New(n);
+    if (unlikely(res == NULL)) return NULL;
+    __Pyx_copy_object_array(src, ((PyListObject*)res)->ob_item, n);
+    return res;
+}
+#endif
+
+/* BytesEquals */
+static CYTHON_INLINE int __Pyx_PyBytes_Equals(PyObject* s1, PyObject* s2, int equals) {
+#if CYTHON_COMPILING_IN_PYPY || CYTHON_COMPILING_IN_LIMITED_API
+    return PyObject_RichCompareBool(s1, s2, equals);
+#else
+    if (s1 == s2) {
+        return (equals == Py_EQ);
+    } else if (PyBytes_CheckExact(s1) & PyBytes_CheckExact(s2)) {
+        const char *ps1, *ps2;
+        Py_ssize_t length = PyBytes_GET_SIZE(s1);
+        if (length != PyBytes_GET_SIZE(s2))
+            return (equals == Py_NE);
+        ps1 = PyBytes_AS_STRING(s1);
+        ps2 = PyBytes_AS_STRING(s2);
+        if (ps1[0] != ps2[0]) {
+            return (equals == Py_NE);
+        } else if (length == 1) {
+            return (equals == Py_EQ);
+        } else {
+            int result;
+#if CYTHON_USE_UNICODE_INTERNALS
+            Py_hash_t hash1, hash2;
+            hash1 = ((PyBytesObject*)s1)->ob_shash;
+            hash2 = ((PyBytesObject*)s2)->ob_shash;
+            if (hash1 != hash2 && hash1 != -1 && hash2 != -1) {
+                return (equals == Py_NE);
+            }
+#endif
+            result = memcmp(ps1, ps2, (size_t)length);
+            return (equals == Py_EQ) ? (result == 0) : (result != 0);
+        }
+    } else if ((s1 == Py_None) & PyBytes_CheckExact(s2)) {
+        return (equals == Py_NE);
+    } else if ((s2 == Py_None) & PyBytes_CheckExact(s1)) {
+        return (equals == Py_NE);
+    } else {
+        int result;
+        PyObject* py_result = PyObject_RichCompare(s1, s2, equals);
+        if (!py_result)
+            return -1;
+        result = __Pyx_PyObject_IsTrue(py_result);
+        Py_DECREF(py_result);
+        return result;
+    }
+#endif
+}
+
+/* UnicodeEquals */
+static CYTHON_INLINE int __Pyx_PyUnicode_Equals(PyObject* s1, PyObject* s2, int equals) {
+#if CYTHON_COMPILING_IN_PYPY || CYTHON_COMPILING_IN_LIMITED_API
+    return PyObject_RichCompareBool(s1, s2, equals);
+#else
+#if PY_MAJOR_VERSION < 3
+    PyObject* owned_ref = NULL;
+#endif
+    int s1_is_unicode, s2_is_unicode;
+    if (s1 == s2) {
+        goto return_eq;
+    }
+    s1_is_unicode = PyUnicode_CheckExact(s1);
+    s2_is_unicode = PyUnicode_CheckExact(s2);
+#if PY_MAJOR_VERSION < 3
+    if ((s1_is_unicode & (!s2_is_unicode)) && PyString_CheckExact(s2)) {
+        owned_ref = PyUnicode_FromObject(s2);
+        if (unlikely(!owned_ref))
+            return -1;
+        s2 = owned_ref;
+        s2_is_unicode = 1;
+    } else if ((s2_is_unicode & (!s1_is_unicode)) && PyString_CheckExact(s1)) {
+        owned_ref = PyUnicode_FromObject(s1);
+        if (unlikely(!owned_ref))
+            return -1;
+        s1 = owned_ref;
+        s1_is_unicode = 1;
+    } else if (((!s2_is_unicode) & (!s1_is_unicode))) {
+        return __Pyx_PyBytes_Equals(s1, s2, equals);
+    }
+#endif
+    if (s1_is_unicode & s2_is_unicode) {
+        Py_ssize_t length;
+        int kind;
+        void *data1, *data2;
+        if (unlikely(__Pyx_PyUnicode_READY(s1) < 0) || unlikely(__Pyx_PyUnicode_READY(s2) < 0))
+            return -1;
+        length = __Pyx_PyUnicode_GET_LENGTH(s1);
+        if (length != __Pyx_PyUnicode_GET_LENGTH(s2)) {
+            goto return_ne;
+        }
+#if CYTHON_USE_UNICODE_INTERNALS
+        {
+            Py_hash_t hash1, hash2;
+        #if CYTHON_PEP393_ENABLED
+            hash1 = ((PyASCIIObject*)s1)->hash;
+            hash2 = ((PyASCIIObject*)s2)->hash;
+        #else
+            hash1 = ((PyUnicodeObject*)s1)->hash;
+            hash2 = ((PyUnicodeObject*)s2)->hash;
+        #endif
+            if (hash1 != hash2 && hash1 != -1 && hash2 != -1) {
+                goto return_ne;
+            }
+        }
+#endif
+        kind = __Pyx_PyUnicode_KIND(s1);
+        if (kind != __Pyx_PyUnicode_KIND(s2)) {
+            goto return_ne;
+        }
+        data1 = __Pyx_PyUnicode_DATA(s1);
+        data2 = __Pyx_PyUnicode_DATA(s2);
+        if (__Pyx_PyUnicode_READ(kind, data1, 0) != __Pyx_PyUnicode_READ(kind, data2, 0)) {
+            goto return_ne;
+        } else if (length == 1) {
+            goto return_eq;
+        } else {
+            int result = memcmp(data1, data2, (size_t)(length * kind));
+            #if PY_MAJOR_VERSION < 3
+            Py_XDECREF(owned_ref);
+            #endif
+            return (equals == Py_EQ) ? (result == 0) : (result != 0);
+        }
+    } else if ((s1 == Py_None) & s2_is_unicode) {
+        goto return_ne;
+    } else if ((s2 == Py_None) & s1_is_unicode) {
+        goto return_ne;
+    } else {
+        int result;
+        PyObject* py_result = PyObject_RichCompare(s1, s2, equals);
+        #if PY_MAJOR_VERSION < 3
+        Py_XDECREF(owned_ref);
+        #endif
+        if (!py_result)
+            return -1;
+        result = __Pyx_PyObject_IsTrue(py_result);
+        Py_DECREF(py_result);
+        return result;
+    }
+return_eq:
+    #if PY_MAJOR_VERSION < 3
+    Py_XDECREF(owned_ref);
+    #endif
+    return (equals == Py_EQ);
+return_ne:
+    #if PY_MAJOR_VERSION < 3
+    Py_XDECREF(owned_ref);
+    #endif
+    return (equals == Py_NE);
+#endif
+}
+
+/* fastcall */
+#if CYTHON_METH_FASTCALL
+static CYTHON_INLINE PyObject * __Pyx_GetKwValue_FASTCALL(PyObject *kwnames, PyObject *const *kwvalues, PyObject *s)
+{
+    Py_ssize_t i, n = PyTuple_GET_SIZE(kwnames);
+    for (i = 0; i < n; i++)
+    {
+        if (s == PyTuple_GET_ITEM(kwnames, i)) return kwvalues[i];
+    }
+    for (i = 0; i < n; i++)
+    {
+        int eq = __Pyx_PyUnicode_Equals(s, PyTuple_GET_ITEM(kwnames, i), Py_EQ);
+        if (unlikely(eq != 0)) {
+            if (unlikely(eq < 0)) return NULL;  // error
+            return kwvalues[i];
+        }
+    }
+    return NULL;  // not found (no exception set)
+}
+#endif
+
+/* RaiseDoubleKeywords */
+static void __Pyx_RaiseDoubleKeywordsError(
+    const char* func_name,
+    PyObject* kw_name)
+{
+    PyErr_Format(PyExc_TypeError,
+        #if PY_MAJOR_VERSION >= 3
+        "%s() got multiple values for keyword argument '%U'", func_name, kw_name);
+        #else
+        "%s() got multiple values for keyword argument '%s'", func_name,
+        PyString_AsString(kw_name));
+        #endif
+}
+
+/* ParseKeywords */
+static int __Pyx_ParseOptionalKeywords(
+    PyObject *kwds,
+    PyObject *const *kwvalues,
+    PyObject **argnames[],
+    PyObject *kwds2,
+    PyObject *values[],
+    Py_ssize_t num_pos_args,
+    const char* function_name)
+{
+    PyObject *key = 0, *value = 0;
+    Py_ssize_t pos = 0;
+    PyObject*** name;
+    PyObject*** first_kw_arg = argnames + num_pos_args;
+    int kwds_is_tuple = CYTHON_METH_FASTCALL && likely(PyTuple_Check(kwds));
+    while (1) {
+        if (kwds_is_tuple) {
+            if (pos >= PyTuple_GET_SIZE(kwds)) break;
+            key = PyTuple_GET_ITEM(kwds, pos);
+            value = kwvalues[pos];
+            pos++;
+        }
+        else
+        {
+            if (!PyDict_Next(kwds, &pos, &key, &value)) break;
+        }
+        name = first_kw_arg;
+        while (*name && (**name != key)) name++;
+        if (*name) {
+            values[name-argnames] = value;
+            continue;
+        }
+        name = first_kw_arg;
+        #if PY_MAJOR_VERSION < 3
+        if (likely(PyString_Check(key))) {
+            while (*name) {
+                if ((CYTHON_COMPILING_IN_PYPY || PyString_GET_SIZE(**name) == PyString_GET_SIZE(key))
+                        && _PyString_Eq(**name, key)) {
+                    values[name-argnames] = value;
+                    break;
+                }
+                name++;
+            }
+            if (*name) continue;
+            else {
+                PyObject*** argname = argnames;
+                while (argname != first_kw_arg) {
+                    if ((**argname == key) || (
+                            (CYTHON_COMPILING_IN_PYPY || PyString_GET_SIZE(**argname) == PyString_GET_SIZE(key))
+                             && _PyString_Eq(**argname, key))) {
+                        goto arg_passed_twice;
+                    }
+                    argname++;
+                }
+            }
+        } else
+        #endif
+        if (likely(PyUnicode_Check(key))) {
+            while (*name) {
+                int cmp = (
+                #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION >= 3
+                    (__Pyx_PyUnicode_GET_LENGTH(**name) != __Pyx_PyUnicode_GET_LENGTH(key)) ? 1 :
+                #endif
+                    PyUnicode_Compare(**name, key)
+                );
+                if (cmp < 0 && unlikely(PyErr_Occurred())) goto bad;
+                if (cmp == 0) {
+                    values[name-argnames] = value;
+                    break;
+                }
+                name++;
+            }
+            if (*name) continue;
+            else {
+                PyObject*** argname = argnames;
+                while (argname != first_kw_arg) {
+                    int cmp = (**argname == key) ? 0 :
+                    #if !CYTHON_COMPILING_IN_PYPY && PY_MAJOR_VERSION >= 3
+                        (__Pyx_PyUnicode_GET_LENGTH(**argname) != __Pyx_PyUnicode_GET_LENGTH(key)) ? 1 :
+                    #endif
+                        PyUnicode_Compare(**argname, key);
+                    if (cmp < 0 && unlikely(PyErr_Occurred())) goto bad;
+                    if (cmp == 0) goto arg_passed_twice;
+                    argname++;
+                }
+            }
+        } else
+            goto invalid_keyword_type;
+        if (kwds2) {
+            if (unlikely(PyDict_SetItem(kwds2, key, value))) goto bad;
+        } else {
+            goto invalid_keyword;
+        }
+    }
+    return 0;
+arg_passed_twice:
+    __Pyx_RaiseDoubleKeywordsError(function_name, key);
+    goto bad;
+invalid_keyword_type:
+    PyErr_Format(PyExc_TypeError,
+        "%.200s() keywords must be strings", function_name);
+    goto bad;
+invalid_keyword:
+    #if PY_MAJOR_VERSION < 3
+    PyErr_Format(PyExc_TypeError,
+        "%.200s() got an unexpected keyword argument '%.200s'",
+        function_name, PyString_AsString(key));
+    #else
+    PyErr_Format(PyExc_TypeError,
+        "%s() got an unexpected keyword argument '%U'",
+        function_name, key);
+    #endif
+bad:
+    return -1;
+}
+
+/* RaiseArgTupleInvalid */
+static void __Pyx_RaiseArgtupleInvalid(
+    const char* func_name,
+    int exact,
+    Py_ssize_t num_min,
+    Py_ssize_t num_max,
+    Py_ssize_t num_found)
+{
+    Py_ssize_t num_expected;
+    const char *more_or_less;
+    if (num_found < num_min) {
+        num_expected = num_min;
+        more_or_less = "at least";
+    } else {
+        num_expected = num_max;
+        more_or_less = "at most";
+    }
+    if (exact) {
+        more_or_less = "exactly";
+    }
+    PyErr_Format(PyExc_TypeError,
+                 "%.200s() takes %.8s %" CYTHON_FORMAT_SSIZE_T "d positional argument%.1s (%" CYTHON_FORMAT_SSIZE_T "d given)",
+                 func_name, more_or_less, num_expected,
+                 (num_expected == 1) ? "" : "s", num_found);
+}
+
+/* ExtTypeTest */
+static CYTHON_INLINE int __Pyx_TypeTest(PyObject *obj, PyTypeObject *type) {
+    __Pyx_TypeName obj_type_name;
+    __Pyx_TypeName type_name;
+    if (unlikely(!type)) {
+        PyErr_SetString(PyExc_SystemError, "Missing type object");
+        return 0;
+    }
+    if (likely(__Pyx_TypeCheck(obj, type)))
+        return 1;
+    obj_type_name = __Pyx_PyType_GetName(Py_TYPE(obj));
+    type_name = __Pyx_PyType_GetName(type);
+    PyErr_Format(PyExc_TypeError,
+                 "Cannot convert " __Pyx_FMT_TYPENAME " to " __Pyx_FMT_TYPENAME,
+                 obj_type_name, type_name);
+    __Pyx_DECREF_TypeName(obj_type_name);
+    __Pyx_DECREF_TypeName(type_name);
+    return 0;
+}
 
 /* JoinPyUnicode */
 static PyObject* __Pyx_PyUnicode_Join(PyObject* value_tuple, Py_ssize_t value_count, Py_ssize_t result_ulength,
@@ -15914,6 +17817,37 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value) {
     }
 }
 
+/* CIntToPy */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_uint8_t(uint8_t value) {
+    const uint8_t neg_one = (uint8_t) ((uint8_t) 0 - (uint8_t) 1), const_zero = (uint8_t) 0;
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(uint8_t) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(uint8_t) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(uint8_t) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(uint8_t) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(uint8_t) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+#endif
+        }
+    }
+    {
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&value;
+        return _PyLong_FromByteArray(bytes, sizeof(uint8_t),
+                                     little, !is_unsigned);
+    }
+}
+
 /* Declarations */
 #if CYTHON_CCOMPLEX
   #ifdef __cplusplus
@@ -17018,7 +18952,7 @@ __Pyx_PyType_GetName(PyTypeObject* tp)
                                                __pyx_n_s_name);
     if (unlikely(name == NULL) || unlikely(!PyUnicode_Check(name))) {
         PyErr_Clear();
-        Py_XSETREF(name, __Pyx_NewRef(__pyx_n_s__66));
+        Py_XSETREF(name, __Pyx_NewRef(__pyx_n_s__82));
     }
     return name;
 }

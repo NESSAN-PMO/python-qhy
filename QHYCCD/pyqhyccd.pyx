@@ -32,6 +32,7 @@ __all__ = ['InitQHYCCDResource',
 'GetQHYCCDSingleFrame',
 'CancelQHYCCDExposing',
 'GetQHYCCDMemLength',
+'SetQHYCCDBinMode',
 'SetQHYCCDResolution',
 'GetQHYCCDExposureRemaining',
 'GetQHYCCDType',
@@ -43,7 +44,14 @@ __all__ = ['InitQHYCCDResource',
 'SetQHYCCDReadMode',
 'GetQHYCCDReadMode',
 'GetQHYCCDEffectiveArea',
-'GetQHYCCDOverScanArea'
+'GetQHYCCDOverScanArea',
+'SetQHYCCDBinMode',
+'BeginQHYCCDLive',
+'StopQHYCCDLive',
+'GetQHYCCDLiveFrame',
+'GetQHYCCDPreciseExposureInfo',
+'SetQHYCCDBitsMode',
+'GetBinModes'
 ]
 
 cdef extern from "Python.h":
@@ -210,6 +218,9 @@ def GetQHYCCDSingleFrame(cam):
 def GetQHYCCDMemLength(cam):
     return qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))
 
+def SetQHYCCDBinMode(cam, wbin, hbin):
+    chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), <uint32_t> wbin, <uint32_t> hbin))
+
 def SetQHYCCDResolution(cam, x, y, xsize, ysize):
     chkerr(qhy.SetQHYCCDResolution(PyLong_AsVoidPtr(cam), <uint32_t> x, <uint32_t> y, <uint32_t> xsize, <uint32_t> ysize))
 
@@ -260,3 +271,54 @@ def GetQHYCCDEffectiveArea(cam):
     cdef uint32_t startX, startY, sizeX, sizeY
     chkerr(qhy.GetQHYCCDEffectiveArea(PyLong_AsVoidPtr(cam), &startX, &startY, &sizeX, &sizeY))
     return (startX, startY, sizeX, sizeY)
+
+def SetQHYCCDBinMode(cam, binw, binh):
+    chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), binw, binh))
+
+def BeginQHYCCDLive(cam):
+    chkerr(qhy.BeginQHYCCDLive(PyLong_AsVoidPtr(cam)))
+
+def StopQHYCCDLive(cam):
+    chkerr(qhy.StopQHYCCDLive(PyLong_AsVoidPtr(cam)))
+
+def GetQHYCCDLiveFrame(cam):
+    cdef uint32_t w, h, bpp, channels
+    cdef uint8_t *imgdata
+    cdef uint32_t memlength
+    memlength = qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))
+    imgdata = <uint8_t *>malloc(memlength * sizeof(uint8_t))
+    ret = qhy.QHYCCD_ERROR
+    while(ret == qhy.QHYCCD_ERROR):
+        ret = qhy.GetQHYCCDLiveFrame(PyLong_AsVoidPtr(cam), &w, &h, &bpp, &channels, imgdata)
+    cdef np.npy_intp shape[2]
+    shape[0] = <np.npy_intp> h
+    shape[1] = <np.npy_intp> w
+    data = np.PyArray_SimpleNewFromData(2, shape, np.NPY_UINT16, <void *>imgdata)
+    np.PyArray_ENABLEFLAGS(data, np.NPY_ARRAY_OWNDATA)
+    return data
+    
+def GetQHYCCDPreciseExposureInfo(cam):
+    cdef uint32_t PixelPeriod_ps, LinePeriod_ns, FramePeriod_us, ClocksPerLine, LinesPerFrame, ActualExposureTime
+    cdef uint8_t isLongExposureMode
+    chkerr(qhy.GetQHYCCDPreciseExposureInfo(PyLong_AsVoidPtr(cam), 
+                                            &PixelPeriod_ps, 
+                                            &LinePeriod_ns, 
+                                            &FramePeriod_us, 
+                                            &ClocksPerLine, 
+                                            &LinesPerFrame, 
+                                            &ActualExposureTime, 
+                                            &isLongExposureMode))
+    return (PixelPeriod_ps, LinePeriod_ns, FramePeriod_us, ClocksPerLine, LinesPerFrame, ActualExposureTime, isLongExposureMode)
+
+def SetQHYCCDBitsMode(cam, value):
+    chkerr(qhy.SetQHYCCDBitsMode(PyLong_AsVoidPtr(cam), <uint32_t> value))
+    
+def GetBinModes(cam):
+    modes = [1]
+    if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN2X2MODE) == qhy.QHYCCD_SUCCESS:
+        modes.append(2)
+    if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN3X3MODE) == qhy.QHYCCD_SUCCESS:
+        modes.append(3)
+    if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN4X4MODE) == qhy.QHYCCD_SUCCESS:
+        modes.append(4)
+    return modes
