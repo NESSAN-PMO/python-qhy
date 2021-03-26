@@ -6,6 +6,7 @@ __pycache__/
 # C extensions
 QHYCCD/*.so
 QHYCCD/*.dll
+QHYCCD/*.cpp
 
 # Distribution / packaging
 .Python

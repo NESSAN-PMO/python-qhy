@@ -300,14 +300,14 @@ def GetQHYCCDLiveFrame(cam):
 def GetQHYCCDPreciseExposureInfo(cam):
     cdef uint32_t PixelPeriod_ps, LinePeriod_ns, FramePeriod_us, ClocksPerLine, LinesPerFrame, ActualExposureTime
     cdef uint8_t isLongExposureMode
-    chkerr(qhy.GetQHYCCDPreciseExposureInfo(PyLong_AsVoidPtr(cam), 
+    qhy.GetQHYCCDPreciseExposureInfo(PyLong_AsVoidPtr(cam), 
                                             &PixelPeriod_ps, 
                                             &LinePeriod_ns, 
                                             &FramePeriod_us, 
                                             &ClocksPerLine, 
                                             &LinesPerFrame, 
                                             &ActualExposureTime, 
-                                            &isLongExposureMode))
+                                            &isLongExposureMode)
     return (PixelPeriod_ps, LinePeriod_ns, FramePeriod_us, ClocksPerLine, LinesPerFrame, ActualExposureTime, isLongExposureMode)
 
 def SetQHYCCDBitsMode(cam, value):
