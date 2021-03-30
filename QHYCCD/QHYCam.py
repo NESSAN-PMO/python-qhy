@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2021-03-18 01:58:51
+LastEditTime: 2021-03-29 01:41:55
 '''
 
 from .pyqhyccd import *
@@ -16,7 +16,7 @@ class Camera():
     def __init__(self, name):
         model, interface, num = name.split('.')
         num = int(num)
-        if model != 'QHY':
+        if model != 'QHYCCD':
             raise NameError(f"Not support model {model}")
         InitQHYCCDResource()
         total_cam = ScanQHYCCD()
@@ -162,7 +162,7 @@ class Camera():
         if self.unsaved_settings == 1:
             self.SetImageArea()
         SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_EXPOSURE, exp * 1000000.0)
-        self.exptime = exp * 1000000.0
+        self.exptime = exp
         ExpQHYCCDSingleFrame(self.cam)
 
     @property
@@ -258,7 +258,6 @@ class Camera():
 
     @property
     def LastExposureStartTime(self):
-        print("Exposure info: ", GetQHYCCDPreciseExposureInfo(self.cam))
         return self.starttime
 
     @property
