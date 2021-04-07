@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2021-03-29 01:41:55
+LastEditTime: 2021-04-07 13:43:18
 '''
 
 from .pyqhyccd import *
@@ -17,12 +17,12 @@ class Camera():
         model, interface, num = name.split('.')
         num = int(num)
         if model != 'QHYCCD':
-            raise NameError(f"Not support model {model}")
+            raise ValueError(f"Not support model {model}.")
         InitQHYCCDResource()
         total_cam = ScanQHYCCD()
         print(f"Found {total_cam} cameras.")
         if num >= total_cam:
-            pass
+            raise ValueError(f"Not available cam id")
         self.camid = GetQHYCCDId(num)
         self.type, self.sn = self.camid.decode('UTF-8').split('-')
         self.lib = GetQHYCCDSDKVersion()
