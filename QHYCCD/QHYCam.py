@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2021-04-07 13:43:18
+LastEditTime: 2021-05-25 00:28:38
 '''
 
 from .pyqhyccd import *
@@ -54,8 +54,8 @@ class Camera():
             self.model = GetQHYCCDModel(self.camid).decode('UTF-8')
             chipw, chiph, self.imagew, self.imageh, self.pixelw, self.pixelh, self.bpp = GetQHYCCDChipInfo(
                 self.cam)
-            SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_GAIN, 60)
-            SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_OFFSET, 76)
+            SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_GAIN, 25)
+            SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_OFFSET, 10)
             self.n_modes = GetQHYCCDNumberOfReadModes(self.cam)
             self.mode_names = []
             for i in range(self.n_modes):
@@ -167,7 +167,18 @@ class Camera():
 
     @property
     def CameraState(self):
-        return -1
+        try:
+            p = self.PercentCompleted
+            if p == 100:
+                return 0
+            elif p < 100 and p > 0:
+                return 2
+            elif p == 0:
+                return 1
+            else:
+                return -1
+        except:
+            return -1
 
     @property
     def CameraXSize(self):
