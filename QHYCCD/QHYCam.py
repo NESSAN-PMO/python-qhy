@@ -3,11 +3,10 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2021-05-25 00:28:38
+LastEditTime: 2021-07-03 01:22:59
 '''
 
 from .pyqhyccd import *
-from astropy.io import fits
 from astropy.time import Time
 import numpy as np
 
@@ -54,6 +53,10 @@ class Camera():
             self.model = GetQHYCCDModel(self.camid).decode('UTF-8')
             chipw, chiph, self.imagew, self.imageh, self.pixelw, self.pixelh, self.bpp = GetQHYCCDChipInfo(
                 self.cam)
+            self.gain_min, self.gain_max, self.gain_step = list(map(int, GetQHYCCDParamMinMaxStep(
+                self.cam, CONTROL_ID.CONTROL_GAIN)))
+            self.offset_min, self.offset_max, self.offset_step = list(map(int, GetQHYCCDParamMinMaxStep(
+                self.cam, CONTROL_ID.CONTROL_OFFSET)))
             SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_GAIN, 25)
             SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_OFFSET, 10)
             self.n_modes = GetQHYCCDNumberOfReadModes(self.cam)
@@ -251,7 +254,7 @@ class Camera():
         self.image = GetQHYCCDSingleFrame(self.cam)
         if self.has_gps:
             buf = self.image[0, 0:22].tobytes(order='C')
-            self.image[0, 0:22] = np.nan
+            self.image[0, 0:22] = 0
             jd = (int.from_bytes(buf[18:22], 'big', signed=False) + int.from_bytes(
                 buf[22:25], 'big', signed=False) / 10000000.) / 86400. + 2450000.5
             tm = Time(jd, format='jd').strftime("%Y-%m-%dT%H:%M:%S.%f")
@@ -308,6 +311,48 @@ class Camera():
         if value >= 0 and value < self.n_modes:
             SetQHYCCDReadMode(self.cam, value)
             self.read_mode = value
+
+    @property
+    def Gain(self):
+        return int(GetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_GAIN))
+
+    @property
+    def GainMax(self):
+        return self.gain_max
+
+    @property
+    def GainMin(self):
+        return self.gain_min
+
+    @property
+    def Gains(self):
+        return list(range(self.gain_min, self.gain_max+1, self.gain_step))
+
+    @Gain.setter
+    def Gain(self, value):
+        if int(value) <= self.GainMax and int(value) >= self.GainMin:
+            SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_GAIN, int(value))
+
+    @property
+    def Offset(self):
+        return int(GetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_OFFSET))
+
+    @property
+    def OffsetMax(self):
+        return self.offset_max
+
+    @property
+    def OffsetMin(self):
+        return self.offset_min
+
+    @property
+    def Offsets(self):
+        return list(range(self.offset_min, self.offset_max+1, self.offset_step))
+
+    @Offset.setter
+    def Offset(self, value):
+        if int(value) <= self.OffsetMax and int(value) >= self.OffsetMin:
+            SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_OFFSET, int(value))
 
     @property
     def SensorType(self):

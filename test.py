@@ -4,49 +4,49 @@ Description:
 Author: F.O.X
 Date: 2021-01-07 16:31:54
 LastEditor: F.O.X
-LastEditTime: 2021-03-31 00:45:58
+LastEditTime: 2021-07-02 14:36:31
 '''
 
-# from QHYCCD import Camera
-# import time
-# from astropy.io import fits
-# from astropy.time import Time
-
-# cam = Camera("QHYCCD.usb.0")
-# cam.Connected = True
-# cam.ReadoutMode = 3
-# print(cam.ReadoutModes[cam.ReadoutMode])
-# for i in range(3):
-#     cam.StartExposure(0.1)
-#     # time.sleep(3)
-#     t = time.time()
-#     d = cam.ImageArray
-#     print(time.time() - t)
-#     # fits.PrimaryHDU(data=d).writeto("test.fits", overwrite=True)
-#     print(cam.LastExposureStartTime)
-# cam.Connected = False
-
-
-from QHYCCD.pyqhyccd import *
-import sys
+from QHYCCD import Camera
+import time
 from astropy.io import fits
 from astropy.time import Time
-from datetime import datetime
-import time
 
-InitQHYCCDResource()
-total_cam = ScanQHYCCD()
-print(f"Found {total_cam} cameras.")
-if total_cam > 0:
-    camid = GetQHYCCDId(0)
-    cam = OpenQHYCCD(camid)
-    SetQHYCCDStreamMode(cam, 1)
-    InitQHYCCD(cam)
-    SetQHYCCDBitsMode(cam, 16)
+cam = Camera("QHYCCD.usb.0")
+cam.Connected = True
+cam.ReadoutMode = 3
+print(cam.ReadoutModes[cam.ReadoutMode])
+for i in range(3):
+    cam.StartExposure(0.1)
+    # time.sleep(3)
+    t = time.time()
+    d = cam.ImageArray
+    print(time.time() - t)
+    # fits.PrimaryHDU(data=d).writeto("test.fits", overwrite=True)
+    print(cam.LastExposureStartTime)
+cam.Connected = False
 
-    SetQHYCCDParam(cam, CONTROL_ID.CONTROL_COOLER, -3)
-    time.sleep(1)
-    print(GetQHYCCDParam(cam, CONTROL_ID.CONTROL_COOLER))
+
+# from QHYCCD.pyqhyccd import *
+# import sys
+# from astropy.io import fits
+# from astropy.time import Time
+# from datetime import datetime
+# import time
+
+# InitQHYCCDResource()
+# total_cam = ScanQHYCCD()
+# print(f"Found {total_cam} cameras.")
+# if total_cam > 0:
+#     camid = GetQHYCCDId(0)
+#     cam = OpenQHYCCD(camid)
+#     SetQHYCCDStreamMode(cam, 1)
+#     InitQHYCCD(cam)
+#     SetQHYCCDBitsMode(cam, 16)
+
+#     SetQHYCCDParam(cam, CONTROL_ID.CONTROL_COOLER, -3)
+#     time.sleep(1)
+#     print(GetQHYCCDParam(cam, CONTROL_ID.CONTROL_COOLER))
 
 #     chipw, chiph, imagew, imageh, pixelw, pixelh, bpp = GetQHYCCDChipInfo(cam)
 #     print(chipw, chiph, imagew, imageh, pixelw, pixelh, bpp)
@@ -73,5 +73,5 @@ if total_cam > 0:
 #         print("Frame: ", int.from_bytes(buf[0:4], 'big', signed=False), tm)
 #     print("Sys Time: ", datetime.utcnow())
 #     StopQHYCCDLive(cam)
-    CloseQHYCCD(cam)
-ReleaseQHYCCDResource()
+#     CloseQHYCCD(cam)
+# ReleaseQHYCCDResource()
