@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2021-07-03 01:22:59
+LastEditTime: 2021-07-05 13:52:45
 '''
 
 from .pyqhyccd import *
@@ -230,13 +230,18 @@ class Camera():
     @CoolerOn.setter
     def CoolerOn(self, value):
         if value:
-            SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_MANULPWM, 50)
+            SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_MANULPWM, 255)
         else:
             SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_MANULPWM, 0)
 
     @property
     def CoolerPower(self):
         return GetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_CURPWM) * 100. / 255.
+    
+    @CoolerPower.setter
+    def CoolerPower(self, value):
+        if value >= 0 and value <=100:
+            SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_MANULPWM, int(value * 255. / 100.))
 
     @property
     def HeatSinkTemperature(self):

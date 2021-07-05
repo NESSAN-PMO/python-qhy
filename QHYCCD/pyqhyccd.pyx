@@ -7,9 +7,6 @@ import numpy as np
 cimport numpy as np
 from libc.stdint cimport uint32_t, uint8_t, uint16_t
 from libc.stdlib cimport malloc, free
-# from libc.stddef cimport wchar_t
-# from libcpp cimport bool
-from cpython.ref cimport PyObject
 
 np.import_array()
 
@@ -57,7 +54,7 @@ __all__ = ['InitQHYCCDResource',
 cdef extern from "Python.h":
     void *PyLong_AsVoidPtr(object)
     object PyLong_FromVoidPtr(void *)
-    
+
 class CONTROL_ID:
     CONTROL_BRIGHTNESS=qhy.CONTROL_BRIGHTNESS
     CONTROL_CONTRAST=qhy.CONTROL_CONTRAST

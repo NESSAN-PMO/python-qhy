@@ -4,7 +4,7 @@ Description:
 Author: F.O.X
 Date: 2021-01-07 16:31:54
 LastEditor: F.O.X
-LastEditTime: 2021-07-02 14:36:31
+LastEditTime: 2021-07-05 16:26:05
 '''
 
 from QHYCCD import Camera
@@ -15,17 +15,34 @@ from astropy.time import Time
 cam = Camera("QHYCCD.usb.0")
 cam.Connected = True
 cam.ReadoutMode = 3
-print(cam.ReadoutModes[cam.ReadoutMode])
-for i in range(3):
-    cam.StartExposure(0.1)
-    # time.sleep(3)
+cam.Gain=70
+cam.Offset=5
+for i in range(5):
+    cam.StartExposure(2)
+    while not cam.ImageReady:
+        time.sleep(0.1)
     t = time.time()
     d = cam.ImageArray
     print(time.time() - t)
-    # fits.PrimaryHDU(data=d).writeto("test.fits", overwrite=True)
+    #fits.PrimaryHDU(data=d).writeto("test_sdk.fits", overwrite=True)
     print(cam.LastExposureStartTime)
 cam.Connected = False
 
+
+# from comtypes.client import CreateObject
+
+# cam = CreateObject("ASCOM.QHYCCD.Camera")
+# cam.Connected=True
+# cam.Gain = 70
+# cam.Offset = 5
+# cam.StartExposure(1, 1)
+# while not cam.ImageReady:
+#     time.sleep(0.1)
+# t = time.time()
+# d=cam.ImageArray
+# print(time.time() - t)
+# fits.PrimaryHDU(data=d).writeto("test_ascom.fits", overwrite=True)
+# cam.Connected = False
 
 # from QHYCCD.pyqhyccd import *
 # import sys
