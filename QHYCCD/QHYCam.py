@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2021-07-05 13:52:45
+LastEditTime: 2021-07-08 19:38:37
 '''
 
 from .pyqhyccd import *
@@ -13,10 +13,8 @@ import numpy as np
 
 class Camera():
     def __init__(self, name):
-        model, interface, num = name.split('.')
+        interface, num = name.split('.')
         num = int(num)
-        if model != 'QHYCCD':
-            raise ValueError(f"Not support model {model}.")
         InitQHYCCDResource()
         total_cam = ScanQHYCCD()
         print(f"Found {total_cam} cameras.")
