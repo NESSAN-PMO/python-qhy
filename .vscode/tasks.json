@@ -6,7 +6,7 @@
         {
             "label": "Build ext",
             "type": "shell",
-            "command": "python ${workspaceFolder}/setup.py build_ext --inplace",
+            "command": "conda activate ast && python ${workspaceFolder}/setup.py build_ext --inplace",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
@@ -16,7 +16,7 @@
         {
             "label": "Build wheel",
             "type": "shell",
-            "command": "python ${workspaceFolder}/setup.py bdist_wheel",
+            "command": "conda activate ast && python ${workspaceFolder}/setup.py bdist_wheel",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
@@ -26,7 +26,7 @@
         {
             "label": "Build",
             "type": "shell",
-            "command": "python ${workspaceFolder}/setup.py build",
+            "command": "conda activate ast && python ${workspaceFolder}/setup.py build",
             "problemMatcher": [],
             "group": {
                 "kind": "build",
