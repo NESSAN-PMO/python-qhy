@@ -4,7 +4,7 @@ Description:
 Author: F.O.X
 Date: 2021-01-07 16:31:54
 LastEditor: F.O.X
-LastEditTime: 2021-07-05 16:26:05
+LastEditTime: 2021-07-09 20:57:25
 '''
 
 from QHYCCD import Camera
@@ -12,12 +12,12 @@ import time
 from astropy.io import fits
 from astropy.time import Time
 
-cam = Camera("QHYCCD.usb.0")
+cam = Camera("usb.0")
 cam.Connected = True
 cam.ReadoutMode = 3
 cam.Gain=70
-cam.Offset=5
-for i in range(5):
+cam.Offset=10
+for i in range(1):
     cam.StartExposure(2)
     while not cam.ImageReady:
         time.sleep(0.1)

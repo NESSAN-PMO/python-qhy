@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2021-07-08 19:38:37
+LastEditTime: 2021-07-09 21:13:40
 '''
 
 from .pyqhyccd import *
@@ -258,9 +258,13 @@ class Camera():
         if self.has_gps:
             buf = self.image[0, 0:22].tobytes(order='C')
             self.image[0, 0:22] = 0
-            jd = (int.from_bytes(buf[18:22], 'big', signed=False) + int.from_bytes(
-                buf[22:25], 'big', signed=False) / 10000000.) / 86400. + 2450000.5
-            tm = Time(jd, format='jd').strftime("%Y-%m-%dT%H:%M:%S.%f")
+            gps_status = (buf[33] // 16) % 4
+            if gps_status == 3:
+                jd = (int.from_bytes(buf[18:22], 'big', signed=False) + int.from_bytes(
+                    buf[22:25], 'big', signed=False) / 10000000.) / 86400. + 2450000.5
+                tm = Time(jd, format='jd').strftime("%Y-%m-%dT%H:%M:%S.%f")
+            else:
+                tm = "1900-01-01T00:00:00"
             self.starttime = tm
         return self.image
 
