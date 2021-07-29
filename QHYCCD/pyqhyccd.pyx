@@ -1,6 +1,5 @@
 import os
 import sys
-import warnings
 cimport cython
 cimport qhyccd as qhy
 import numpy as np

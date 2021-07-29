@@ -53,7 +53,7 @@ setup(
     package_dir={'QHYCCD': 'QHYCCD'},
     data_files=[(os.path.join('..', '..', 'QHYCCD'), data)],
     ext_modules=ext_modules,
-    requires=['numpy (>=1.5)'],
+    requires=['numpy (>=1.17)'],
     classifiers=[
         "Development Status :: 3 - Beta",
         "Intended Audience :: Developers",
