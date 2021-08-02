@@ -1,5 +1,5 @@
 from libc.stdint cimport uint32_t, uint8_t#, uint64_t, uint16_t, int32_t
-# from libcpp cimport bool
+from libcpp cimport bool
 # from libc.stddef cimport wchar_t
 
 cdef extern from 'qhyccderr.h':
@@ -18,6 +18,12 @@ cdef extern from 'qhyccderr.h':
         QHYCCD_DELAY_200MS
         QHYCCD_READ_DIRECTLY
 
+cdef extern from 'qhyccdstruct.h':
+    ctypedef enum BAYER_ID:
+        BAYER_GB
+        BAYER_GR
+        BAYER_BG
+        BAYER_RG
         
 cdef extern from 'qhyccdstruct.h':
     ctypedef enum CONTROL_ID:
@@ -121,14 +127,15 @@ cdef extern from 'qhyccd.h':
     uint32_t GetQHYCCDReadModeName(qhyccd_handle *h,uint32_t modeNumber, char* name) nogil
     uint32_t SetQHYCCDReadMode(qhyccd_handle *h,uint32_t modeNumber) nogil
     uint32_t GetQHYCCDReadMode(qhyccd_handle *h,uint32_t* modeNumber) nogil
-    uint32_t GetQHYCCDEffectiveArea(qhyccd_handle *h,uint32_t *startX, uint32_t *startY, uint32_t *sizeX, uint32_t *sizeY)
-    uint32_t GetQHYCCDOverScanArea(qhyccd_handle *h,uint32_t *startX, uint32_t *startY, uint32_t *sizeX, uint32_t *sizeY)
+    uint32_t GetQHYCCDEffectiveArea(qhyccd_handle *h,uint32_t *startX, uint32_t *startY, uint32_t *sizeX, uint32_t *sizeY) nogil
+    uint32_t GetQHYCCDOverScanArea(qhyccd_handle *h,uint32_t *startX, uint32_t *startY, uint32_t *sizeX, uint32_t *sizeY) nogil
     uint32_t SetQHYCCDBinMode(qhyccd_handle *handle,uint32_t wbin,uint32_t hbin) nogil
-    uint32_t BeginQHYCCDLive(qhyccd_handle *handle)
-    uint32_t GetQHYCCDLiveFrame(qhyccd_handle *handle,uint32_t *w,uint32_t *h,uint32_t *bpp,uint32_t *channels,uint8_t *imgdata)
-    uint32_t StopQHYCCDLive(qhyccd_handle *handle)
-    uint32_t GetQHYCCDPreciseExposureInfo(qhyccd_handle *h, uint32_t *PixelPeriod_ps, uint32_t *LinePeriod_ns, uint32_t *FramePeriod_us, uint32_t *ClocksPerLine, uint32_t *LinesPerFrame, uint32_t *ActualExposureTime, uint8_t *isLongExposureMode)
-    uint32_t SetQHYCCDBitsMode(qhyccd_handle *handle,uint32_t bits)
+    uint32_t BeginQHYCCDLive(qhyccd_handle *handle) nogil
+    uint32_t GetQHYCCDLiveFrame(qhyccd_handle *handle,uint32_t *w,uint32_t *h,uint32_t *bpp,uint32_t *channels,uint8_t *imgdata) nogil
+    uint32_t StopQHYCCDLive(qhyccd_handle *handle) nogil
+    uint32_t GetQHYCCDPreciseExposureInfo(qhyccd_handle *h, uint32_t *PixelPeriod_ps, uint32_t *LinePeriod_ns, uint32_t *FramePeriod_us, uint32_t *ClocksPerLine, uint32_t *LinesPerFrame, uint32_t *ActualExposureTime, uint8_t *isLongExposureMode) nogil
+    uint32_t SetQHYCCDBitsMode(qhyccd_handle *handle,uint32_t bits) nogil
+    uint32_t SetQHYCCDDebayerOnOff(qhyccd_handle *h, bool onoff) nogil
 
     # void SetQHYCCDAutoDetectCamera(bool enable)
 
@@ -212,7 +219,6 @@ cdef extern from 'qhyccd.h':
     # uint32_t DownloadFX3FirmWare(uint16_t vid,uint16_t pid,char *imgpath)
 
 
-    # uint32_t SetQHYCCDDebayerOnOff(qhyccd_handle *h,bool onoff)
 
     # uint32_t SetQHYCCDFineTone(qhyccd_handle *h,uint8_t setshporshd,uint8_t shdloc,uint8_t shploc,uint8_t shwidth)
 

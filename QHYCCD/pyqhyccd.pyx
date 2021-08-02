@@ -21,6 +21,7 @@ __all__ = ['InitQHYCCDResource',
 'GetQHYCCDModel',
 'IsQHYCCDControlAvailable',
 'CONTROL_ID',
+'BAYER_ID',
 'SetQHYCCDParam',
 'GetQHYCCDParam',
 'GetQHYCCDParamMinMaxStep',
@@ -47,7 +48,8 @@ __all__ = ['InitQHYCCDResource',
 'GetQHYCCDLiveFrame',
 'GetQHYCCDPreciseExposureInfo',
 'SetQHYCCDBitsMode',
-'GetBinModes'
+'GetBinModes',
+'SetQHYCCDDebayerOnOff'
 ]
 
 cdef extern from "Python.h":
@@ -123,10 +125,16 @@ class CONTROL_ID:
     CONTROL_SensorChamberCycle_PUMP=qhy.CONTROL_SensorChamberCycle_PUMP
     CONTROL_MAX_ID=qhy.CONTROL_MAX_ID
 
+class BAYER_ID:
+    BAYER_GB = qhy.BAYER_GB
+    BAYER_GR = qhy.BAYER_GR
+    BAYER_BG = qhy.BAYER_BG
+    BAYER_RG = qhy.BAYER_RG
+
 cdef int chkerr(long err):
     if err != qhy.QHYCCD_SUCCESS:
         print("error: ", err)
-        raise OSError(-err, os.strerror(-err))
+        #raise OSError(-err, os.strerror(-err))
 
 
 def InitQHYCCDResource():
@@ -170,8 +178,10 @@ def IsQHYCCDControlAvailable(cam, controlId):
     ret = qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), controlId)
     if ret == qhy.QHYCCD_SUCCESS:
         return True
-    else:
+    elif ret == qhy.QHYCCD_ERROR:
         return False
+    else:
+        return ret
 
 def GetQHYCCDParam(cam, controlId):
     ret = qhy.GetQHYCCDParam(PyLong_AsVoidPtr(cam), controlId)
@@ -201,13 +211,20 @@ def GetQHYCCDSingleFrame(cam):
     cdef uint32_t w, h, bpp, channels
     cdef uint8_t *imgdata
     cdef uint32_t memlength
-    memlength = qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))
+    memlength = qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))*2
     imgdata = <uint8_t *>malloc(memlength * sizeof(uint8_t))
     chkerr(qhy.GetQHYCCDSingleFrame(PyLong_AsVoidPtr(cam), &w, &h, &bpp, &channels, imgdata))
-    cdef np.npy_intp shape[2]
+    if bpp == 8:
+        np_bpp = np.NPY_UINT8
+    elif bpp == 16:
+        np_bpp = np.NPY_UINT16 
+    elif bpp == 32:
+        np_bpp = np.NPY_INT32
+    cdef np.npy_intp shape[3]
     shape[0] = <np.npy_intp> h
     shape[1] = <np.npy_intp> w
-    data = np.PyArray_SimpleNewFromData(2, shape, np.NPY_UINT16, <void *>imgdata)
+    shape[2] = <np.npy_intp> channels
+    data = np.PyArray_SimpleNewFromData(3, shape, np_bpp, <void *>imgdata)
     np.PyArray_ENABLEFLAGS(data, np.NPY_ARRAY_OWNDATA)
     return data
 
@@ -318,3 +335,6 @@ def GetBinModes(cam):
     if qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), CONTROL_ID.CAM_BIN4X4MODE) == qhy.QHYCCD_SUCCESS:
         modes.append(4)
     return modes
+
+def SetQHYCCDDebayerOnOff(cam, onoff):
+    chkerr(qhy.SetQHYCCDDebayerOnOff(PyLong_AsVoidPtr(cam), onoff))

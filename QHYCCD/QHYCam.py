@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2021-07-09 21:13:40
+LastEditTime: 2021-08-03 02:26:12
 '''
 
 from .pyqhyccd import *
@@ -17,7 +17,6 @@ class Camera():
         num = int(num)
         InitQHYCCDResource()
         total_cam = ScanQHYCCD()
-        print(f"Found {total_cam} cameras.")
         if num >= total_cam:
             raise ValueError(f"Not available cam id")
         self.camid = GetQHYCCDId(num)
@@ -76,6 +75,9 @@ class Camera():
                 self.has_gps = 1
             else:
                 self.has_gps = 0
+            if IsQHYCCDControlAvailable(self.cam, CONTROL_ID.CAM_COLOR) in [BAYER_ID.BAYER_GB, BAYER_ID.BAYER_GR, BAYER_ID.BAYER_BG, BAYER_ID.BAYER_RG]:
+                SetQHYCCDDebayerOnOff(self.cam, False)
+                self.debayer = False
 
         elif value is False and self.Connected is True:
             CloseQHYCCD(self.cam)
@@ -235,11 +237,12 @@ class Camera():
     @property
     def CoolerPower(self):
         return GetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_CURPWM) * 100. / 255.
-    
+
     @CoolerPower.setter
     def CoolerPower(self, value):
-        if value >= 0 and value <=100:
-            SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_MANULPWM, int(value * 255. / 100.))
+        if value >= 0 and value <= 100:
+            SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_MANULPWM,
+                           int(value * 255. / 100.))
 
     @property
     def HeatSinkTemperature(self):
@@ -266,12 +269,13 @@ class Camera():
             else:
                 tm = "1900-01-01T00:00:00"
             self.starttime = tm
+        if self.image.shape[2] == 1:
+            self.image = self.image[:, :, 0]
         return self.image
 
     @property
     def ImageArrayVariant(self):
-        self.image = GetQHYCCDSingleFrame(self.cam)
-        return self.image
+        return self.ImageArray
 
     @property
     def LastExposureDuration(self):
@@ -405,3 +409,13 @@ class Camera():
     @property
     def DriverInfo(self):
         return self.lib
+
+    @property
+    def Debayer(self):
+        return self.debayer
+
+    @Debayer.setter
+    def Debayer(self, value):
+        if IsQHYCCDControlAvailable(self.cam, CONTROL_ID.CAM_COLOR) in [BAYER_ID.BAYER_GB, BAYER_ID.BAYER_GR, BAYER_ID.BAYER_BG, BAYER_ID.BAYER_RG]:
+            SetQHYCCDDebayerOnOff(self.cam, value)
+            self.debayer = value
