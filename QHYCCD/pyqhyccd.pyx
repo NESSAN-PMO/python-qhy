@@ -49,7 +49,8 @@ __all__ = ['InitQHYCCDResource',
 'GetQHYCCDPreciseExposureInfo',
 'SetQHYCCDBitsMode',
 'GetBinModes',
-'SetQHYCCDDebayerOnOff'
+'SetQHYCCDDebayerOnOff',
+'ClearQHYCCDLiveFrame'
 ]
 
 cdef extern from "Python.h":
