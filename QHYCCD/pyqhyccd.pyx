@@ -320,6 +320,15 @@ def GetQHYCCDLiveFrame(cam):
     data = np.PyArray_SimpleNewFromData(3, shape, np_bpp, <void *>imgdata)
     np.PyArray_ENABLEFLAGS(data, np.NPY_ARRAY_OWNDATA)
     return data
+
+def ClearQHYCCDLiveFrame(cam):
+    cdef uint32_t w, h, bpp, channels
+    cdef uint8_t *imgdata
+    cdef uint32_t memlength
+    memlength = qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))*2
+    imgdata = <uint8_t *>malloc(memlength * sizeof(uint8_t))
+    ret = qhy.GetQHYCCDLiveFrame(PyLong_AsVoidPtr(cam), &w, &h, &bpp, &channels, imgdata)
+    return ret
     
 def GetQHYCCDPreciseExposureInfo(cam):
     cdef uint32_t PixelPeriod_ps, LinePeriod_ns, FramePeriod_us, ClocksPerLine, LinesPerFrame, ActualExposureTime
