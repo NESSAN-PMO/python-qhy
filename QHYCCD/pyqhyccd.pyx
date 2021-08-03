@@ -220,6 +220,8 @@ def GetQHYCCDSingleFrame(cam):
         np_bpp = np.NPY_UINT16 
     elif bpp == 32:
         np_bpp = np.NPY_INT32
+    else:
+        np_bpp = np.NPY_UINT16
     cdef np.npy_intp shape[3]
     shape[0] = <np.npy_intp> h
     shape[1] = <np.npy_intp> w
@@ -298,15 +300,24 @@ def GetQHYCCDLiveFrame(cam):
     cdef uint32_t w, h, bpp, channels
     cdef uint8_t *imgdata
     cdef uint32_t memlength
-    memlength = qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))
+    memlength = qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))*2
     imgdata = <uint8_t *>malloc(memlength * sizeof(uint8_t))
     ret = qhy.QHYCCD_ERROR
     while(ret == qhy.QHYCCD_ERROR):
         ret = qhy.GetQHYCCDLiveFrame(PyLong_AsVoidPtr(cam), &w, &h, &bpp, &channels, imgdata)
-    cdef np.npy_intp shape[2]
+    if bpp == 8:
+        np_bpp = np.NPY_UINT8
+    elif bpp == 16:
+        np_bpp = np.NPY_UINT16 
+    elif bpp == 32:
+        np_bpp = np.NPY_INT32
+    else:
+        np_bpp = np.NPY_UINT16
+    cdef np.npy_intp shape[3]
     shape[0] = <np.npy_intp> h
     shape[1] = <np.npy_intp> w
-    data = np.PyArray_SimpleNewFromData(2, shape, np.NPY_UINT16, <void *>imgdata)
+    shape[2] = <np.npy_intp> channels
+    data = np.PyArray_SimpleNewFromData(3, shape, np_bpp, <void *>imgdata)
     np.PyArray_ENABLEFLAGS(data, np.NPY_ARRAY_OWNDATA)
     return data
     
