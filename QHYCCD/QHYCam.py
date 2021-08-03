@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2021-08-03 02:26:12
+LastEditTime: 2021-08-04 02:18:20
 '''
 
 from .pyqhyccd import *
@@ -22,7 +22,6 @@ class Camera():
         self.camid = GetQHYCCDId(num)
         self.type, self.sn = self.camid.decode('UTF-8').split('-')
         self.lib = GetQHYCCDSDKVersion()
-        self.unsaved_settings = 0
         self.starttime = 0
         self.exptime = 0
 
@@ -95,7 +94,6 @@ class Camera():
             self.area[3] = self.imageh / self.binh
         SetQHYCCDBinMode(self.cam, self.binw, self.binh)
         SetQHYCCDResolution(self.cam, *self.area)
-        self.unsaved_settings = 0
 
     @property
     def BinX(self):
@@ -107,7 +105,7 @@ class Camera():
             self.binw = value
             self.binh = value
             self.area = [0, 0, self.imagew/self.binw, self.imageh/self.binh]
-            self.unsaved_settings = 1
+            self.SetImageArea()
 
     @property
     def BinY(self):
@@ -119,7 +117,7 @@ class Camera():
             self.binw = value
             self.binh = value
             self.area = [0, 0, self.imagew/self.binw, self.imageh/self.binh]
-            self.unsaved_settings = 1
+            self.SetImageArea()
 
     @property
     def NumX(self):
@@ -129,7 +127,7 @@ class Camera():
     def NumX(self, value):
         if value > 0:
             self.area[2] = int(value)
-            self.unsaved_settings = 1
+            self.SetImageArea()
 
     @property
     def NumY(self):
@@ -139,7 +137,7 @@ class Camera():
     def NumY(self, value):
         if value > 0:
             self.area[3] = int(value)
-            self.unsaved_settings = 1
+            self.SetImageArea()
 
     @property
     def StartX(self):
@@ -149,7 +147,7 @@ class Camera():
     def StartX(self, value):
         if value >= 0 and value < self.imagew:
             self.area[0] = int(value)
-            self.unsaved_settings = 1
+            self.SetImageArea()
 
     @property
     def StartY(self):
@@ -159,11 +157,9 @@ class Camera():
     def StartY(self, value):
         if value >= 0 and value < self.imageh:
             self.area[1] = int(value)
-            self.unsaved_settings = 1
+            self.SetImageArea()
 
     def StartExposure(self, exp, light=1):
-        if self.unsaved_settings == 1:
-            self.SetImageArea()
         SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_EXPOSURE, exp * 1000000.0)
         self.exptime = exp
         ExpQHYCCDSingleFrame(self.cam)
