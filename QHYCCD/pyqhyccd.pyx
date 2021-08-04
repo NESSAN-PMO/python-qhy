@@ -133,8 +133,7 @@ class BAYER_ID:
 
 cdef int chkerr(long err):
     if err != qhy.QHYCCD_SUCCESS:
-        print("error: ", err)
-        #raise OSError(-err, os.strerror(-err))
+        raise OSError(-err, os.strerror(-err))
 
 
 def InitQHYCCDResource():
@@ -213,14 +212,7 @@ def GetQHYCCDSingleFrame(cam):
     cdef uint32_t memlength
     memlength = qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))*2
     imgdata = <uint8_t *>malloc(memlength * sizeof(uint8_t))
-    while 1:
-        ret = qhy.GetQHYCCDSingleFrame(PyLong_AsVoidPtr(cam), &w, &h, &bpp, &channels, imgdata)
-        if ret == -1:
-            return False
-        elif ret == qhy.QHYCCD_SUCCESS:
-            break
-        else:
-            continue
+    chkerr(qhy.GetQHYCCDSingleFrame(PyLong_AsVoidPtr(cam), &w, &h, &bpp, &channels, imgdata))
     if bpp == 8:
         np_bpp = np.NPY_UINT8
     elif bpp == 16:
