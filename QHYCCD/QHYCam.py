@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2021-08-04 02:18:20
+LastEditTime: 2021-08-05 16:18:57
 '''
 
 from .pyqhyccd import *
@@ -24,6 +24,8 @@ class Camera():
         self.lib = GetQHYCCDSDKVersion()
         self.starttime = 0
         self.exptime = 0
+        self.stype = 0
+        self.debayer = False
 
     def __del__(self):
         try:
@@ -76,6 +78,7 @@ class Camera():
                 self.has_gps = 0
             if IsQHYCCDControlAvailable(self.cam, CONTROL_ID.CAM_COLOR) in [BAYER_ID.BAYER_GB, BAYER_ID.BAYER_GR, BAYER_ID.BAYER_BG, BAYER_ID.BAYER_RG]:
                 SetQHYCCDDebayerOnOff(self.cam, False)
+                self.stype = 2
                 self.debayer = False
 
         elif value is False and self.Connected is True:
@@ -363,7 +366,7 @@ class Camera():
 
     @property
     def SensorType(self):
-        return "CMOS"
+        return self.stype
 
     @property
     def SetCCDTemperature(self):
@@ -415,3 +418,7 @@ class Camera():
         if IsQHYCCDControlAvailable(self.cam, CONTROL_ID.CAM_COLOR) in [BAYER_ID.BAYER_GB, BAYER_ID.BAYER_GR, BAYER_ID.BAYER_BG, BAYER_ID.BAYER_RG]:
             SetQHYCCDDebayerOnOff(self.cam, value)
             self.debayer = value
+            if value:
+                self.stype = 1
+            else:
+                self.stype = 2
