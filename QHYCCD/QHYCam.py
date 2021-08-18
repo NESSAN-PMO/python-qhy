@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2021-08-05 16:18:57
+LastEditTime: 2021-08-18 16:49:51
 '''
 
 from .pyqhyccd import *
@@ -164,7 +164,11 @@ class Camera():
 
     def StartExposure(self, exp, light=1):
         SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_EXPOSURE, exp * 1000000.0)
-        self.exptime = exp
+        if self.has_gps:
+            expinfo = GetQHYCCDPreciseExposureInfo(cam)
+            self.exptime = expinfo[5] / 1000000.
+        else:
+            self.exptime = exp
         ExpQHYCCDSingleFrame(self.cam)
 
     @property
@@ -422,3 +426,19 @@ class Camera():
                 self.stype = 1
             else:
                 self.stype = 2
+
+    @property
+    def USBTraffic(self):
+        return GetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_USBTRAFFIC)
+
+    @USBTraffic.setter
+    def USBTraffic(self, value):
+        SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_USBTRAFFIC, int(value))
+
+    @property
+    def DDR(self):
+        return IsQHYCCDControlAvailable(self.cam, CONTROL_ID.CONTROL_DDR)
+
+    @DDR.setter
+    def DDR(self, value):
+        SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_DDR, bool(value))
