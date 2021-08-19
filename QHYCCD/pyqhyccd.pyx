@@ -175,6 +175,7 @@ def GetQHYCCDModel(camid):
 
 def IsQHYCCDControlAvailable(cam, controlId):
     ret = qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), controlId)
+    return ret
     if ret == qhy.QHYCCD_SUCCESS:
         return True
     elif ret == qhy.QHYCCD_ERROR:

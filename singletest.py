@@ -4,7 +4,7 @@ Description:
 Author: F.O.X
 Date: 2021-01-07 16:31:54
 LastEditor: F.O.X
-LastEditTime: 2021-08-18 09:57:25
+LastEditTime: 2021-08-19 10:35:26
 '''
 
 from QHYCCD import Camera

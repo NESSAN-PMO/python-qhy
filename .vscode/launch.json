@@ -15,7 +15,14 @@
             "name": "Python: Test",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}/test.py",
+            "program": "${workspaceFolder}/singletest.py",
+            "console": "integratedTerminal"
+        },
+        {
+            "name": "Python: Live Test",
+            "type": "python",
+            "request": "launch",
+            "program": "${workspaceFolder}/livetest.py",
             "console": "integratedTerminal"
         }
     ]

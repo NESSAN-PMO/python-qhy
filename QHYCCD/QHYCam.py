@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2021-08-18 16:49:51
+LastEditTime: 2021-08-19 12:41:32
 '''
 
 from .pyqhyccd import *
@@ -26,6 +26,7 @@ class Camera():
         self.exptime = 0
         self.stype = 0
         self.debayer = False
+        self.lineperiod = 0
 
     def __del__(self):
         try:
@@ -165,8 +166,9 @@ class Camera():
     def StartExposure(self, exp, light=1):
         SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_EXPOSURE, exp * 1000000.0)
         if self.has_gps:
-            expinfo = GetQHYCCDPreciseExposureInfo(cam)
+            expinfo = GetQHYCCDPreciseExposureInfo(self.cam)
             self.exptime = expinfo[5] / 1000000.
+            self.lineperiod = expinfo[1] / 1000.
         else:
             self.exptime = exp
         ExpQHYCCDSingleFrame(self.cam)
@@ -442,3 +444,7 @@ class Camera():
     @DDR.setter
     def DDR(self, value):
         SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_DDR, bool(value))
+
+    @property
+    def LinePeriod(self):
+        return self.lineperiod
