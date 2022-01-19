@@ -9,6 +9,9 @@ from libc.stdlib cimport malloc, free
 
 np.import_array()
 
+cdef extern from "numpy/arrayobject.h":
+    void PyArray_ENABLEFLAGS(np.ndarray arr, int flags)
+
 __all__ = ['InitQHYCCDResource', 
 'ReleaseQHYCCDResource', 
 'ScanQHYCCD', 
@@ -175,7 +178,6 @@ def GetQHYCCDModel(camid):
 
 def IsQHYCCDControlAvailable(cam, controlId):
     ret = qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), controlId)
-    return ret
     if ret == qhy.QHYCCD_SUCCESS:
         return True
     elif ret == qhy.QHYCCD_ERROR:
@@ -227,7 +229,7 @@ def GetQHYCCDSingleFrame(cam):
     shape[1] = <np.npy_intp> w
     shape[2] = <np.npy_intp> channels
     data = np.PyArray_SimpleNewFromData(3, shape, np_bpp, <void *>imgdata)
-    np.PyArray_ENABLEFLAGS(data, np.NPY_ARRAY_OWNDATA)
+    PyArray_ENABLEFLAGS(data, np.NPY_ARRAY_OWNDATA)
     return data
 
 def GetQHYCCDMemLength(cam):
@@ -318,7 +320,7 @@ def GetQHYCCDLiveFrame(cam):
     shape[1] = <np.npy_intp> w
     shape[2] = <np.npy_intp> channels
     data = np.PyArray_SimpleNewFromData(3, shape, np_bpp, <void *>imgdata)
-    np.PyArray_ENABLEFLAGS(data, np.NPY_ARRAY_OWNDATA)
+    PyArray_ENABLEFLAGS(data, np.NPY_ARRAY_OWNDATA)
     return data
 
 def GetQHYCCDPreciseExposureInfo(cam):
