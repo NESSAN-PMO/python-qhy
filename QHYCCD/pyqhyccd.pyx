@@ -216,6 +216,7 @@ def GetQHYCCDSingleFrame(cam):
     memlength = qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))*2
     imgdata = <uint8_t *>malloc(memlength * sizeof(uint8_t))
     chkerr(qhy.GetQHYCCDSingleFrame(PyLong_AsVoidPtr(cam), &w, &h, &bpp, &channels, imgdata))
+    print(imgdata[0:44])
     if bpp == 8:
         np_bpp = np.NPY_UINT8
     elif bpp == 16:
