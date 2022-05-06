@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2021-08-19 12:41:32
+LastEditTime: 2022-05-06 13:47:19
 '''
 
 from .pyqhyccd import *
@@ -72,7 +72,7 @@ class Camera():
             self.binw = 1
             self.binh = 1
             self.SetImageArea()
-            if IsQHYCCDControlAvailable(self.cam, CONTROL_ID.CAM_GPS):
+            if IsQHYCCDControlAvailable(self.cam, CONTROL_ID.CAM_GPS) == ERROR_ID.SUCCESS:
                 SetQHYCCDParam(self.cam, CONTROL_ID.CAM_GPS, 1)
                 self.has_gps = 1
             else:
@@ -439,7 +439,7 @@ class Camera():
 
     @property
     def DDR(self):
-        return IsQHYCCDControlAvailable(self.cam, CONTROL_ID.CONTROL_DDR)
+        return IsQHYCCDControlAvailable(self.cam, CONTROL_ID.CONTROL_DDR) == ERROR_ID.SUCCESS
 
     @DDR.setter
     def DDR(self, value):

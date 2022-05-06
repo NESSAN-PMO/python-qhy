@@ -2,7 +2,7 @@
 #include "qhyccderr.h"
 #include "qhyccdcamdef.h"
 #include "qhyccdstruct.h"
-#include "stdint.h"
+#include <stdint.h>
 #include "config.h"
 #include <functional>
 #include <string>

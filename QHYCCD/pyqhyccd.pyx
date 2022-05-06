@@ -25,6 +25,7 @@ __all__ = ['InitQHYCCDResource',
 'IsQHYCCDControlAvailable',
 'CONTROL_ID',
 'BAYER_ID',
+'ERROR_ID',
 'SetQHYCCDParam',
 'GetQHYCCDParam',
 'GetQHYCCDParamMinMaxStep',
@@ -134,6 +135,11 @@ class BAYER_ID:
     BAYER_BG = qhy.BAYER_BG
     BAYER_RG = qhy.BAYER_RG
 
+class ERROR_ID:
+    SUCCESS=qhy.QHYCCD_SUCCESS
+    ERROR=qhy.QHYCCD_ERROR
+
+
 cdef int chkerr(long err):
     if err != qhy.QHYCCD_SUCCESS:
         raise OSError(-err, os.strerror(-err))
@@ -178,12 +184,7 @@ def GetQHYCCDModel(camid):
 
 def IsQHYCCDControlAvailable(cam, controlId):
     ret = qhy.IsQHYCCDControlAvailable(PyLong_AsVoidPtr(cam), controlId)
-    if ret == qhy.QHYCCD_SUCCESS:
-        return True
-    elif ret == qhy.QHYCCD_ERROR:
-        return False
-    else:
-        return ret
+    return ret
 
 def GetQHYCCDParam(cam, controlId):
     ret = qhy.GetQHYCCDParam(PyLong_AsVoidPtr(cam), controlId)
@@ -216,7 +217,6 @@ def GetQHYCCDSingleFrame(cam):
     memlength = qhy.GetQHYCCDMemLength(PyLong_AsVoidPtr(cam))*2
     imgdata = <uint8_t *>malloc(memlength * sizeof(uint8_t))
     chkerr(qhy.GetQHYCCDSingleFrame(PyLong_AsVoidPtr(cam), &w, &h, &bpp, &channels, imgdata))
-    print(imgdata[0:44])
     if bpp == 8:
         np_bpp = np.NPY_UINT8
     elif bpp == 16:
