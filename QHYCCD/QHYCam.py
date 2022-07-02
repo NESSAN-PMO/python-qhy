@@ -3,11 +3,11 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2022-05-06 13:47:19
+LastEditTime: 2022-05-16 16:55:25
 '''
 
 from .pyqhyccd import *
-from astropy.time import Time
+from astropy.time import Time, TimeDelta
 import numpy as np
 
 
@@ -38,7 +38,7 @@ class Camera():
     @property
     def Connected(self):
         try:
-            GetQHYCCDType(self.cam)
+            GetQHYCCDReadMode(self.cam)
             return True
         except:
             return False
@@ -168,7 +168,12 @@ class Camera():
         if self.has_gps:
             expinfo = GetQHYCCDPreciseExposureInfo(self.cam)
             self.exptime = expinfo[5] / 1000000.
-            self.lineperiod = expinfo[1] / 1000.
+            # self.fixedoffset = GetQHYCCDRollingShutterEndOffset(
+            #     self.cam, 0) / 1000000.0
+            # self.rowoffset = (GetQHYCCDRollingShutterEndOffset(
+            #     self.cam, 2) - GetQHYCCDRollingShutterEndOffset(self.cam, 0)) * self.binh / 2000000.0
+            self.rowoffset = expinfo[1] * self.binh / 1000000000.
+            self.fixedoffset = 0
         else:
             self.exptime = exp
         ExpQHYCCDSingleFrame(self.cam)
@@ -265,12 +270,13 @@ class Camera():
         self.image = GetQHYCCDSingleFrame(self.cam)
         if self.has_gps:
             buf = self.image[0, 0:22].tobytes(order='C')
-            self.image[0, 0:22] = 0
+            self.image[0, ] = 0
             gps_status = (buf[33] // 16) % 4
             if gps_status == 3:
                 jd = (int.from_bytes(buf[18:22], 'big', signed=False) + int.from_bytes(
                     buf[22:25], 'big', signed=False) / 10000000.) / 86400. + 2450000.5
-                tm = Time(jd, format='jd').strftime("%Y-%m-%dT%H:%M:%S.%f")
+                tm = (Time(jd, format='jd') + TimeDelta(self.fixedoffset, format='sec') -
+                      TimeDelta(self.exptime, format='sec')).strftime("%Y-%m-%dT%H:%M:%S.%f")
             else:
                 tm = "1900-01-01T00:00:00"
             self.starttime = tm
@@ -446,5 +452,9 @@ class Camera():
         SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_DDR, bool(value))
 
     @property
-    def LinePeriod(self):
-        return self.lineperiod
+    def RowOffset(self):
+        return self.rowoffset
+
+    @property
+    def SupportedActions(self):
+        return ['RowOffset']

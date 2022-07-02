@@ -53,7 +53,8 @@ __all__ = ['InitQHYCCDResource',
 'GetQHYCCDPreciseExposureInfo',
 'SetQHYCCDBitsMode',
 'GetBinModes',
-'SetQHYCCDDebayerOnOff'
+'SetQHYCCDDebayerOnOff',
+'GetQHYCCDRollingShutterEndOffset'
 ]
 
 cdef extern from "Python.h":
@@ -352,3 +353,9 @@ def GetBinModes(cam):
 
 def SetQHYCCDDebayerOnOff(cam, onoff):
     chkerr(qhy.SetQHYCCDDebayerOnOff(PyLong_AsVoidPtr(cam), onoff))
+
+def GetQHYCCDRollingShutterEndOffset(cam, row=0):
+    cdef double offset
+    offset = 0.0
+    chkerr(qhy.GetQHYCCDRollingShutterEndOffset(PyLong_AsVoidPtr(cam), <uint32_t> row, &offset))
+    return offset

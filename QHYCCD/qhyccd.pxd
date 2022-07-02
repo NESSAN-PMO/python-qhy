@@ -136,6 +136,7 @@ cdef extern from 'qhyccd.h':
     uint32_t GetQHYCCDPreciseExposureInfo(qhyccd_handle *h, uint32_t *PixelPeriod_ps, uint32_t *LinePeriod_ns, uint32_t *FramePeriod_us, uint32_t *ClocksPerLine, uint32_t *LinesPerFrame, uint32_t *ActualExposureTime, uint8_t *isLongExposureMode) nogil
     uint32_t SetQHYCCDBitsMode(qhyccd_handle *handle,uint32_t bits) nogil
     uint32_t SetQHYCCDDebayerOnOff(qhyccd_handle *h, bool onoff) nogil
+    uint32_t GetQHYCCDRollingShutterEndOffset(qhyccd_handle *h,uint32_t row,double *offset) nogil
 
     # void SetQHYCCDAutoDetectCamera(bool enable)
 
