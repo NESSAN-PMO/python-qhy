@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2022-10-03 18:28:11
+LastEditTime: 2022-10-03 20:16:40
 '''
 
 from .pyqhyccd import *
@@ -27,28 +27,29 @@ class Camera():
         self.stype = 0
         self.debayer = False
         self.lineperiod = 0
+        self.read_mode = 0
+        self.conn = False
 
     def __del__(self):
         try:
             CloseQHYCCD(self.cam)
+            self.conn = False
         except:
             pass
         ReleaseQHYCCDResource()
 
     @property
     def Connected(self):
-        try:
-            GetQHYCCDReadMode(self.cam)
-            return True
-        except:
-            return False
+        return self.conn
 
     @Connected.setter
     def Connected(self, value):
         if value is True and self.Connected is False:
             self.cam = OpenQHYCCD(self.camid)
+            SetQHYCCDReadMode(self.cam, self.read_mode)
             SetQHYCCDStreamMode(self.cam, 0)
             InitQHYCCD(self.cam)
+            self.conn = True
             self.model = GetQHYCCDModel(self.camid).decode('UTF-8')
             chipw, chiph, self.imagew, self.imageh, self.pixelw, self.pixelh, self.bpp = GetQHYCCDChipInfo(
                 self.cam)
@@ -61,8 +62,6 @@ class Camera():
             for i in range(self.n_modes):
                 self.mode_names.append(
                     GetQHYCCDReadModeName(self.cam, i).decode('UTF-8'))
-            self.read_mode = 0
-            SetQHYCCDReadMode(self.cam, self.read_mode)
             SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_GAIN, 0)
             SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_OFFSET, 20)
             self.bin_modes = GetBinModes(self.cam)
@@ -84,6 +83,7 @@ class Camera():
 
         elif value is False and self.Connected is True:
             CloseQHYCCD(self.cam)
+            self.conn = False
         else:
             pass
 
@@ -337,8 +337,9 @@ class Camera():
     @ReadoutMode.setter
     def ReadoutMode(self, value):
         if value >= 0 and value < self.n_modes:
-            SetQHYCCDReadMode(self.cam, value)
+            self.Connected = False
             self.read_mode = value
+            self.Connected = True
 
     @property
     def Gain(self):
