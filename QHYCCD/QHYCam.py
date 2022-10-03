@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2022-10-03 17:57:54
+LastEditTime: 2022-10-03 18:28:11
 '''
 
 from .pyqhyccd import *
@@ -96,7 +96,6 @@ class Camera():
             self.area[2] = self.imagew / self.binw
         if (self.area[1] + self.area[3]) * self.binh > self.imageh:
             self.area[3] = self.imageh / self.binh
-        print("Set Image Area")
         SetQHYCCDBinMode(self.cam, self.binw, self.binh)
         SetQHYCCDResolution(self.cam, *self.area)
 
@@ -275,9 +274,9 @@ class Camera():
             gps_status = (buf[33] // 16) % 4
             if gps_status == 3:
                 sec1 = int.from_bytes(buf[18:22], 'big', signed=False) + \
-                    int.from_bytes(buf[22:25], 'big', signed=False) / 1000000.
+                    int.from_bytes(buf[22:25], 'big', signed=False) / 10000000.
                 sec2 = int.from_bytes(buf[26:30], 'big', signed=False) + \
-                    int.from_bytes(buf[30:33], 'big', signed=False) / 1000000.
+                    int.from_bytes(buf[30:33], 'big', signed=False) / 10000000.
                 if sec2 - sec1 < self.exptime * 0.1:
                     jd = (sec2 - self.exptime + self.fixedoffset) / \
                         86400. + 2450000.5
