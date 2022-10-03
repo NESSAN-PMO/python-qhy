@@ -33,7 +33,6 @@ __all__ = ['InitQHYCCDResource',
 'GetQHYCCDSingleFrame',
 'CancelQHYCCDExposing',
 'GetQHYCCDMemLength',
-'SetQHYCCDBinMode',
 'SetQHYCCDResolution',
 'GetQHYCCDExposureRemaining',
 'GetQHYCCDType',
@@ -290,9 +289,6 @@ def GetQHYCCDEffectiveArea(cam):
     cdef uint32_t startX, startY, sizeX, sizeY
     chkerr(qhy.GetQHYCCDEffectiveArea(PyLong_AsVoidPtr(cam), &startX, &startY, &sizeX, &sizeY))
     return (startX, startY, sizeX, sizeY)
-
-def SetQHYCCDBinMode(cam, binw, binh):
-    chkerr(qhy.SetQHYCCDBinMode(PyLong_AsVoidPtr(cam), binw, binh))
 
 def BeginQHYCCDLive(cam):
     chkerr(qhy.BeginQHYCCDLive(PyLong_AsVoidPtr(cam)))

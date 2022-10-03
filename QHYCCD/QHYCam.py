@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2022-05-16 16:55:25
+LastEditTime: 2022-10-03 17:57:54
 '''
 
 from .pyqhyccd import *
@@ -56,8 +56,6 @@ class Camera():
                 self.cam, CONTROL_ID.CONTROL_GAIN)))
             self.offset_min, self.offset_max, self.offset_step = list(map(int, GetQHYCCDParamMinMaxStep(
                 self.cam, CONTROL_ID.CONTROL_OFFSET)))
-            SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_GAIN, 25)
-            SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_OFFSET, 10)
             self.n_modes = GetQHYCCDNumberOfReadModes(self.cam)
             self.mode_names = []
             for i in range(self.n_modes):
@@ -65,6 +63,8 @@ class Camera():
                     GetQHYCCDReadModeName(self.cam, i).decode('UTF-8'))
             self.read_mode = 0
             SetQHYCCDReadMode(self.cam, self.read_mode)
+            SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_GAIN, 0)
+            SetQHYCCDParam(self.cam, CONTROL_ID.CONTROL_OFFSET, 20)
             self.bin_modes = GetBinModes(self.cam)
             self.area_eff = GetQHYCCDEffectiveArea(self.cam)
             self.area_ovr = GetQHYCCDOverScanArea(self.cam)
@@ -96,6 +96,7 @@ class Camera():
             self.area[2] = self.imagew / self.binw
         if (self.area[1] + self.area[3]) * self.binh > self.imageh:
             self.area[3] = self.imageh / self.binh
+        print("Set Image Area")
         SetQHYCCDBinMode(self.cam, self.binw, self.binh)
         SetQHYCCDResolution(self.cam, *self.area)
 
@@ -115,7 +116,7 @@ class Camera():
     def BinY(self):
         return self.binh
 
-    @BinX.setter
+    @BinY.setter
     def BinY(self, value):
         if value in self.bin_modes:
             self.binw = value
@@ -273,10 +274,16 @@ class Camera():
             self.image[0, ] = 0
             gps_status = (buf[33] // 16) % 4
             if gps_status == 3:
-                jd = (int.from_bytes(buf[18:22], 'big', signed=False) + int.from_bytes(
-                    buf[22:25], 'big', signed=False) / 10000000.) / 86400. + 2450000.5
-                tm = (Time(jd, format='jd') + TimeDelta(self.fixedoffset, format='sec') -
-                      TimeDelta(self.exptime, format='sec')).strftime("%Y-%m-%dT%H:%M:%S.%f")
+                sec1 = int.from_bytes(buf[18:22], 'big', signed=False) + \
+                    int.from_bytes(buf[22:25], 'big', signed=False) / 1000000.
+                sec2 = int.from_bytes(buf[26:30], 'big', signed=False) + \
+                    int.from_bytes(buf[30:33], 'big', signed=False) / 1000000.
+                if sec2 - sec1 < self.exptime * 0.1:
+                    jd = (sec2 - self.exptime + self.fixedoffset) / \
+                        86400. + 2450000.5
+                else:
+                    jd = (sec1 + self.fixedoffset) / 86400. + 2450000.5
+                tm = (Time(jd, format='jd')).strftime("%Y-%m-%dT%H:%M:%S.%f")
             else:
                 tm = "1900-01-01T00:00:00"
             self.starttime = tm
