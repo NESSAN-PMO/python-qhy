@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2022-12-02 13:36:06
+LastEditTime: 2022-12-03 03:47:17
 '''
 
 from .pyqhyccd import *
@@ -176,6 +176,8 @@ class Camera():
             #self.fixedoffset = 0
         else:
             self.exptime = exp
+            self.rowoffset = 0
+            self.fixedoffset = 0
         ExpQHYCCDSingleFrame(self.cam)
 
     @property
@@ -461,6 +463,10 @@ class Camera():
     @property
     def RowOffset(self):
         return self.rowoffset
+
+    @property
+    def FixedOffset(self):
+        return self.fixedoffset
 
     @property
     def SupportedActions(self):
