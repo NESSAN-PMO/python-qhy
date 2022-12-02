@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2022-10-03 20:16:40
+LastEditTime: 2022-12-02 13:36:06
 '''
 
 from .pyqhyccd import *
@@ -168,12 +168,12 @@ class Camera():
         if self.has_gps:
             expinfo = GetQHYCCDPreciseExposureInfo(self.cam)
             self.exptime = expinfo[5] / 1000000.
-            # self.fixedoffset = GetQHYCCDRollingShutterEndOffset(
-            #     self.cam, 0) / 1000000.0
-            # self.rowoffset = (GetQHYCCDRollingShutterEndOffset(
-            #     self.cam, 2) - GetQHYCCDRollingShutterEndOffset(self.cam, 0)) * self.binh / 2000000.0
-            self.rowoffset = expinfo[1] * self.binh / 1000000000.
-            self.fixedoffset = 0
+            self.fixedoffset = GetQHYCCDRollingShutterEndOffset(
+                self.cam, 0) / 1000000.0
+            self.rowoffset = (GetQHYCCDRollingShutterEndOffset(
+                self.cam, 2) - GetQHYCCDRollingShutterEndOffset(self.cam, 0)) * self.binh / 2000000.0
+            #self.rowoffset = expinfo[1] * self.binh / 1000000000.
+            #self.fixedoffset = 0
         else:
             self.exptime = exp
         ExpQHYCCDSingleFrame(self.cam)
