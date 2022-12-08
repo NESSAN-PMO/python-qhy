@@ -43,7 +43,7 @@ ext_modules = [Extension('QHYCCD.pyqhyccd', src, **compiler_settings)]
 
 setup(
     name="python-qhy",
-    version="2.0.2",
+    version="2.0.3",
     author="Fockez Zhang",
     author_email="fockez@live.com",
     download_url=" ",

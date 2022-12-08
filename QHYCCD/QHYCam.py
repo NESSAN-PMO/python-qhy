@@ -3,7 +3,7 @@
 @Author: F.O.X
 @Date: 2020-03-08 00:01:00
 @LastEditor: F.O.X
-LastEditTime: 2022-12-06 23:02:41
+LastEditTime: 2022-12-07 15:09:15
 '''
 
 from .pyqhyccd import *
@@ -171,7 +171,7 @@ class Camera():
             self.fixedoffset = GetQHYCCDRollingShutterEndOffset(
                 self.cam, 0) / 1000000.0
             self.rowoffset = (GetQHYCCDRollingShutterEndOffset(
-                self.cam, 2) - GetQHYCCDRollingShutterEndOffset(self.cam, 0)) * self.binh / 2000000.0
+                self.cam, 2) - GetQHYCCDRollingShutterEndOffset(self.cam, 0)) / 2000000.0
             #self.rowoffset = expinfo[1] * self.binh / 1000000000.
             #self.fixedoffset = 0
         else:
