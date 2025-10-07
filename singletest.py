@@ -4,12 +4,12 @@ Description:
 Author: F.O.X
 Date: 2021-01-07 16:31:54
 LastEditor: F.O.X
-LastEditTime: 2022-05-16 09:52:26
+LastEditTime: 2024-08-11 03:54:33
 '''
 
 from QHYCCD import Camera
 import time
-# from astropy.io import fits
+from astropy.io import fits
 # from astropy.time import Time
 # import tifffile as tiff
 
@@ -19,16 +19,20 @@ cam.Connected = True
 cam.ReadoutMode = 3
 cam.Gain = 70
 cam.Offset = 10
+cam.BinX = 2
+cam.BinY = 2
 for i in range(100):
     cam.StartExposure(5)
     while not cam.ImageReady:
         time.sleep(0.1)
     t = time.time()
     d = cam.ImageArray
-    print(time.time() - t)
-    #fits.PrimaryHDU(data=d).writeto("test.fits", overwrite=True)
+    # print(time.time() - t)
+    hdu = fits.PrimaryHDU(data=d)
+    hdu.header['GAIN'] = 70
+    hdu.writeto("test.fits", overwrite=True)
     # tiff.imsave('test.tif', d)
-    print(cam.LastExposureStartTime)
+    # print(cam.LastExposureStartTime)
 cam.Connected = False
 
 
